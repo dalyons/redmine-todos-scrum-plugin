@@ -1,3 +1,19 @@
-= task_lists
+= nested todo/scrum-ish plugin for redmine
 
-Description goes here
+A nested, easy to use project based todos plugin for Redmine. Allows easy creation and management of infinitely nestable todo lists on a per project basis, that can be organised into sprints(or releases). 
+Also provides global 'My Todos' for all projects. Todos can be allocated to uses, and tied to Redmine Issues.
+
+== Release 0.0.1
+* All todo functionality implemented, works great for simple todo listing needs.
+* Scrum/release groupings not implemented yet
+
+== Installation 
+0. Follow the Redmine plugin installation steps at: http://www.redmine.org/wiki/redmine/Plugins 
+1. Cd to your redmine vendor/plugins dir.
+2. Git-clone the plugin from this repo into a folder in there (git clone git://github.com/dalyons/redmine-todos-scrum-plugin.git redmine_todos_plugin)
+3. Run the plugin migrations +rake db:migrate_plugins+
+4. Restart your Redmine web servers (e.g. mongrel, thin, mod_rails)
+5. Login to your Redmine install as an Administrator
+6. Setup the permissions for the todos module for your roles
+7. Enable the module on a per-project basis as needed.
+
