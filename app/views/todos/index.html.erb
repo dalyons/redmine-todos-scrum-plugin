@@ -1,0 +1,28 @@
+<% content_for :header_tags do %>
+    <%= stylesheet_link_tag 'task_lists', :plugin => 'redmine_task_lists' %>
+<% end %>
+
+
+<div id=project-todos>
+	<h2>Todos</h2>
+	<div style="" >
+		<%= render :partial => 'new_todo', :locals => {:todo => Todo.new(:project => @project,:assigned_to => User.current)}  
+		%>
+		
+	</div>
+
+
+
+
+
+	<ul class="todos root" id='todo-children-ul'>
+
+		<% for todo in @todos %>
+			
+				<%= render :partial => 'todo', :locals => { :todo => todo}%>
+
+		<% end %>
+
+	</ul>
+	
+</div>

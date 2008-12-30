@@ -1,0 +1,65 @@
+
+
+<li class="<%= todo.done ? 'done' :'' %>" id=todo<%=todo.id%>>
+
+<span class="todo-controls">
+	<%=
+		if !todo.done
+			link_to(image_tag('true.png', :title => 'mark as done', :size=>'13x13'), 
+				{ :action => 'toggle_complete', :id => todo, :project_id => todo.project}, :class => 'icon-done')
+		else
+			link_to(image_tag('cancel.png', :title => 'unmark'), 
+				{:action => 'toggle_complete', :id => todo, :project_id => todo.project}, :class => 'icon-restore')
+				
+		end
+	
+	%><%= link_to_remote( image_tag('add.png', :title => 'add child to this todo'), 
+		:url => { :action => 'new', :parent_id => todo.id, :project_id => todo.project.id},  
+		:html => {:class => 'icon-new'}, :update => "todo#{todo.id}-new-box" ) #, :position => :top
+		  
+	%><%= link_to_remote( image_tag('delete.png', :title => 'delete this todo'), 
+		:url => { :action => 'destroy', :id => todo,:project_id => todo.project}, :confirm => l(:text_are_you_sure), :html => {:class => 'icon-delete'}, 
+		:update => "todo#{todo.id}" ) %>
+</span>
+
+<span class="todo-content ">
+	<% if todo.done %>
+		<span class=date title="date completed"><%= todo.completed_at.to_s(:short_day) %></span>
+	<% end %>
+	<span class="text todo-has-children-<%= todo.children.any? %>""><%= todo.text %> </span>
+	
+	<span class=notes>
+		<% if todo.due %>
+			<span class=due>Due: <%= todo.due.to_s(:short_day) %></span>
+		<% end %>
+		<% if todo.assigned_to %>
+			<span class=assigned>Assigned to: <%= todo.assigned_to.name %></span>
+		<% end %>
+		<% if todo.refers_to %>
+			<span class=refers>Ref: <%= link_to "##{ todo.refers_to.id}", 
+								{:controller => :issues, :action => :show, :id => todo.refers_to.id}, :title => "#{todo.refers_to.tracker.name}: #{todo.refers_to.subject}" %>
+			</span>
+		<% end %>
+	</span>
+</span>
+<br />
+<div id='todo<%= todo.id %>-new-box'></div>
+
+	
+	<% if todo.children.any? || true %>
+		
+		<ul class="todos children depth<%= todo.ancestors.size%>" id='todo<%= todo.id %>-children-ul' >
+			<% for todo in todo.children %>
+				
+					<%= render :partial => 'todo', :locals => {:todo => todo} %>
+				
+			<% end %>
+		</ul>
+		
+	<% end %>
+	
+
+</li>
+
+
+

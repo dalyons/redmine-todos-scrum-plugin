@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  id: 1
+  due: 2008-12-22 14:14:48
+  priority: 
+  parent_id: 
+  text: MyString
+  author_id: 
+  assigned_to_id: 
+  project_id: 
+  issue_id: 
+two:
+  id: 2
+  due: 2008-12-22 14:14:48
+  priority: 
+  parent_id: 
+  text: MyString
+  author_id: 
+  assigned_to_id: 
+  project_id: 
+  issue_id: 
