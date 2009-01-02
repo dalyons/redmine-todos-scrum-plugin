@@ -1,0 +1,9 @@
+<fieldset>
+<legend>Todos Plugin settings</legend>
+<p>
+  <label>Name</label><%= check_box_tag 'settings[todos_auto_complete_parent]', @settings['todos_auto_complete_parent'] %>
+</p>
+
+</fieldset>
+
+
