@@ -11,8 +11,8 @@
 	list-style-type: none;
 	
 }
-#project-todos ul.root li { font-size: 1.1em; padding-top: 1em; }
-#project-todos ul.children li { font-size: 0.9em; padding-top:0.2em; }
+#project-todos ul.root li { font-size: 1.1em; padding-bottom: 0.6em; }
+#project-todos ul.children li { font-size: 0.9em; padding-bottom:0.2em; }
 #project-todos ul.children { padding-bottom: 0px; padding-top: 0px;}
 /*#project-todos div.children { padding-bottom: 10px;}*/
 

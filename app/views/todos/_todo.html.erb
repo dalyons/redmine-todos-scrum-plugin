@@ -1,6 +1,6 @@
 
 
-<li class="<%= todo.done ? 'done' :'' %>" id=todo<%=todo.id%>>
+<li class="<%= todo.done ? 'done' :'' %>" id=todo_<%=todo.id%>>
 
 <span class="todo-controls">
 	<%=
@@ -19,7 +19,7 @@
 		  
 	%><%= link_to_remote( image_tag('delete.png', :title => 'delete this todo'), 
 		:url => { :action => 'destroy', :id => todo,:project_id => todo.project}, :confirm => l(:text_are_you_sure), :html => {:class => 'icon-delete'}, 
-		:update => "todo#{todo.id}" ) %>
+		:update => "todo_#{todo.id}" ) %>
 </span>
 
 <span class="todo-content ">
@@ -46,17 +46,19 @@
 <div id='todo<%= todo.id %>-new-box'></div>
 
 	
-	<% if todo.children.any? || true %>
 		
-		<ul class="todos children depth<%= todo.ancestors.size%>" id='todo<%= todo.id %>-children-ul' >
-			<% for todo in todo.children %>
+		<ul class="todos children depth<%= todo.ancestors.size%>" id='todo-children-ul_<%= todo.id %>' >
+			<% for child_todo in todo.children %>
 				
-					<%= render :partial => 'todo', :locals => {:todo => todo} %>
+					<%= render :partial => 'todo', :locals => {:todo => child_todo} %>
 				
 			<% end %>
 		</ul>
-		
-	<% end %>
+		<%= sortable_element "todo-children-ul_#{todo.id}", :url => {:action => 'sort', :parent_id => todo.id, :project_id => todo.project_id},
+				:handle => "todo-content"#,
+				#:complete => visual_effect(:highlight, "todo-children-ul_#{todo.id}")
+			  %>
+
 	
 
 </li>

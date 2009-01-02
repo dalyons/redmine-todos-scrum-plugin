@@ -1,7 +1,7 @@
 
 <div class="new-todo">
 	<% remote_form_for :todo, todo, :url => {:action=> "create", :project_id => todo.project }, 
-			:update => "todo#{ todo.parent_id }-children-ul", :position => :top ,
+			:update => "todo-children-ul_#{ todo.parent_id }", :position => :bottom,
 			:success => "elements['todo[text]'].activate().clear();" do |f| %>
 			
 		<%= f.hidden_field :due, :id=>"due#{todo.parent_id}", 

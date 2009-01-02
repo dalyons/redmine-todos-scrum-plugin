@@ -9,15 +9,17 @@
 
 	<% @grouped_todos.each do |project, todos| %>
 	
-		<h3><%= project.name %></h3>
+		<h3><%= link_to h(project.name), {:controller => 'todos', :action => 'index', :project_id => project},
+				 :class => (User.current.member_of?(project) ? "icon icon-fav" : "") %></h3>
 		
-		<ul class="todos root">
-			<% for todo in todos %>
-				<li class="<%= todo.done ? 'done' :'' %>" id=todo<%=todo.id%>>
+		<ul class="todos root" id="todo-children-ul_<%= project.id %>">
+			<% for todo in todos.sort{|a,b| a.position <=> b.position} %>
 					<%= render :partial => 'todo', :locals => { :todo => todo, :project => project }%>
-				</li>
 			<% end %>
 		</ul>
-		
+		<%= sortable_element "todo-children-ul_#{project.id}", :url => {:action => 'sort', :parent_id => nil, :project_id => todo.project_id},
+				:handle => "todo-content" %>
+				
 	<% end %>
+
 </div>

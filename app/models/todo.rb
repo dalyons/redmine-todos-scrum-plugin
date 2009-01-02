@@ -1,5 +1,6 @@
 class Todo < ActiveRecord::Base
-	acts_as_tree :order => "created_at"
+	acts_as_tree :order => "position"
+	acts_as_list :scope => :parent_id
 	
 	belongs_to :author, :class_name => 'User', :foreign_key => 'author_id'
 	belongs_to :assigned_to, :class_name => 'User', :foreign_key => 'assigned_to_id'
@@ -9,11 +10,34 @@ class Todo < ActiveRecord::Base
 	
 	validates_presence_of :project, :author
 	
-	def done=(v)
-		super(v)
-		self.children.each{|c| c.done = v}
+	
+	def set_done(val, cascade_to_children = true)
+	  self.done = val
+	  
+	  #3debugger
+	  
+		self.children.each{|c| c.set_done val} if cascade_to_children
+		
 		self.completed_at = Time.now
 		self.save
+		
+		if self.parent
+			#if we are being marked as undone, we have to undo our parent aswell
+			if !val 
+				self.parent.set_done(false, false)
+			end 
+		
+			#if all our siblings are done, mark parent as done 
+			##Actually, I dont think this is a desireable feature.
+			#if self.done && !parent.done && self.siblings.inject(true){|result, sibling| result = result && sibling.done} 
+			#	puts "siblings done"
+			#	#self.parent.update_attribute(:done,  true)
+			#	self.parent.set_done(false, false)
+			#end
+			
+		end
+		
+		
 	end
 	
 	def possible_issues
