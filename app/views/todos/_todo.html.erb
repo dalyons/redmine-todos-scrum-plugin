@@ -55,7 +55,7 @@
 			<% end %>
 		</ul>
 		<%= sortable_element "todo-children-ul_#{todo.id}", :url => {:action => 'sort', :parent_id => todo.id, :project_id => todo.project_id},
-				:handle => "todo-content"#,
+				:handle => "todo-content", :tree => true  #,
 				#:complete => visual_effect(:highlight, "todo-children-ul_#{todo.id}")
 			  %>
 

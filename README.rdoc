@@ -3,6 +3,11 @@
 A nested, easy to use project based todos plugin for Redmine. Allows easy creation and management of infinitely nestable todo lists on a per project basis, that can be organised into sprints(or releases). 
 Also provides global 'My Todos' for all projects. Todos can be allocated to uses, and tied to Redmine Issues.
 
+== Release 0.0.2.1
+Minor bugfixes:
+* Renamed/removed all references to this plugin from 'task_lists' to 'todos_list'. After updating to this ver you will have to re-setup roles & permissions, as well as re-enable the module on a per-project basis. Hopefully it wont change names again! Sorry for confusion.
+* Removed ruby-debug dependancy, a careless error by me. 
+
 == Release 0.0.2
 * Implements D&D re-ordering of lists.
 

@@ -1,5 +1,5 @@
 <% content_for :header_tags do %>
-    <%= stylesheet_link_tag 'task_lists', :plugin => 'redmine_task_lists' %>
+    <%= stylesheet_link_tag 'todos', :plugin => 'redmine_todos_plugin' %>
 <% end %>
 
 
@@ -23,7 +23,7 @@
 
 	</ul>
 		<%= sortable_element "todo-children-ul_", :url => {:action => 'sort', :parent_id => nil, :project_id => @project.id},
-				:handle => "todo-content"#, :only => "todo-content",
+				:handle => "todo-content", :tree => true #, :only => "todo-content",
 				#:complete => visual_effect(:highlight, "todo-children-ul_")
 			  %>
 </div>

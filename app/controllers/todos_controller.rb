@@ -1,4 +1,4 @@
-require 'ruby-debug'
+#require 'ruby-debug'
 
 
 class TodosController < ApplicationController
@@ -79,19 +79,33 @@ class TodosController < ApplicationController
     end
   end
   
-  #for the d&d sorting ajax helper
+  #for the d&d sorting ajax helpers
   #TODO: this is pretty messy.
   def sort
 		raise "cant sort without a project!" if !@project
 		
-    @todos = @project.todos.find_all_by_parent_id(params[:parent_id])
-    params.keys.select{|k| k.include? "todo-children-ul_" }.each do | key | 
-		  @todos.each do |t|
-		  	#raise "argh!"
-		  	t.position = params[key].index(t.id.to_s)
-		  	t.save!
-		  end
+		@todos = @project.todos.find_all_by_project_id(@project.id)
+		
+		##tree mode - prototype helps pass in the todo tree like so:
+		# "todo-children-ul_"=>{ 
+		# 	"0"=>{"id"=>"96"}, 
+		#		"1"=>{"0"=>{"id"=>"93"}, "id"=>"68", "1"=>{"id"=>"92"}, "2"=>{"id"=>"94"}},
+		#		"2"=>{"id"=>"55"}, etc.. }
+		#so make a recursive reordering function for that structure.
+		reorder = lambda { |order_hash_array, parent_id| 
+			
+			order_hash_array.each{|position,children_hash|
+				id = children_hash["id"].to_i
+				@todos.select{|t| t.id == id }.first.update_attributes(:parent_id => parent_id, :position => position)
+				
+				children_hash.delete("id")
+				reorder.call( children_hash, id )
+			}
+		}
+		params.keys.select{|k| k.include? "todo-children-ul_" }.each do |key|
+			reorder.call( params[key], params[:parent_id])
 		end
+		
     render :nothing => true
   end
   
