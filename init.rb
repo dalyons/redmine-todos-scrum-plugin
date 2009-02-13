@@ -16,16 +16,22 @@ Redmine::Plugin.register :redmine_todo_lists do
    # permission :edit_customer, {:customers => [:edit, :update, :new, :create, :destroy]}
   #end
 
-	settings :default => {
-		'todos_auto_complete_parent' => false
-	}, :partial => 'settings/settings'
+  settings :default => {
+    'todos_auto_complete_parent' => false
+  }, :partial => 'settings/settings'
   
   
   project_module :todo_lists do
-  	permission :view_todo_lists, {:todos => [:index, 'my_todos'] } #, :require => :member#{:todos => [:index, :my_todos]}  #, :public => true
-  	permission :edit_todo_lists, {:todos => [:create, :destroy, :new, :toggle_complete, :index, :sort]}
+  	permission :view_project_todo_lists, {:todos => [:index] }
+  	permission :edit_project_todo_lists, {:todos => [:create, :destroy, :new, :toggle_complete, :index, :sort]} 
+  	
+  	permission :use_personal_todo_lists, {:mytodos =>
+  	       [:index,:destroy, :new, :create, :toggle_complete, :index, :sort]}
+  	       
+  	#, :require => :member#{:todos => [:index, :my_todos]}  #, :public => true
+  	
   end
 	
-	menu :top_menu, :todo_lists, { :controller => 'todos', :action => 'my_todos' }, :caption => 'My todos'
+	menu :top_menu, :todo_lists, { :controller => 'mytodos', :action => 'index' }, :caption => 'My todos'
   menu :project_menu, :todo_lists, {:controller => 'todos', :action => 'index'}, :caption => :projects_todo_title, :after => :new_issue, :param => :project_id
 end

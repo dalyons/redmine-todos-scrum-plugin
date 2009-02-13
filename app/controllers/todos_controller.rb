@@ -4,36 +4,17 @@
 class TodosController < ApplicationController
 
 	
-	before_filter :authorize#, :except => [:my_todos] #????
+	before_filter :authorize
 	before_filter :find_project, :except => [:my_todos]
 	
 	
   def index
-  	@todos = @project.todos.find_all_by_parent_id(nil,:order => 'position', :include => [:project, :assigned_to])
+  	@todos = @project.todos.find_all_by_parent_id(nil,:order => 'position', 
+      :include => [:project, :assigned_to])
   	
-  	@new_todo = Todo.new
+    @new_todo = Todo.new
   end
   
-	#def update
-    #@customer = Customer.find_by_id(params[:customer_id])
-  #  if @customer.update_attributes(params[:customer])
-  #    flash[:notice] = l(:notice_successful_update)
-  #    redirect_to :action => "list", :id => params[:id]
-  #  else
-  #    render :action => "edit", :id => params[:id]
-  #  end
-  #end
-  
-  def my_todos
-  	@todos = Todo.find_all_by_parent_id(nil, 
-  						:conditions => ["author_id = :id OR assigned_to_id = :id",{:id => User.current.id}],
-  						:order => "project_id, position" )
-  	
-  	#group the results by project, into a hash keyed on project.
-  	#this line is so beautiful it nearly made me cry!
-  	@grouped_todos = Set.new(@todos).classify{|t| t.project } 
-  	
-  end
 
   def destroy
     @todo = @project.todos.find(params[:id])
@@ -68,7 +49,7 @@ class TodosController < ApplicationController
     
     if @todo.save
       if (request.xhr?)
-        render :partial => 'todo', :locals => { :todo => @todo }
+        render :partial => 'todo', :locals => { :todo => @todo, :editable => true }
       else
         flash[:notice] = l(:notice_successful_create)
         redirect_to :action => "index", :project_id => params[:project_id]
@@ -92,18 +73,22 @@ class TodosController < ApplicationController
 		#		"1"=>{"0"=>{"id"=>"93"}, "id"=>"68", "1"=>{"id"=>"92"}, "2"=>{"id"=>"94"}},
 		#		"2"=>{"id"=>"55"}, etc.. }
 		#so make a recursive reordering function for that structure.
-		reorder = lambda { |order_hash_array, parent_id| 
-			
-			order_hash_array.each{|position,children_hash|
-				id = children_hash["id"].to_i
-				@todos.select{|t| t.id == id }.first.update_attributes(:parent_id => parent_id, :position => position)
-				
-				children_hash.delete("id")
-				reorder.call( children_hash, id )
-			}
-		}
+#		reorder = lambda { |order_hash_array, parent_id| 
+#			
+#			order_hash_array.each{|position,children_hash|
+#				id = children_hash["id"].to_i
+#				@todos.select{|t| t.id == id }.first.update_attributes(:parent_id => parent_id, :position => position)
+#				
+#				children_hash.delete("id")
+#				reorder.call( children_hash, id )
+#			}
+#		}
+#		params.keys.select{|k| k.include? "todo-children-ul_" }.each do |key|
+#			reorder.call( params[key], params[:parent_id])
+#		end
+    #Todo.sort_todos(@todos, "todo-children-ul_", params)
 		params.keys.select{|k| k.include? "todo-children-ul_" }.each do |key|
-			reorder.call( params[key], params[:parent_id])
+		  Todo.sort_todos(@todos,params[key])
 		end
 		
     render :nothing => true

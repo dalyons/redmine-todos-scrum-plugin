@@ -32,14 +32,15 @@ div.new-todo {
 div.new-todo  { font-size: 0.8em}
 
 #project-todos li {
-	text-align: bottom;
+	text-align: middle;
+	vertical-align: middle;
 	margin: 0 0 0 0;
 }
-#project-todos img {
+/*#project-todos img {
 	position: relative;
 	top: 2px;
 	max-height: 14px;
-}
+}*/
 
 .todo-controls {
 	margin-left: 0px;
@@ -48,6 +49,7 @@ div.new-todo  { font-size: 0.8em}
 .todo-controls img, .todo-controls a {
 	margin: 0 0 0 0;
 	padding: 0 0 0 0;
+	vertical-align:middle;
 
 }
 .todos .date {

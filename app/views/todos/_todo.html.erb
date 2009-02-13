@@ -1,25 +1,41 @@
 
+<% editable ||= false %>
 
 <li class="<%= todo.done ? 'done' :'' %>" id=todo_<%=todo.id%>>
 
 <span class="todo-controls">
-	<%=
-		if !todo.done
-			link_to(image_tag('true.png', :title => 'mark as done', :size=>'13x13'), 
-				{ :action => 'toggle_complete', :id => todo, :project_id => todo.project}, :class => 'icon-done')
-		else
-			link_to(image_tag('cancel.png', :title => 'unmark'), 
-				{:action => 'toggle_complete', :id => todo, :project_id => todo.project}, :class => 'icon-restore')
+  <% if editable then %>
+	  <%=
+		  if todo.done
+			  link_to(image_tag('cancel.png', :title => 'unmark'), 
+				  { :action => 'toggle_complete', :id => todo, :project_id => todo.project}, :class => 'icon-restore')
+		  else
+			  link_to(image_tag('true.png', :title => 'mark as done', :size=>'13x13'), 
+				  {:action => 'toggle_complete', :id => todo, :project_id => todo.project}, :class => 'icon-done')
 				
-		end
+		  end
 	
-	%><%= link_to_remote( image_tag('add.png', :title => 'add child to this todo'), 
-		:url => { :action => 'new', :parent_id => todo.id, :project_id => todo.project.id},  
-		:html => {:class => 'icon-new'}, :update => "todo#{todo.id}-new-box" ) #, :position => :top
-		  
-	%><%= link_to_remote( image_tag('delete.png', :title => 'delete this todo'), 
-		:url => { :action => 'destroy', :id => todo,:project_id => todo.project}, :confirm => l(:text_are_you_sure), :html => {:class => 'icon-delete'}, 
-		:update => "todo_#{todo.id}" ) %>
+	  %><%= link_to_remote( image_tag('add.png', :title => 'add child to this todo'), 
+		  :url => { :action => 'new', :parent_id => todo.id, :project_id => todo.project, 
+		            :update_target => "todo-children-ul_#{todo.id}"},  
+		  :html => {:class => 'icon-new'}, :update => "todo#{todo.id}-new-box" ) #, :position => :top
+		    
+	  %><%= link_to_remote( image_tag('delete.png', :title => 'delete this todo'), 
+		  :url => { :action => 'destroy', :id => todo,:project_id => todo.project}, 
+		  :confirm => l(:text_are_you_sure), :html => {:class => 'icon-delete'}, 
+		  :update => "todo_#{todo.id}" ) %>
+  
+  <% else %>
+    <%=
+      if todo.parent_id.nil? || todo.children.any? 
+    		  #image_tag('sub.gif')
+    		  image_tag('bullet_black.png') 
+    	else
+    		  #image_tag('bullet_black.png')
+    		  image_tag('sub.gif')    			
+    	end
+		%>
+  <% end %>
 </span>
 
 <span class="todo-content ">
@@ -37,7 +53,8 @@
 		<% end %>
 		<% if todo.refers_to %>
 			<span class=refers>Ref: <%= link_to "##{ todo.refers_to.id}", 
-								{:controller => :issues, :action => :show, :id => todo.refers_to.id}, :title => "#{todo.refers_to.tracker.name}: #{todo.refers_to.subject}" %>
+								{:controller => :issues, :action => :show, :id => todo.refers_to.id},
+								 :title => "#{todo.refers_to.tracker.name}: #{todo.refers_to.subject}" %>
 			</span>
 		<% end %>
 	</span>
@@ -50,14 +67,20 @@
 		<ul class="todos children depth<%= todo.ancestors.size%>" id='todo-children-ul_<%= todo.id %>' >
 			<% for child_todo in todo.children %>
 				
-					<%= render :partial => 'todo', :locals => {:todo => child_todo} %>
+					<%= render :partial => 'todos/todo', :locals => {:todo => child_todo, :editable => editable} %>
 				
 			<% end %>
 		</ul>
-		<%= sortable_element "todo-children-ul_#{todo.id}", :url => {:action => 'sort', :parent_id => todo.id, :project_id => todo.project_id},
-				:handle => "todo-content", :tree => true  #,
-				#:complete => visual_effect(:highlight, "todo-children-ul_#{todo.id}")
-			  %>
+		<%= 
+		  if editable then 
+		     sortable_element("todo-children-ul_#{todo.id}", :url => {:action => 'sort', 
+		          :parent_id => todo.id, :project_id => todo.project_id},
+				      :handle => "todo-content", :tree => true )  #,
+				    #:complete => visual_effect(:highlight, "todo-children-ul_#{todo.id}")
+				
+		  end
+		%> 
+		
 
 	
 

@@ -8,7 +8,7 @@ class Todo < ActiveRecord::Base
 	belongs_to :project
 	belongs_to :refers_to, :class_name => 'Issue', :foreign_key => 'issue_id'
 	
-	validates_presence_of :project, :author
+	validates_presence_of  :author
 	
 	
 	def set_done(val, cascade_to_children = true)
@@ -48,9 +48,34 @@ class Todo < ActiveRecord::Base
 		end
 	end
 	
+	
+	#complicated ugly method that sorts todos based on the nested param array passed in from
+	#the Prototype sortable element helper.
+	def self::sort_todos(valid_todos, todos_position_tree = {}) #element_identifier = "todo-children-ul_", params = {})
+	  reorder = lambda { |order_hash_array, parent_id| 
+			
+			order_hash_array.each{|position,children_hash|
+				id = children_hash["id"].to_i
+				valid_todos.select{|t| t.id == id }.first.update_attributes(:parent_id => parent_id, :position => position)
+				
+				children_hash.delete("id")
+				reorder.call( children_hash, id )
+			}
+		}
+		#todos_position_tree.each do |key|
+	    #reorder.call( params[key], nil)
+		#end
+		reorder.call(todos_position_tree, nil)
+	end
+	
 	def self::group_by_project(todos)
 		res = Hash.new{|h,k| h[k] = []}
 		todos.each{|todo| res[todo.project_id] << todo}
 		return res
+	end
+	
+	#find a todo by id, but return null if the user didnt author it or is not assigned to it
+	def self::find_by_user(todo_id, user_id)
+	  self.find(todo_id, :conditions => ["author_id = :id OR assigned_to_id = :id",{:id => User.current.id}] )
 	end
 end
