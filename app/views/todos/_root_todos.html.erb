@@ -1,0 +1,17 @@
+<% editable ||= false %>
+
+		<ul class="todos root" id="todo-children-ul_<%= project_id %>">
+			<% for todo in todos.sort{|a,b| a.position <=> b.position} %>
+					<%= render :partial => 'todos/todo', :locals => { :todo => todo, :editable => editable }%>
+			<% end %>
+		</ul>
+		<%= 
+		  if editable then
+		     sortable_element "todo-children-ul_#{project_id}", 
+		     :url => {:action => 'sort', :parent_id => nil, :project_id => project_id},
+				    :handle => "todo-content", :tree => true 
+		  end 
+		%>
+				
+				
+
