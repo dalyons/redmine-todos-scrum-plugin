@@ -73,5 +73,11 @@ class MytodosController < ApplicationController
     render :nothing => true
   end
   
+ private
+  def authorize
+    action = {:controller => params[:controller], :action => params[:action]}
+    allowed = User.current.allowed_to?(action,project = nil,options={:global => true})
+    allowed ? true : deny_access
+  end
   
 end

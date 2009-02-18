@@ -23,7 +23,8 @@ Redmine::Plugin.register :redmine_todo_lists do
   
   project_module :todo_lists do
   	permission :view_project_todo_lists, {:todos => [:index] }
-  	permission :edit_project_todo_lists, {:todos => [:create, :destroy, :new, :toggle_complete, :index, :sort]} 
+  	permission :edit_project_todo_lists, 
+  	    {:todos => [:create, :destroy, :new, :toggle_complete, :sort]} 
   	
   	permission :use_personal_todo_lists, {:mytodos =>
   	       [:index,:destroy, :new, :create, :toggle_complete, :index, :sort]}

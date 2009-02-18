@@ -4,8 +4,9 @@
 class TodosController < ApplicationController
 
 	
+	
+	before_filter :find_project #, :except => [:my_todos]
 	before_filter :authorize
-	before_filter :find_project, :except => [:my_todos]
 	
 	
   def index
