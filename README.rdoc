@@ -5,6 +5,9 @@ Also provides global 'My Todos' for all projects. Todos can be allocated to uses
 
 Please check the wiki for current known bugs.
 
+== Release 0.0.3.1
+* Fixed permissions issue. You no longer need to make any changes to Redmine's user.rb
+
 == Release 0.0.3
 * Implemented personal todo lists. Allows users to manage a personal list of todos through the 'My Todos' page. After upgrading to this version you will need to redo the module permissions in 'Roles and Permissions'.
 * minor bugfixes to the AJAX in the todo lists.
