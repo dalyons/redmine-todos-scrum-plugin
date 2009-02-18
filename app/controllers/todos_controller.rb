@@ -13,6 +13,8 @@ class TodosController < ApplicationController
   	@todos = @project.todos.find_all_by_parent_id(nil,:order => 'position', 
       :include => [:project, :assigned_to])
   	
+  	@allowed_to_edit = User.current.allowed_to?(:edit_project_todo_lists, @project)
+  	
     @new_todo = Todo.new
   end
   
