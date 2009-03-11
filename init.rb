@@ -1,6 +1,6 @@
 require 'redmine'
 
-require_dependency 'patch_redmine_classes'
+require 'patch_redmine_classes'
 
 Redmine::Plugin.register :redmine_todo_lists do
   name 'Redmine Todo Lists plugin'

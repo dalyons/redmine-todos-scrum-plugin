@@ -3,9 +3,16 @@
 
 class TodosController < ApplicationController
 
+  #put in a filthy hack to reload the patches to core redmine models.
+  #If cache_classes is off, the patches are dropped when the classes reload on every request.
+  #So, we reapply the patches here - for some reason it doesnt work in the Todo model.
+  #TODO: you are very welcome to find a better way to do this!
+  unless Rails.configuration.cache_classes
+	  unloadable
+	  Project.send(:include, TodosProjectPatch)
+	end
 	
-	
-	before_filter :find_project #, :except => [:my_todos]
+	before_filter :find_project
 	before_filter :authorize
 	
 	

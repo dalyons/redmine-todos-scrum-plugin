@@ -1,16 +1,22 @@
-require_dependency 'project'
+#require_dependency 'project'
+#require_dependency 'user'
+#require 'project'
+#require_dependency 'project'
+#require_dependency 'user'
  
 # Patches Redmine's projects dynamically. Adds a relationship
 # Issue +belongs_to+ to Deliverable
-module ProjectPatch
+module TodosProjectPatch
+  require_dependency 'project'
+
   def self.included(base) # :nodoc:
-    base.extend(ClassMethods)
+    Project.extend(ClassMethods)
  
-    base.send(:include, InstanceMethods)
+    Project.send(:include, InstanceMethods)
  
     # Same as typing in the class
-    base.class_eval do
-      unloadable # Send unloadable so it will not be unloaded in development
+    Project.class_eval do
+      #unloadable # Send unloadable so it will not be unloaded in development
       has_many :todos
       #raise ActiveRecord::RecordNotFound, "pie"
     end
@@ -24,14 +30,17 @@ module ProjectPatch
   end
 end
  
-# Add module to Project
-Project.send(:include, ProjectPatch)
+# Add module to Project. Will only work for production enviroments.
+Project.send(:include, TodosProjectPatch)
 
 
 
 # Patches Redmine's Users dynamically. 
 # Adds relationships for accessing assigned and authored todos.
-module UserPatch
+module TodosUserPatch
+  
+  require_dependency 'user'
+
   def self.included(base) # :nodoc:
     base.extend(ClassMethods)
  
@@ -61,8 +70,8 @@ module UserPatch
   end
 end
  
-# Add module to Project
-User.send(:include, UserPatch)
+# Add module to User, once. Will only work for production enviroments.
+User.send(:include, TodosUserPatch)
 
 
 ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(

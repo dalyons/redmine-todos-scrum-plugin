@@ -1,4 +1,14 @@
+#require 'patch_redmine_classes'
+#require_dependancy 'project'
+
 class Todo < ActiveRecord::Base
+	
+	#require_dependancy 'patch_redmine_classes' 
+	#include TodosProjectPatch
+	#include TodosUserPatch
+	#Project.send(:include, TodosProjectPatch)
+	
+
 	acts_as_tree :order => "position"
 	acts_as_list :scope => :parent_id
 	
