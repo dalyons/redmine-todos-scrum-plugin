@@ -5,6 +5,10 @@ Also provides global 'My Todos' for all projects. Todos can be allocated to uses
 
 Please check the wiki for current known bugs.
 
+== Release 0.0.3.3
+* Fixed the fix from the last release. Plugin no longer patches redmine classes, becuase this doesnt work in dev mode. Now uses named_scopes instead.
+* Now toggling items as complete is an AJAX call instead of a page reload.
+
 == Release 0.0.3.2
 * Fixed the inability to run the plugin on a rails server in development mode. It just uses a conditional to check for 'cache_classes', then reloads the offending module from the controller - if anyone knows of a better way please tell me.
 

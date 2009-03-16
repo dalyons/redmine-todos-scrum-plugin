@@ -1,7 +1,13 @@
+<% 
+#New todo: partial for creating a new todo.
+#requires:
+#   todo : a new Todo object
+#   update_target : a string containing a DOM element id to render the new todo 
+%>
 
 <div class="new-todo">
 	<% remote_form_for :todo, todo, :url => {:action=> "create", :project_id => todo.project }, 
-			:update => update_target, :position => :bottom,
+			:update => update_target, :position => :bottom,  #"todo-children-ul_#{todo.parent_id}"
 			:success => "elements['todo[text]'].activate().clear();" do |f| %>
 			
 		<%= f.hidden_field :due, :id=>"due#{todo.parent_id}", 

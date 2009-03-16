@@ -6,27 +6,27 @@ class MytodosController < ApplicationController
   #If cache_classes is off, the patches are dropped when the classes reload on every request.
   #So, we reapply the patches here - for some reason it doesnt work in the Todo model.
   #TODO: you are very welcome to find a better way to do this!
-  unless Rails.configuration.cache_classes
-	  unloadable
-	  User.send(:include, TodosUserPatch)
-	end
+  #unless Rails.configuration.cache_classes
+  #  unloadable
+  #  User.send(:include, TodosUserPatch)
+  #end
+
 
   before_filter :authorize
 
   def index
     #get all the root level todos belonging to current user
-    @todos = User.current.todos.select{|t| t.parent_id == nil }
-    
+    #@todos = User.current.todos.select{|t| t.parent_id == nil }
+    @personal_todos = Todo.personal_todos.for_user(User.current.id).roots
+
+    @project_todos = Todo.project_todos.for_user(User.current.id).roots
+
     #group the results by project, into a hash keyed on project.
-  	#this line is so beautiful it nearly made me cry!
-  	@grouped_project_todos = Set.new(@todos).classify{|t| t.project } 
-  	
-  	#debugger
-  	
-  	#personal todos are just normal todos with no project id. 
-  	#Grab them and remove them from the project list.
-  	@personal_todos = @grouped_project_todos.delete(nil).to_a
-  	
+    #this line is so beautiful it nearly made me cry!
+    @grouped_project_todos = Set.new(@project_todos).classify{|t| t.project } 
+    
+    #debugger
+    
     @new_todo = Todo.new(:author_id => User.current.id)
   end
   
@@ -51,7 +51,7 @@ class MytodosController < ApplicationController
         redirect_to :action => "index"
       end
     else
-    	render :text => @todo.errors.collect{|k,m| m}.join
+      render :text => @todo.errors.collect{|k,m| m}.join
     end
   end
   
@@ -66,18 +66,22 @@ class MytodosController < ApplicationController
   end
   
   def toggle_complete
-    @todo = Todo.find_by_user(params[:id], User.current.id)
+    @todo = Todo.for_user(User.current.id).find(params[:id])
     @todo.set_done !@todo.done
-    redirect_to :action => "index"
+    if (request.xhr?)
+      render :partial => 'todos/todo', :locals => {:todo => @todo, :editable => true}
+    else
+      redirect_to :action => "index", :project_id => params[:project_id]
+    end
   end
   
   def sort
-		
+    
     @todos = User.current.todos
     
     params.keys.select{|k| k.include? "todo-children-ul_" }.each do |key|
-		  Todo.sort_todos(@todos,params[key])
-		end
+      Todo.sort_todos(@todos,params[key])
+    end
 
     render :nothing => true
   end

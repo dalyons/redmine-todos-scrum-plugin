@@ -2,7 +2,9 @@
 
 		<ul class="todos root" id="todo-children-ul_<%= project_id %>">
 			<% for todo in todos.sort{|a,b| a.position <=> b.position} %>
-					<%= render :partial => 'todos/todo', :locals => { :todo => todo, :editable => editable }%>
+			  <% #<li class="<%= todo.done ? 'done' :'' %>" id=todo_<%=todo.id%>>
+			  %>
+					<%= render :partial => 'todos/todo_li', :locals => { :todo => todo, :editable => editable }%>
 			<% end %>
 		</ul>
 		<%= 

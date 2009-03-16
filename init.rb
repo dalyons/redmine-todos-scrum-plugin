@@ -1,6 +1,8 @@
 require 'redmine'
 
-require 'patch_redmine_classes'
+#This file loads some associations into the core redmine classes, like associations to todos.
+##REMOVED because I couldnt get it to work in dev enviroment, where model classes are continiously reloaded
+#require 'patch_redmine_classes'
 
 Redmine::Plugin.register :redmine_todo_lists do
   name 'Redmine Todo Lists plugin'
@@ -36,3 +38,13 @@ Redmine::Plugin.register :redmine_todo_lists do
 	menu :top_menu, :todo_lists, { :controller => 'mytodos', :action => 'index' }, :caption => 'My todos'
   menu :project_menu, :todo_lists, {:controller => 'todos', :action => 'index'}, :caption => :projects_todo_title, :after => :new_issue, :param => :project_id
 end
+
+#fix required to make the plugin work in devel mode with rails 2.2
+# as per http://www.ruby-forum.com/topic/171629
+load_paths.each do |path|
+  ActiveSupport::Dependencies.load_once_paths.delete(path)
+end
+
+
+
+
