@@ -1,3 +1,20 @@
+/* print-specific CSS sheet for printing todos */
+
+
+
+#top-menu { display: none; }
+#header {display:none; }
+div.new-todo { display: none; }
+#todos-link-bar { display: none; }
+.todo-controls { display: none; }
+
+a {text-decoration: none; }
+
+/* now include all the stuff from todos.css... 
+   I should use an @import but i couldnt get the paths to work with 
+   @import "todos.css"
+****************************************************************/
+
 
 
 /* css for the project todos screen */
@@ -16,31 +33,18 @@
 #project-todos ul.root ul.children li { font-size: 0.9em; padding-bottom: 0em; padding-top: 0.0em;}
 /*#project-todos div.children { padding-bottom: 10px;}*/
 
-span.todo-has-children-true {text-decoration: underline; }
+span.todo-has-children-true {}
 
 /* #project-todos ul.depth0 { background-color: #cecece;} */
 
-div.new-todo { 
-	background-color: #ffe2a9;
-	border: 1px solid grey;
-	padding: 3px;
-	width: 500px;
-	margin-left: 40px;
-	margin-top: 5px;
-	margin-bottom: 20px;
-}
-div.new-todo  { font-size: 0.8em}
+
 
 #project-todos li {
 	text-align: middle;
 	vertical-align: middle;
 	margin: 0 0 0 0;
 }
-/*#project-todos img {
-	position: relative;
-	top: 2px;
-	max-height: 14px;
-}*/
+
 
 .todo-controls {
 	margin-left: 0px;

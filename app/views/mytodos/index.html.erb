@@ -1,11 +1,11 @@
 <% content_for :header_tags do %>
     <%= stylesheet_link_tag 'todos', :plugin => 'redmine_todos_plugin' %>
+    <%= stylesheet_link_tag 'todos_print', :plugin => 'redmine_todos_plugin', :media => 'print' %>
 <% end %>
 
-<h2>My Todos</h2>
 
 <div id=project-todos>
-	
+	<%= render :partial => 'todos/link_bar' %>
 	<h3>My Personal Todos</h3>
 	
 	<%= render :partial => 'new_todo',
@@ -21,9 +21,11 @@
 	<% @grouped_project_todos.each do |project, todos| %>
 	
 		<h3>
+		  Project
 				<%= link_to h(project.name), {:controller => 'todos', :action => 'index', :project_id => project},
 					 :class => (User.current.member_of?(project) ? "icon icon-fav" : ""),
 					 :title => "Edit the todos for this project" %>
+			Todos
 		</h3>
 		
 		<%= render :partial => 'todos/root_todos', 

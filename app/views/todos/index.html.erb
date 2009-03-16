@@ -1,10 +1,12 @@
 <% content_for :header_tags do %>
     <%= stylesheet_link_tag 'todos', :plugin => 'redmine_todos_plugin' %>
+    <%= stylesheet_link_tag 'todos_print', :plugin => 'redmine_todos_plugin', :media => 'print' %>
 <% end %>
 
 
 <div id=project-todos>
-	<h2>Todos</h2>
+  <%= render :partial => 'todos/link_bar' %>
+	<h2>Todos for project <%= @project.name %></h2>
 	<div style="" >
 	  
 		<%= render(:partial => 'new_todo', 

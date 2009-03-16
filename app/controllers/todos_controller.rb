@@ -16,7 +16,7 @@ class TodosController < ApplicationController
   before_filter :authorize
   
 
-
+  #layout 'base', :except => 'print'
   
   def index
     #@todos = @project.todos.find_all_by_parent_id(nil,:order => 'position', 
