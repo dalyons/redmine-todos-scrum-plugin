@@ -8,7 +8,7 @@ Redmine::Plugin.register :redmine_todo_lists do
   name 'Redmine Todo Lists plugin'
   author 'David Lyons'
   description 'A plugin to create and manage agile-esque todo lists on a per project basis.'
-  version '0.0.3.1'
+  version '0.0.3.3'
   
   
   #project_module :task_lists_module do

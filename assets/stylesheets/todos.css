@@ -58,7 +58,7 @@ div.new-todo  { font-size: 0.8em}
 	font-family: Arial;
 	padding-right: 2px;
 }
-.todos .done .todo-content {	text-decoration: line-through; }
+.done  {	text-decoration: line-through; }
 .todos .due {}
 .todos .assigned {}
 .todos .refers {}
