@@ -7,6 +7,7 @@ Please check the wiki for current known bugs.
 
 == Release 0.0.3.4
 * All strings are now localeized to comply with Rails 2.2.2 i18n. Lang files now live in /config/locales/.
+* As part of this release I had to change the plugin module name, which may mean you need to redo permissions?
 
 == Release 0.0.3.3
 * Fixed the fix from the last release. Plugin no longer patches redmine classes, becuase this doesnt work in dev mode. Now uses named_scopes instead.
