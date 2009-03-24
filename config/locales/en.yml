@@ -1,2 +1,31 @@
+#Todos en locacles file
 en:
-  projects_todo_title: ToDos
+  project_todos_title: ToDos
+  my_todos_title: My Todos
+  
+  todo_sort_no_project_error: "cant sort without a project!"
+  todo_project_not_found_error: "Project not found!"
+  todo_new_missing_update_target_error: "You need an update_target!!"
+  
+  mytodos_heading: My Personal Todos
+  mytodos_edit_project_tooltip: "Edit the todos for this project"
+  
+  todo_new_done_link: Done adding todos
+  todo_new_due_label: Due
+  todo_new_or_label: or
+  todo_new_create_button: Create Todo
+  todo_new_issue_tooltip: refers to
+  todo_new_assign_to_tooltip: assign to
+  
+  todos_project_heading: Todos for
+  todos_print_button_tooltip: Print this list
+  
+  todo_unmark_tooltip: Mark this todo(and children) as Uncomplete
+  todo_mark_tooltip: Mark this todo(and children) as Done
+  todo_add_child_tooltip: 'add child to this todo'
+  todo_delete_tooltip: delete this todo(and children!)
+  
+  todo_due_label: "Due:"
+  todo_assigned_label: "Assigned to:"
+  todo_ref_label: "Ref:"
+  

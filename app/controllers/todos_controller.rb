@@ -82,7 +82,7 @@ class TodosController < ApplicationController
   #for the d&d sorting ajax helpers
   #TODO: this is pretty messy.
   def sort
-    raise "cant sort without a project!" if !@project
+    raise l(:todo_sort_no_project_error) if !@project
     
     @todos = Todo.for_project(@project.id)
     
@@ -116,6 +116,6 @@ class TodosController < ApplicationController
  private
   def find_project
     @project = Project.find(params[:project_id])
-    raise ActiveRecord::RecordNotFound, "Project not found! With id:" + params[:project_id] unless @project
+    raise ActiveRecord::RecordNotFound, l(:todo_project_not_found_error) + " id:" + params[:project_id] unless @project
   end
 end

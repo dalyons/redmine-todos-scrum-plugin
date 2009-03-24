@@ -6,7 +6,7 @@
 
 <div id=project-todos>
   <%= render :partial => 'todos/link_bar' %>
-	<h2>Todos for project <%= @project.name %></h2>
+	<h2><%= l(:todos_project_heading) %> <%= @project.name %></h2>
 	<div style="" >
 	  
 		<%= render(:partial => 'new_todo', 

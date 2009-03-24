@@ -1,6 +1,7 @@
 <div id=todos-link-bar>
   <%= link_to_function( 
-    image_tag("/plugin_assets/redmine_todos_plugin/images/printer.png", :size => '24x24', :title =>'print'),
+    image_tag("/plugin_assets/redmine_todos_plugin/images/printer.png", 
+              :size => '24x24', :title =>l(:todos_print_button_tooltip)),
     "javascript:print()")
   %>
 </div>

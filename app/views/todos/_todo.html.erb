@@ -5,21 +5,24 @@
 <span class="todo-controls">
   <% if editable then %>
     <% todo_class = todo.done ? 'icon-restore' : 'icon-done' %>
-    <% todo_img = todo.done ? image_tag('cancel.png', :title => 'unmark') : image_tag('true.png', :title => 'mark as done', :size=>'13x13') %>
+    <% todo_img = todo.done ? 
+                      image_tag('cancel.png', :title => l(:todo_unmark_tooltip)) :
+                      image_tag('true.png', :title => l(:todo_mark_tooltip), :size=>'13x13') 
+    %>
     
     <%= link_to_remote( todo_img,
           :url => { :action => 'toggle_complete', :id => todo.id, :project_id => todo.project}, 
           :html => {:class => todo_class},
           :update => "todo_#{todo.id}" )
     %>
-    <%= link_to_remote( image_tag('add.png', :title => 'add child to this todo'), 
+    <%= link_to_remote( image_tag('add.png', :title => l(:todo_add_child_tooltip)), 
       :url => { :action => 'new', :parent_id => todo.id, :project_id => todo.project, 
                 :update_target => "todo-children-ul_#{todo.id}"},  
       :html => {:class => 'icon-new'}, 
       :update => "todo#{todo.id}-new-box" ) #, :position => :top
         
     %>
-    <%= link_to_remote( image_tag('delete.png', :title => 'delete this todo'), 
+    <%= link_to_remote( image_tag('delete.png', :title => l(:todo_delete_tooltip)), 
       :url => { :action => 'destroy', :id => todo,:project_id => todo.project}, 
       :confirm => l(:text_are_you_sure), :html => {:class => 'icon-delete'}, 
       :update => "todo_#{todo.id}" ) 
@@ -47,13 +50,15 @@
   
   <span class=notes>
     <% if todo.due %>
-      <span class=due>Due: <%= todo.due.to_s(:short_day) %></span>
+      <span class=due><%=l(:todo_due_label)%> <%= todo.due.to_s(:short_day) %></span>
     <% end %>
     <% if todo.assigned_to %>
-      <span class=assigned>Assigned to: <%= todo.assigned_to.name %></span>
+      <span class=assigned><%=l(:todo_assigned_label)%>  <%= todo.assigned_to.name %></span>
     <% end %>
     <% if todo.refers_to %>
-      <span class=refers>Ref: <%= link_to "##{ todo.refers_to.id}", 
+      <span class=refers>
+        <%=l(:todo_ref_label)%>
+        <%= link_to "##{ todo.refers_to.id}", 
                 {:controller => :issues, :action => :show, :id => todo.refers_to.id},
                  :title => "#{todo.refers_to.tracker.name}: #{todo.refers_to.subject}" %>
       </span>

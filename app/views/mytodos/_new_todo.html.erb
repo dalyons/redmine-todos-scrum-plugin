@@ -1,4 +1,4 @@
-<% raise Exception, "You need an update_target!!" unless update_target %>
+<% raise Exception, l(:todo_new_missing_update_target_error) unless update_target %>
 
 <div class="new-todo">
 	<% remote_form_for :todo, todo, :url => {:action=> "create" }, 
@@ -7,18 +7,23 @@
 			
 		<%= f.hidden_field :due, :id=>"due#{todo.parent_id}", 
 			:onchange=> "$('due#{todo.parent_id}_span').update($('due#{todo.parent_id}').value);"
-			%>
+		%>
 		<%= f.text_field :text, :size => 40 %>
-		Due<span style='position: relative; top: -2px;'>
+		
+		<%= l(:todo_new_due_label) %>
+		
+		  <span style='position: relative; top: -2px;'>
 		    <%= calendar_for "due#{todo.parent_id}" %></span>: <span id='<%= "due#{todo.parent_id}_span" %>' >
 		  </span>
 
 		<%= f.hidden_field :parent_id %>
 		<br />
 
-		<%= f.submit "create todo" %>
+		<%= f.submit l(:todo_new_create_button) %>
 		<% if todo.parent %>
-			or <%= link_to_function('Done adding todos', "Element.update('todo#{todo.parent_id}-new-box','')") %>
+		  <%= l(:todo_new_or_label) %> 
+			<%= link_to_function(l(:todo_new_done_link), 
+			    "Element.update('todo#{todo.parent_id}-new-box','')") %>
 		<% end %>
 	<% end %>
 </div>

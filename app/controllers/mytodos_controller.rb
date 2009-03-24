@@ -25,7 +25,6 @@ class MytodosController < ApplicationController
     #this line is so beautiful it nearly made me cry!
     @grouped_project_todos = Set.new(@project_todos).classify{|t| t.project } 
     
-    #debugger
     
     @new_todo = Todo.new(:author_id => User.current.id)
   end
@@ -34,7 +33,8 @@ class MytodosController < ApplicationController
     @todo = Todo.new
     @todo.parent_id = Todo.find(params[:parent_id]).id
     @todo.assigned_to = User.current
-    render :partial => 'new_todo', :locals => { :todo => @todo, :update_target => params['update_target']}
+    render :partial => 'new_todo',
+       :locals => { :todo => @todo, :update_target => params['update_target']}
   end
   
   def create
@@ -89,7 +89,7 @@ class MytodosController < ApplicationController
  private
   def authorize
     action = {:controller => params[:controller], :action => params[:action]}
-    allowed = User.current.allowed_to?(action,project = nil,options={:global => true})
+    allowed = User.current.allowed_to?(action, project = nil, options={:global => true})
     allowed ? true : deny_access
   end
   

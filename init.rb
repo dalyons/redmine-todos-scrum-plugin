@@ -4,19 +4,12 @@ require 'redmine'
 ##REMOVED because I couldnt get it to work in dev enviroment, where model classes are continiously reloaded
 #require 'patch_redmine_classes'
 
-Redmine::Plugin.register :redmine_todo_lists do
+Redmine::Plugin.register :redmine_todos_plugin do
   name 'Redmine Todo Lists plugin'
   author 'David Lyons'
   description 'A plugin to create and manage agile-esque todo lists on a per project basis.'
-  version '0.0.3.3'
+  version '0.0.3.4'
   
-  
-  #project_module :task_lists_module do
-   # permission :view_customer, {:customers => [:show]}
-   # permission :assign_customer, {:customers => [:assign, :select]}
-   # permission :see_customer_list, {:customers => [:list]}
-   # permission :edit_customer, {:customers => [:edit, :update, :new, :create, :destroy]}
-  #end
 
   settings :default => {
     'todos_auto_complete_parent' => false
@@ -24,19 +17,22 @@ Redmine::Plugin.register :redmine_todo_lists do
   
   
   project_module :todo_lists do
-  	permission :view_project_todo_lists, {:todos => [:index] }
-  	permission :edit_project_todo_lists, 
-  	    {:todos => [:create, :destroy, :new, :toggle_complete, :sort]} 
-  	
-  	permission :use_personal_todo_lists, {:mytodos =>
-  	       [:index,:destroy, :new, :create, :toggle_complete, :index, :sort]}
-  	       
-  	#, :require => :member#{:todos => [:index, :my_todos]}  #, :public => true
-  	
+  	permission :view_project_todo_lists,
+      {:todos => [:index] }
+      
+    permission :edit_project_todo_lists, 
+      {:todos => [:create, :destroy, :new, :toggle_complete, :sort]} 
+  
+    permission :use_personal_todo_lists, 
+      {:mytodos => [:index,:destroy, :new, :create, :toggle_complete, :index, :sort]}
+         
   end
 	
-	menu :top_menu, :todo_lists, { :controller => 'mytodos', :action => 'index' }, :caption => 'My todos'
-  menu :project_menu, :todo_lists, {:controller => 'todos', :action => 'index'}, :caption => :projects_todo_title, :after => :new_issue, :param => :project_id
+  menu :top_menu, :todo_lists, { :controller => 'mytodos', :action => 'index' }, 
+      :caption => :my_todos_title #, :public => false
+     
+  menu :project_menu, :todo_lists, {:controller => 'todos', :action => 'index'}, 
+      :caption => :project_todos_title, :after => :new_issue, :param => :project_id
 end
 
 #fix required to make the plugin work in devel mode with rails 2.2
