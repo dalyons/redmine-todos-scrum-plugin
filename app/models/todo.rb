@@ -81,7 +81,8 @@ class Todo < ActiveRecord::Base
       
       order_hash_array.each{|position,children_hash|
         id = children_hash["id"].to_i
-        valid_todos.select{|t| t.id == id }.first.update_attributes(:parent_id => parent_id, :position => position)
+        todo = valid_todos.select{|t| t.id == id }.first
+        todo.update_attributes(:parent_id => parent_id, :position => position) unless todo.nil?
         
         children_hash.delete("id")
         reorder.call( children_hash, id )

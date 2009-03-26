@@ -15,12 +15,10 @@ class TodosController < ApplicationController
   before_filter :find_project
   before_filter :authorize
   
-
-  #layout 'base', :except => 'print'
+  #global string to use as the suffix for the element id for todo's <UL> 
+  UL_ID = "todo-children-ul_"
   
   def index
-    #@todos = @project.todos.find_all_by_parent_id(nil,:order => 'position', 
-    #  :include => [:project, :assigned_to])
     @todos = Todo.for_project(@project.id).roots
 
     @allowed_to_edit = User.current.allowed_to?(:edit_project_todo_lists, @project)
@@ -46,7 +44,7 @@ class TodosController < ApplicationController
     @todo.parent_id = Todo.for_project(@project.id).find(params[:parent_id]).id
     @todo.project = @project
     @todo.assigned_to = User.current
-    render :partial => 'new_todo', :locals => { :todo => @todo, :update_target => params[:update_target]}
+    render :partial => 'new_todo', :locals => { :todo => @todo}
   end
   
   def toggle_complete
@@ -68,7 +66,7 @@ class TodosController < ApplicationController
     
     if @todo.save
       if (request.xhr?)
-        render :partial => 'todo', :locals => { :todo => @todo, :editable => true }
+        render :partial => 'todo_li', :locals => { :todo => @todo, :editable => true, :new => true }
       else
         flash[:notice] = l(:notice_successful_create)
         redirect_to :action => "index", :project_id => params[:project_id]
@@ -106,7 +104,7 @@ class TodosController < ApplicationController
 #      reorder.call( params[key], params[:parent_id])
 #    end
     #Todo.sort_todos(@todos, "todo-children-ul_", params)
-    params.keys.select{|k| k.include? "todo-children-ul_" }.each do |key|
+    params.keys.select{|k| k.include? UL_ID }.each do |key|
       Todo.sort_todos(@todos,params[key])
     end
     

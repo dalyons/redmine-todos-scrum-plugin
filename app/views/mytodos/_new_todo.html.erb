@@ -1,8 +1,7 @@
-<% raise Exception, l(:todo_new_missing_update_target_error) unless update_target %>
 
 <div class="new-todo">
 	<% remote_form_for :todo, todo, :url => {:action=> "create" }, 
-			:update => update_target, :position => :bottom,
+			:update => TodosController::UL_ID + todo.parent_id.to_s, :position => :bottom,
 			:success => "elements['todo[text]'].activate().clear();" do |f| %>
 			
 		<%= f.hidden_field :due, :id=>"due#{todo.parent_id}", 

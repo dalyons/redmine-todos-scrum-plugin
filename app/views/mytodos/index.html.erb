@@ -9,7 +9,7 @@
   <h3><%= l(:mytodos_heading)%></h3>
   
   <%= render :partial => 'new_todo',
-       :locals => {:todo => @new_todo, :update_target => "todo-children-ul_#{ 'personal' }"} %>
+       :locals => {:todo => @new_todo } %>
 
   <%= render :partial => 'todos/root_todos', 
       :locals => {:todos => @personal_todos, :editable => true, :project_id => 'personal'} %>

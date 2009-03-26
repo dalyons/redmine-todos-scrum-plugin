@@ -16,8 +16,7 @@
           :update => "todo_#{todo.id}" )
     %>
     <%= link_to_remote( image_tag('add.png', :title => l(:todo_add_child_tooltip)), 
-      :url => { :action => 'new', :parent_id => todo.id, :project_id => todo.project, 
-                :update_target => "todo-children-ul_#{todo.id}"},  
+      :url => { :action => 'new', :parent_id => todo.id, :project_id => todo.project },  
       :html => {:class => 'icon-new'}, 
       :update => "todo#{todo.id}-new-box" ) #, :position => :top
         
@@ -44,13 +43,15 @@
 <span class="todo-content <%= todo.done ? 'done' :'' %>">
 
   <% if todo.done %>
-    <span class=date title="date completed"><%= todo.completed_at.to_s(:short_day) %></span>
+    <span class=date title="date completed">
+      <%= format_date(todo.completed_at) %>
+    </span>
   <% end %>
   <span class="text todo-has-children-<%= todo.children.any? %>""><%= todo.text %> </span>
   
   <span class=notes>
     <% if todo.due %>
-      <span class=due><%=l(:todo_due_label)%> <%= todo.due.to_s(:short_day) %></span>
+      <span class=due><%=l(:todo_due_label)%> <%= format_date(todo.due) %></span>
     <% end %>
     <% if todo.assigned_to %>
       <span class=assigned><%=l(:todo_assigned_label)%>  <%= todo.assigned_to.name %></span>
@@ -70,21 +71,23 @@
 
   
     
-    <ul class="todos children depth<%= todo.ancestors.size%>" id='todo-children-ul_<%= todo.id %>' >
+    <ul class="todos children depth<%= todo.ancestors.size%>" id='<%= TodosController::UL_ID + todo.id.to_s %>' >
       <% for child_todo in todo.children %>
-        <% #<li class="<%= child_todo.done ? 'done' :'' %>" id=todo_<%=child_todo.id%>>
-        %>
           <%= render :partial => 'todos/todo_li', :locals => {:todo => child_todo, :editable => editable} %>
-        
       <% end %>
     </ul>
     <%= 
       if editable then 
-         sortable_element("todo-children-ul_#{todo.id}", :url => {:action => 'sort', 
+         sortable_element(TodosController::UL_ID + todo.id.to_s, :url => {:action => 'sort', 
               :parent_id => todo.id, :project_id => todo.project_id},
-              :handle => "todo-content", :tree => true )  #,
-            #:complete => visual_effect(:highlight, "todo-children-ul_#{todo.id}")
-        
+              :handle => "todo-content", :tree => true )  
+      end
+    %>
+    <%= 
+      if false then
+        sortable_element(TodosController::UL_ID + todo.id, :url => {:action => 'sort', 
+              :parent_id => todo.id, :project_id => todo.project_id},
+              :handle => "todo-content", :tree => true )
       end
     %> 
     

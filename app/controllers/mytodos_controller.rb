@@ -34,7 +34,7 @@ class MytodosController < ApplicationController
     @todo.parent_id = Todo.find(params[:parent_id]).id
     @todo.assigned_to = User.current
     render :partial => 'new_todo',
-       :locals => { :todo => @todo, :update_target => params['update_target']}
+       :locals => { :todo => @todo}
   end
   
   def create
@@ -45,7 +45,7 @@ class MytodosController < ApplicationController
     if @todo.save
     
       if (request.xhr?)
-        render :partial => 'todos/todo', :locals => { :todo => @todo, :editable => true }
+        render :partial => 'todos/todo_li', :locals => { :todo => @todo, :editable => true, :new => true }
       else
         flash[:notice] =  @todo.errors.collect{|k,m| m}.join
         redirect_to :action => "index"

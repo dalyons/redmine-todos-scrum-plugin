@@ -1,0 +1,30 @@
+#Todos zh locacles file
+zh:
+  project_todos_title: 日程
+  my_todos_title: 我的日程
+
+  todo_sort_no_project_error: "未找到项目因此无法排序!"
+  todo_project_not_found_error: "未找到项目!"
+  todo_new_missing_update_target_error: "未找到更新对象!!"
+
+  mytodos_heading: 我的个人日程
+  mytodos_edit_project_tooltip: "编辑此项目的日程"
+
+  todo_new_done_link: 日程已添加
+  todo_new_due_label: 完成日期
+  todo_new_or_label: 或
+  todo_new_create_button: 新建日程
+  todo_new_issue_tooltip: 关联到
+  todo_new_assign_to_tooltip: 指派给
+
+  todos_project_heading: 此项目的日程-
+  todos_print_button_tooltip: 打印列表
+
+  todo_unmark_tooltip: 将日程(及子日程)设置为未完成
+  todo_mark_tooltip: 将日程(及子日程)设置为已完成
+  todo_add_child_tooltip: '添加子日程'
+  todo_delete_tooltip: 删除此日程(及子日程!)
+
+  todo_due_label: "完成日期:"
+  todo_assigned_label: "指派给:"
+  todo_ref_label: "关联:"
