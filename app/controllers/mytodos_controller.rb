@@ -79,7 +79,7 @@ class MytodosController < ApplicationController
     
     @todos = Todo.for_user(User.current.id)
     
-    params.keys.select{|k| k.include? "todo-children-ul_" }.each do |key|
+    params.keys.select{|k| k.include? TodosController::UL_ID }.each do |key|
       Todo.sort_todos(@todos,params[key])
     end
 
