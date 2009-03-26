@@ -1,13 +1,13 @@
 <% editable ||= false %>
 
-    <ul class="todos root" id="<%= TodosController::UL_ID %>">
+    <ul class="todos root" id="<%= TodosController::UL_ID + 'root' %><%='not-editable' unless editable %>">
       <% for todo in todos.sort{|a,b| a.position <=> b.position} %>
           <%= render :partial => 'todos/todo_li', :locals => { :todo => todo, :editable => editable }%>
       <% end %>
     </ul>
     <%= 
       if editable then
-         sortable_element TodosController::UL_ID, 
+         sortable_element TodosController::UL_ID + 'root', 
          :url => {:action => 'sort', :parent_id => nil, :project_id => project_id},
             :handle => "todo-content", :tree => true 
       end 

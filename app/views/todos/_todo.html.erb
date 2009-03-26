@@ -2,6 +2,7 @@
 <% editable ||= false %>
 
 
+
 <span class="todo-controls">
   <% if editable then %>
     <% todo_class = todo.done ? 'icon-restore' : 'icon-done' %>
@@ -83,13 +84,6 @@
               :handle => "todo-content", :tree => true )  
       end
     %>
-    <%= 
-      if false then
-        sortable_element(TodosController::UL_ID + todo.id, :url => {:action => 'sort', 
-              :parent_id => todo.id, :project_id => todo.project_id},
-              :handle => "todo-content", :tree => true )
-      end
-    %> 
     
 
   

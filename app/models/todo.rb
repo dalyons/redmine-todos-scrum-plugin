@@ -36,6 +36,13 @@ class Todo < ActiveRecord::Base
   validates_presence_of  :author
   
   
+  #for some reason, running under Passenger in production, changing all the todo tree&order 
+  #positions doesnt work. For some reason, rails doesnt write the parent_id of some records 
+  #because it doesnt think they have changed when they actually have - the partial_updates feature 
+  #from rails is fucked for this scenario.
+  #I tried all sorts of reloads - the only thing that works is this bad boy.
+  self.partial_updates = false
+  
   def set_done(val, cascade_to_children = true)
     self.done = val
     
@@ -73,25 +80,40 @@ class Todo < ActiveRecord::Base
     end
   end
   
+  def parent_or_root_id
+    if self.project
+      (parent_id || 'project-' + self.project.id.to_s).to_s
+    else
+      (parent_id || 'personal').to_s
+    end
+    return (parent_id || 'root').to_s
+  end
+  
   
   #complicated ugly method that sorts todos based on the nested param array passed in from
   #the Prototype sortable element helper.
   def self::sort_todos(valid_todos, todos_position_tree = {}) #element_identifier = "todo-children-ul_", params = {})
+    
+    #logger.info "sorting!" + todos_position_tree.inspect
+    
     reorder = lambda { |order_hash_array, parent_id| 
       
       order_hash_array.each{|position,children_hash|
+        
         id = children_hash["id"].to_i
         todo = valid_todos.select{|t| t.id == id }.first
-        todo.update_attributes(:parent_id => parent_id, :position => position) unless todo.nil?
+        #todo.reload
+        logger.debug "id:#{todo.id} n:#{todo.text} parent:#{parent_id} position:#{position}"
+        
+        todo.update_attributes!(:parent_id => parent_id, :position => position) unless todo.nil?
         
         children_hash.delete("id")
         reorder.call( children_hash, id )
       }
     }
-    #todos_position_tree.each do |key|
-      #reorder.call( params[key], nil)
-    #end
+
     reorder.call(todos_position_tree, nil)
+    
   end
   
   def self::group_by_project(todos)
