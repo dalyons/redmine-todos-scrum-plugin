@@ -5,6 +5,11 @@ Also provides global 'My Todos' for all projects. Todos can be allocated to uses
 
 Please check the wiki for current known bugs.
 
+== Release 0.0.3.5
+* Fixed the bug that prevented sorting on newly created todos without a page refresh! 
+* Changed the way project todos are displayed on MyTodos screen.
+* Fixed some minor ajax bugs
+* Added a few more chinese translations(thanks again Zou!)
 
 == Release 0.0.3.4
 * All strings are now localeized to comply with Rails 2.2.2 i18n. Lang files now live in /config/locales/.

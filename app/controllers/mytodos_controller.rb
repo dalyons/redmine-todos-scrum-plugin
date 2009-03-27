@@ -19,7 +19,9 @@ class MytodosController < ApplicationController
     #@todos = User.current.todos.select{|t| t.parent_id == nil }
     @personal_todos = Todo.personal_todos.for_user(User.current.id).roots
 
-    @project_todos = Todo.project_todos.for_user(User.current.id).roots
+    #find the roots of any project todo that belongs to or was authored by the user
+    #(The root itself may not belong to the user, but we still want to display it!)
+    @project_todos = Todo.project_todos.for_user(User.current.id).collect{|t| t.root}.uniq
 
     #group the results by project, into a hash keyed on project.
     #this line is so beautiful it nearly made me cry!
@@ -45,7 +47,9 @@ class MytodosController < ApplicationController
     if @todo.save
     
       if (request.xhr?)
-        render :partial => 'todos/todo_li', :locals => { :todo => @todo, :editable => true, :new => true }
+        @element_html = render_to_string :partial => 'todos/todo_li',
+                                         :locals => { :todo => @todo, :editable => true }
+         render :template => 'todos/create.rjs'   #using rjs
       else
         flash[:notice] =  @todo.errors.collect{|k,m| m}.join
         redirect_to :action => "index"
@@ -84,6 +88,7 @@ class MytodosController < ApplicationController
     end
 
     render :nothing => true
+    #render :template => 'todos/sort.rjs' 
   end
   
  private

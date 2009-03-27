@@ -92,6 +92,12 @@ class Todo < ActiveRecord::Base
   
   #complicated ugly method that sorts todos based on the nested param array passed in from
   #the Prototype sortable element helper.
+  ###tree mode - prototype helps pass in the todo tree like so:
+    # "todo-children-ul_"=>{ 
+    #   "0"=>{"id"=>"96"}, 
+    #    "1"=>{"0"=>{"id"=>"93"}, "id"=>"68", "1"=>{"id"=>"92"}, "2"=>{"id"=>"94"}},
+    #    "2"=>{"id"=>"55"}, etc.. }
+    #so make a recursive reordering function for that structure.
   def self::sort_todos(valid_todos, todos_position_tree = {}) #element_identifier = "todo-children-ul_", params = {})
     
     #logger.info "sorting!" + todos_position_tree.inspect

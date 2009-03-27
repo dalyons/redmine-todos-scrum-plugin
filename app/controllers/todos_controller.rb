@@ -31,9 +31,9 @@ class TodosController < ApplicationController
     @todo = Todo.for_project(@project.id).find(params[:id])
     
     if @todo.destroy
-      flash[:todo] = l(:notice_successful_delete)
+      flash[:todo] = l(:notice_successful_delete) unless request.xhr?
     else
-      flash[:error] = l(:notice_unsuccessful_save)
+      flash[:error] = l(:notice_unsuccessful_save) unless request.xhr?
     end
     render :text => @todo.errors.collect{|k,m| m}.join
 
@@ -66,7 +66,9 @@ class TodosController < ApplicationController
     
     if @todo.save
       if (request.xhr?)
-        render :partial => 'todo_li', :locals => { :todo => @todo, :editable => true, :new => true }
+        @element_html = render_to_string :partial => 'todo_li',
+                                         :locals => { :todo => @todo, :editable => true }
+        render    #using rjs
       else
         flash[:notice] = l(:notice_successful_create)
         redirect_to :action => "index", :project_id => params[:project_id]
@@ -84,26 +86,7 @@ class TodosController < ApplicationController
     
     @todos = Todo.for_project(@project.id)
     
-    ##tree mode - prototype helps pass in the todo tree like so:
-    # "todo-children-ul_"=>{ 
-    #   "0"=>{"id"=>"96"}, 
-    #    "1"=>{"0"=>{"id"=>"93"}, "id"=>"68", "1"=>{"id"=>"92"}, "2"=>{"id"=>"94"}},
-    #    "2"=>{"id"=>"55"}, etc.. }
-    #so make a recursive reordering function for that structure.
-#    reorder = lambda { |order_hash_array, parent_id| 
-#      
-#      order_hash_array.each{|position,children_hash|
-#        id = children_hash["id"].to_i
-#        @todos.select{|t| t.id == id }.first.update_attributes(:parent_id => parent_id, :position => position)
-#        
-#        children_hash.delete("id")
-#        reorder.call( children_hash, id )
-#      }
-#    }
-#    params.keys.select{|k| k.include? "todo-children-ul_" }.each do |key|
-#      reorder.call( params[key], params[:parent_id])
-#    end
-    #Todo.sort_todos(@todos, "todo-children-ul_", params)
+    
     params.keys.select{|k| k.include? UL_ID }.each do |key|
       Todo.sort_todos(@todos,params[key])
     end

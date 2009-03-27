@@ -27,3 +27,9 @@ todo_delete_tooltip: delete this todo(and children!)
 todo_due_label: "Due:"
 todo_assigned_label: "Assigned to:"
 todo_ref_label: "Ref:"
+
+project_module_todo_lists: Todo Lists
+
+permission_view_project_todo_lists: View Todo Lists
+permission_edit_project_todo_lists: Edit Todo Lists
+permission_use_personal_todo_lists: Use personal Todo Lists
