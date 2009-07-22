@@ -1,0 +1,48 @@
+#language file for es - pre rails 2.2.2
+
+project_todos_title: Tareas Pendientes
+my_todos_title: Mis Tareas Pendientes
+
+#cant sort without a project!
+todo_sort_no_project_error: "No se puede ordenar sin un proyecto" 	
+#Project not found!
+todo_project_not_found_error: "No se ha encontrado el proyecto"
+#You need an update_target!!
+todo_new_missing_update_target_error: "Se necesita un update_target"	
+
+
+#My Personal Todos
+mytodos_heading: Mis Tareas Pendientes
+#Edit the todos for this project
+mytodos_edit_project_tooltip: "Editar las tareas pendientes de este proyecto"
+
+#Done adding todos
+todo_new_done_link: Terminar añadir tareas pendientes
+#Due
+todo_new_due_label: Entrega
+#or
+todo_new_or_label: o
+#Create Todo
+todo_new_create_button: Crear Tarea Pendiente
+#refers to
+todo_new_issue_tooltip: se refiere a
+#assign to
+todo_new_assign_to_tooltip: asignar a
+
+#Todos for
+todos_project_heading: Tareas pendientes para
+#Print this list
+todos_print_button_tooltip: Imprimir esta lista
+#Mark this todo(and children) as Uncomplete
+todo_unmark_tooltip: Marcar esta Tarea Pendiente (y sus hijas) como Incompleta
+#Mark this todo(and children) as Done
+todo_mark_tooltip: Marcar esta Tarea Pendiente (y sus hijas) como Terminada
+#'add child to this todo'
+todo_add_child_tooltip: 'Añadir una Tarea hija'
+#delete this todo(and children!)
+todo_delete_tooltip: borrar esta Tarea Pendiente (y sus hijas)
+#"Due:"
+todo_due_label: "Entrega:"
+#"Assigned to:"
+todo_assigned_label: "Asignada a:"
+todo_ref_label: "Relacionada con petición:"

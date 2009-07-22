@@ -6,6 +6,7 @@ Also provides global 'My Todos' for all projects. Todos can be allocated to uses
 Please check the issues page(thanks Mischa!) for current known bugs.
 
 == Release 0.0.3.6
+* Spanish translations added(thanks Joaquim Casals!)
 * Fixed the unsortable todos after creation and check/uncheck, by adding RJS scripts to recreate the sortable elements
 
 == Release 0.0.3.5
