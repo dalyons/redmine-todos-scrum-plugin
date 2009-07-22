@@ -9,6 +9,7 @@ Please check the issues page(thanks Mischa!) for current known bugs.
 * Spanish translations added(thanks Joaquim Casals!)
 * Fixed the unsortable todos after creation and check/uncheck, by adding RJS scripts to recreate the sortable elements
 * You can clear the date on new todos now
+* Tab highlighting works properly now(thanks Mischa!)
 
 == Release 0.0.3.5
 * Fixed the bug that prevented sorting on newly created todos without a page refresh! 

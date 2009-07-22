@@ -28,10 +28,10 @@ Redmine::Plugin.register :redmine_todos_plugin do
          
   end
 	
-  menu :top_menu, :todo_lists, { :controller => 'mytodos', :action => 'index' }, 
+  menu :top_menu, :mytodos, { :controller => 'mytodos', :action => 'index' }, 
       :caption => :my_todos_title #, :public => false
      
-  menu :project_menu, :todo_lists, {:controller => 'todos', :action => 'index'}, 
+  menu :project_menu, :todos, {:controller => 'todos', :action => 'index'}, 
       :caption => :project_todos_title, :after => :new_issue, :param => :project_id
 end
 
