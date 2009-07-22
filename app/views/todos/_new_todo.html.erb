@@ -10,7 +10,7 @@
       :success => "elements['todo[text]'].activate().clear();" do |f| %>
       
     <%= f.hidden_field :due, :id=>"due#{todo.parent_id}", 
-      :onchange=> "$('due#{todo.parent_id}_span').update($('due#{todo.parent_id}').value);"
+      :onchange=> "$('due#{todo.parent_id}_span').update($('due#{todo.parent_id}').value); $('due#{todo.parent_id}_cancel_span').show();"
     %>
     <%= f.text_field :text, :size => 40 %>
     
@@ -20,6 +20,15 @@
       <%= calendar_for "due#{todo.parent_id}" %>
     </span>:
     <span id='<%= "due#{todo.parent_id}_span" %>' ></span>
+    <span id='<%= "due#{todo.parent_id}_cancel_span" %>' class='new-todo-date-cancel' style='display: none;'>
+      <%= 
+          link_to_function(image_tag('bullet_delete.png'), nil, :title => "Clear Date") do |page|
+            page["due#{todo.parent_id}"].value = ''
+            page.replace_html "due#{todo.parent_id}_span", ''
+            page.hide "due#{todo.parent_id}_cancel_span"
+          end 
+      %>
+    </span>
 
     <%= f.hidden_field :parent_id %>
     <br />
