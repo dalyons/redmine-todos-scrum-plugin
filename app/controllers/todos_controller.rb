@@ -17,6 +17,7 @@ class TodosController < ApplicationController
   
   #global string to use as the suffix for the element id for todo's <UL> 
   UL_ID = "todo-children-ul_"
+  TODO_LI_ID = "todo_"
   
   def index
     @todos = Todo.for_project(@project.id).roots
@@ -51,7 +52,9 @@ class TodosController < ApplicationController
     @todo = Todo.for_project(@project.id).find(params[:id])
     @todo.set_done !@todo.done
     if (request.xhr?)
-      render :partial => 'todos/todo', :locals => {:todo => @todo, :editable => true}
+      @element_html = render_to_string :partial => 'todos/todo',
+                                         :locals => {:todo => @todo, :editable => true}                 
+      render :action => "todo.rjs"
     else
       redirect_to :action => "index", :project_id => params[:project_id]
     end
@@ -68,7 +71,7 @@ class TodosController < ApplicationController
       if (request.xhr?)
         @element_html = render_to_string :partial => 'todo_li',
                                          :locals => { :todo => @todo, :editable => true }
-        render    #using rjs
+        render :action => "create.rjs"   #using rjs
       else
         flash[:notice] = l(:notice_successful_create)
         redirect_to :action => "index", :project_id => params[:project_id]

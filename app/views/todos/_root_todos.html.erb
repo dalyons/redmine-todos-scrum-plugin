@@ -7,9 +7,11 @@
     </ul>
     <%= 
       if editable then
-         sortable_element TodosController::UL_ID + 'root', 
-         :url => {:action => 'sort', :parent_id => nil, :project_id => project_id},
-            :handle => "todo-content", :tree => true 
+         sortable_element(
+            TodosController::UL_ID + 'root', 
+            :url => {:action => 'sort', :project_id => project_id},
+            :handle => "todo-content", :tree => true
+         ) 
       end 
     %>
         

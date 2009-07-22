@@ -73,7 +73,9 @@ class MytodosController < ApplicationController
     @todo = Todo.for_user(User.current.id).find(params[:id])
     @todo.set_done !@todo.done
     if (request.xhr?)
-      render :partial => 'todos/todo', :locals => {:todo => @todo, :editable => true}
+      @element_html = render_to_string :partial => 'todos/todo',
+                                         :locals => {:todo => @todo, :editable => true}                 
+      render :template => 'todos/todo.rjs'
     else
       redirect_to :action => "index", :project_id => params[:project_id]
     end

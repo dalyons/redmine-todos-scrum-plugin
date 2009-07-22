@@ -89,6 +89,10 @@ class Todo < ActiveRecord::Base
     return (parent_id || 'root').to_s
   end
   
+  def self_and_ancestors 
+    self.ancestors.unshift self
+  end
+  
   
   #complicated ugly method that sorts todos based on the nested param array passed in from
   #the Prototype sortable element helper.

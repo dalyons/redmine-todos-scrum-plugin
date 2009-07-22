@@ -13,8 +13,9 @@
     
     <%= link_to_remote( todo_img,
           :url => { :action => 'toggle_complete', :id => todo.id, :project_id => todo.project}, 
-          :html => {:class => todo_class},
-          :update => "todo_#{todo.id}" )
+          :html => {:class => todo_class} #,
+         # :update => "todo_#{todo.id}" 
+         )
     %>
     <%= link_to_remote( image_tag('add.png', :title => l(:todo_add_child_tooltip)), 
       :url => { :action => 'new', :parent_id => todo.id, :project_id => todo.project },  
@@ -79,9 +80,11 @@
     </ul>
     <%= 
       if editable then 
-         sortable_element(TodosController::UL_ID + todo.id.to_s, :url => {:action => 'sort', 
-              :parent_id => todo.id, :project_id => todo.project_id},
-              :handle => "todo-content", :tree => true )  
+         sortable_element(
+              TodosController::UL_ID + todo.id.to_s, 
+              :url => {:action => 'sort', :project_id => todo.project_id},
+              :handle => "todo-content", :tree => true
+         )  
       end
     %>
     
