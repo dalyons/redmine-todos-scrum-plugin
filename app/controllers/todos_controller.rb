@@ -89,12 +89,12 @@ class TodosController < ApplicationController
     
     @todos = Todo.for_project(@project.id)
     
-    
     params.keys.select{|k| k.include? UL_ID }.each do |key|
       Todo.sort_todos(@todos,params[key])
     end
     
     render :nothing => true
+
   end
   
  private
