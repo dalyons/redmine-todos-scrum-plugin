@@ -1,4 +1,4 @@
-#Todos en locacles file
+#Todos English locale File for Rails >= 2.2.2
 en:
   project_todos_title: ToDos
   my_todos_title: My Todos
