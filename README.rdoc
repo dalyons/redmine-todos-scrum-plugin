@@ -7,6 +7,10 @@ Currently has translations for Chinese, Spanish, Italian and English, thanks to 
 
 Please check the issues page(thanks Mischa!) for current known bugs.
 
+== Release 0.0.3.7
+* French translations added(thanks Stéphane!)
+* German translations added(thanks Andreas!)
+* Actually commited the italian file, oops!
 
 == Release 0.0.3.6
 * Italian translations added(thanks Marco!)
