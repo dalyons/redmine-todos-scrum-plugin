@@ -1,0 +1,40 @@
+#Todos Korean locale File for Rails >= 2.2.2
+ko:
+  project_todos_title: 할일
+  my_todos_title: 내 할일
+  
+  todo_sort_no_project_error: "정렬하려면 프로젝트가 필요합니다!"
+  todo_project_not_found_error: "프로젝트를 찾을 수 없습니다!"
+  todo_new_missing_update_target_error: "You need an update_target!!"
+  
+  mytodos_heading: 나의 개인적인 할일
+  mytodos_edit_project_tooltip: "이 프로젝트의 할일 목록 편집"
+  
+  todo_new_done_link: 할일 추가 끝내기
+  todo_new_due_label: 기한
+  todo_new_or_label: 또는
+  todo_new_create_button: 할일 만들기
+  todo_new_issue_tooltip: 참고하기
+  todo_new_assign_to_tooltip: 담당자 정하기
+  
+  todos_project_heading: "할일:"
+  todos_print_button_tooltip: 이 목록 인쇄
+  
+  todo_unmark_tooltip: 이 할일을 (자식까지) 끝내지 않은 것으로 표시
+  todo_mark_tooltip: 이 할일을 (자식까지) 끝낸 것으로 표시
+  todo_add_child_tooltip: '이 할일에 자식 추가'
+  todo_delete_tooltip: 이 할일 (자식까지) 지우기 
+  
+  todo_due_label: "기한:"
+  todo_assigned_label: "담당:"
+  todo_ref_label: "참고:"
+  
+  project_module_todo_lists: 할일 목록
+  
+  permission_view_project_todo_lists: 할일 목록 보기
+  permission_edit_project_todo_lists: 할일 목록 고치기
+  permission_use_personal_todo_lists: 개인 할일 목록 사용하기
+  
+  
+  
+  
