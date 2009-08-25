@@ -1,0 +1,36 @@
+#language file for it - pre rails 2.2.2
+it:
+  project_todos_title: ToDo
+  my_todos_title: Miei Todo
+
+  todo_sort_no_project_error: "Impossibile ordinare senza un progetto!"
+  todo_project_not_found_error: "Progetto non trovato!"
+  todo_new_missing_update_target_error: "Hai bisogno di un update_target!!"
+
+  mytodos_heading: Todo personali
+  mytodos_edit_project_tooltip: "Modifica i todo per questo progetto"
+
+  todo_new_done_link: Aggiunta todo completata
+  todo_new_due_label: Previsto per
+  todo_new_or_label: o
+  todo_new_create_button: Crea Todo
+  todo_new_issue_tooltip: riferito a
+  todo_new_assign_to_tooltip: assegna a
+
+  todos_project_heading: Todo per
+  todos_print_button_tooltip: Stampa questa lista
+
+  todo_unmark_tooltip: Marca quest todo (e quelli collegati) come Incompleto
+  todo_mark_tooltip: Marca questo todo (e quelli collegati) come Completato
+  todo_add_child_tooltip: 'aggiungi sotto-todo collegato a questo todo'
+  todo_delete_tooltip: cancella il todo (e quelli collegati!)
+
+  todo_due_label: "Previsto per:"
+  todo_assigned_label: "Assegnato a:"
+  todo_ref_label: "Rif:"
+
+  project_module_todo_lists: Lista todo
+
+  permission_view_project_todo_lists: Mostra lista todo
+  permission_edit_project_todo_lists: Modifica lista todo
+  permission_use_personal_todo_lists: Usa lista todo personale

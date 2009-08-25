@@ -1,0 +1,35 @@
+#language file for de - pre rails 2.2.2
+project_todos_title: Anstehende Aufgaben
+my_todos_title: Meine anstehenden Aufgaben
+
+todo_sort_no_project_error: "Ohne Projekt kann nicht sortiert werden!"
+todo_project_not_found_error: "Projekt nicht gefunden!"
+todo_new_missing_update_target_error: "Sie benötigen ein update_target!"
+
+mytodos_heading: Meine anstehenden Aufgaben
+mytodos_edit_project_tooltip: "Anstehende Aufgaben für dieses Projekt bearbeiten"
+
+todo_new_done_link: Hinzufügen von Aufgaben beenden
+todo_new_due_label: Fällig
+todo_new_or_label: oder
+todo_new_create_button: Neue Aufgabe erstellen
+todo_new_issue_tooltip: verweist auf
+todo_new_assign_to_tooltip: zugewiesen an
+
+todos_project_heading: Anstehende Aufgaben für
+todos_print_button_tooltip: Liste drucken
+
+todo_unmark_tooltip: Diese Aufgabe (und alle Unteraufgaben) als noch nicht erledigt markieren
+todo_mark_tooltip: Diese Aufgabe (und alle Unteraufgaben) als erledigt markieren
+todo_add_child_tooltip: 'Unteraufgabe hinzufügen'
+todo_delete_tooltip: Diese Aufgabe (und alle Unteraufgaben) löschen
+
+todo_due_label: "Fällig am:"
+todo_assigned_label: "Zugewiesen an:"
+todo_ref_label: "Bezug:"
+
+project_module_todo_lists: Liste anstehender Aufgaben
+
+permission_view_project_todo_lists: Anstehende Aufgaben einsehen
+permission_edit_project_todo_lists: Anstehende Aufgaben bearbeiten
+permission_use_personal_todo_lists: Persönliche Liste für anstehende Aufgaben nutzen
