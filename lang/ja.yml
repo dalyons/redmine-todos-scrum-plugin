@@ -1,5 +1,5 @@
 #language file for ja - pre rails 2.2.2
-project_todos_title: のTodoリスト
+project_todos_title: Todoリスト
 my_todos_title: マイTodoリスト
 
 todo_sort_no_project_error: "プロジェクトなしでソートすることはできません!"

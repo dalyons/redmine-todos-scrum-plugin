@@ -1,6 +1,6 @@
 #Todos Japanese locale File for Rails >= 2.2.2
 ja:
-  project_todos_title: のTodoリスト
+  project_todos_title: Todoリスト
   my_todos_title: マイTodoリスト
 
   todo_sort_no_project_error: "プロジェクトなしでソートすることはできません!"
