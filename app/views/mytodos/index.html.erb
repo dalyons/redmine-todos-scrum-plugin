@@ -26,7 +26,7 @@
            {:controller => 'todos', :action => 'index', :project_id => project},
            :class => (User.current.member_of?(project) ? "icon icon-fav" : ""),
            :title => l(:mytodos_edit_project_tooltip) %>
-      <%= l(:project_todos_title)%>
+      <%= l(:project_todos_title) %>
     </h3>
     
     <%= render :partial => 'todos/root_todos', 
