@@ -1,0 +1,36 @@
+#Todos Japanese locale File for Rails >= 2.2.2
+ja:
+  project_todos_title: Todoリスト
+  my_todos_title: マイTodoリスト
+
+  todo_sort_no_project_error: "プロジェクトなしでソートすることはできません!"
+  todo_project_not_found_error: "プロジェクトが見つかりません!"
+  todo_new_missing_update_target_error: "更新対象が必要です!!"
+
+  mytodos_heading: マイTodoリスト
+  mytodos_edit_project_tooltip: "このプロジェクトのTodoの編集"
+
+  todo_new_done_link: Todoを追加しました。
+  todo_new_due_label: 期限
+  todo_new_or_label: or
+  todo_new_create_button: Todoの作成
+  todo_new_issue_tooltip: 参照先
+  todo_new_assign_to_tooltip: 担当者
+
+  todos_project_heading: Todos for
+  todos_print_button_tooltip: このリストの印刷
+
+  todo_unmark_tooltip: このTodo(と関連するTodo)を未完了に戻す
+  todo_mark_tooltip: このTodo(と関連するTodo)を完了する
+  todo_add_child_tooltip: このTodoに関連するTodoを追加する
+  todo_delete_tooltip: このTodo(と関連するTodo)を削除する
+
+  todo_due_label: "期限:"
+  todo_assigned_label: "担当者:"
+  todo_ref_label: "参照先:"
+
+  project_module_todo_lists: Todoリスト
+
+  permission_view_project_todo_lists: View Todo Lists
+  permission_edit_project_todo_lists: Edit Todo Lists
+  permission_use_personal_todo_lists: Use personal Todo Lists
