@@ -30,7 +30,7 @@ Redmine::Plugin.register :redmine_todos_plugin do
   
   project_module :todo_lists do
   	permission :view_project_todo_lists,
-      {:todos => [:index, :show] }
+      {:todos => [:index] }
       
     permission :edit_project_todo_lists, 
       {:todos => [:create, :destroy, :new, :toggle_complete, :sort],
