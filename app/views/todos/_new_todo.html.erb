@@ -39,7 +39,8 @@
          
     <%= f.select :issue_id, 
           todo.possible_issues.collect{ |i| 
-            ["##{i.id} #{i.subject[0..40]}... #{i.tracker.name}" , i.id]
+            subject = i.subject[0..40].scan(/([\x00-\x7f]|[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3})/).join
+            ["##{i.id} #{subject}... #{i.tracker.name}" , i.id]
           },
           :prompt=> l(:todo_new_issue_tooltip) 
     %>
