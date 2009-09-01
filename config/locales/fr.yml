@@ -34,3 +34,5 @@ fr:
   permission_view_project_todo_lists: Voir les Listes de Tâches
   permission_edit_project_todo_lists: Editer les Listes de Tâches
   permission_use_personal_todo_lists: Utiliser les Listes de Tâches personnelles
+
+  label_related_todos: Tâches liées

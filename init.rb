@@ -3,6 +3,18 @@ require 'redmine'
 #This file loads some associations into the core redmine classes, like associations to todos.
 ##REMOVED because I couldnt get it to work in dev enviroment, where model classes are continiously reloaded
 #require 'patch_redmine_classes'
+#
+# Hooks
+require 'todo_issues_hook'
+
+# Patches to the Redmine core
+require 'dispatcher'
+
+Dispatcher.to_prepare do
+  require_dependency 'application'
+  require 'todo_issues_controller_patch'
+  IssuesController.send(:include, TodoIssuesControllerPatch)
+end
 
 Redmine::Plugin.register :redmine_todos_plugin do
   name 'Redmine Todo Lists plugin'
@@ -18,10 +30,11 @@ Redmine::Plugin.register :redmine_todos_plugin do
   
   project_module :todo_lists do
   	permission :view_project_todo_lists,
-      {:todos => [:index] }
+      {:todos => [:index, :show] }
       
     permission :edit_project_todo_lists, 
-      {:todos => [:create, :destroy, :new, :toggle_complete, :sort]} 
+      {:todos => [:create, :destroy, :new, :toggle_complete, :sort],
+        :issues => [:create, :destroy, :new, :toggle_complete, :sort]}
   
     permission :use_personal_todo_lists, 
       {:mytodos => [:index,:destroy, :new, :create, :toggle_complete, :index, :sort]}

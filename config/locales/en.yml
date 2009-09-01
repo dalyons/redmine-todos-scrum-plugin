@@ -34,7 +34,5 @@ en:
   permission_view_project_todo_lists: View Todo Lists
   permission_edit_project_todo_lists: Edit Todo Lists
   permission_use_personal_todo_lists: Use personal Todo Lists
-  
-  
-  
-  
+
+  label_related_todos: Related todos
