@@ -12,19 +12,19 @@
     %>
     
     <%= link_to_remote( todo_img,
-          :url => { :action => 'toggle_complete', :id => todo.id, :project_id => todo.project}, 
+          :url => { :controller => 'todos', :action => 'toggle_complete', :id => todo.id, :project_id => todo.project},
           :html => {:class => todo_class} #,
          # :update => "todo_#{todo.id}" 
          )
     %>
     <%= link_to_remote( image_tag('add.png', :title => l(:todo_add_child_tooltip)), 
-      :url => { :action => 'new', :parent_id => todo.id, :project_id => todo.project },  
+      :url => { :controller => 'todos', :action => 'new', :parent_id => todo.id, :project_id => todo.project, :issue_id => @issue },
       :html => {:class => 'icon-new'}, 
       :update => "todo#{todo.id}-new-box" ) #, :position => :top
         
     %>
     <%= link_to_remote( image_tag('delete.png', :title => l(:todo_delete_tooltip)), 
-      :url => { :action => 'destroy', :id => todo,:project_id => todo.project}, 
+      :url => { :controller => 'todos', :action => 'destroy', :id => todo,:project_id => todo.project},
       :confirm => l(:text_are_you_sure), :html => {:class => 'icon-delete'}, 
       :update => "todo_#{todo.id}" ) 
     %>
@@ -49,7 +49,7 @@
       <%= format_date(todo.completed_at) %>
     </span>
   <% end %>
-  <span class="text todo-has-children-<%= todo.children.any? %>""><%= todo.text %> </span>
+  <span class="text todo-has-children-<%= todo.children.any? %>"><%= todo.text %> </span>
   
   <span class=notes>
     <% if todo.due %>
@@ -58,7 +58,7 @@
     <% if todo.assigned_to %>
       <span class=assigned><%=l(:todo_assigned_label)%>  <%= todo.assigned_to.name %></span>
     <% end %>
-    <% if todo.refers_to %>
+    <% if todo.refers_to and controller.controller_name != 'issues' %>
       <span class=refers>
         <%=l(:todo_ref_label)%>
         <%= link_to "##{ todo.refers_to.id}", 
@@ -68,7 +68,6 @@
     <% end %>
   </span>
 </span>
-<br />
 <div id='todo<%= todo.id %>-new-box'></div>
 
   
@@ -82,7 +81,7 @@
       if editable then 
          sortable_element(
               TodosController::UL_ID + todo.id.to_s, 
-              :url => {:action => 'sort', :project_id => todo.project_id},
+              :url => {:controller => 'todos', :action => 'sort', :project_id => todo.project_id},
               :handle => "todo-content", :tree => true
          )  
       end

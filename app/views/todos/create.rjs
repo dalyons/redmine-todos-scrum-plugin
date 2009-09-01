@@ -14,7 +14,7 @@ page.insert_html :bottom, parent_ul_id, @element_html
   parent_ul_id = TodosController::UL_ID + todo.parent_or_root_id
   page.sortable(parent_ul_id, 
                 {   
-                  :url => {:action => 'sort', :project_id => @todo.project_id},
+                  :url => {:controller => 'todos', :action => 'sort', :project_id => @todo.project_id},
                   :handle => "todo-content", :tree => true 
                 })
 end
