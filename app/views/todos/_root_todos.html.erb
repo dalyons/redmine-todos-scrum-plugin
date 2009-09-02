@@ -1,3 +1,4 @@
+<% todos_controller = (controller.controller_name == 'issues') ? 'todos' : controller.controller_name %>
 <% editable ||= false %>
 
     <ul class="todos root" id="<%= TodosController::UL_ID + 'root' %><%='not-editable' unless editable %>">
@@ -9,7 +10,7 @@
       if editable then
          sortable_element(
             TodosController::UL_ID + 'root', 
-            :url => {:controller => 'todos', :action => 'sort', :project_id => project_id},
+            :url => {:controller => todos_controller, :action => 'sort', :project_id => project_id},
             :handle => "todo-content", :tree => true
          ) 
       end 

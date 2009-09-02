@@ -1,4 +1,4 @@
-
+todos_controller = (controller.controller_name == 'issues') ? 'todos' : controller.controller_name
 #render a newly created todo, and also recreate the sorter helper for the parents container
 #if you dont use page.sortable to recreate, the sorting doesnt work for new elements
 
@@ -14,7 +14,7 @@ page.insert_html :bottom, parent_ul_id, @element_html
   parent_ul_id = TodosController::UL_ID + todo.parent_or_root_id
   page.sortable(parent_ul_id, 
                 {   
-                  :url => {:controller => 'todos', :action => 'sort', :project_id => @todo.project_id},
+                  :url => {:controller => todos_controller, :action => 'sort', :project_id => @todo.project_id},
                   :handle => "todo-content", :tree => true 
                 })
 end
