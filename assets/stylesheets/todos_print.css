@@ -75,3 +75,9 @@ span.todo-has-children-true {}
   min-height: 6.2em;
 }
 
+div#issue-todos .todo { padding: 4px;}
+div#issue-todos .todo { border-bottom: 1px solid #ddd; }
+div#issue-todos p { margin-top: 0; margin-bottom: 1em;}
+div#issue-todos #project-todos ul.root { padding-left: 0px;}
+div#issue-todos #project-todos span.notes { color: #888888; font-size: 0.8em; font-style: normal;}
+div#issue-todos #project-todos span.notes span.refers { display: none;}
