@@ -18,7 +18,7 @@
          )
     %>
     <%= link_to_remote( image_tag('add.png', :title => l(:todo_add_child_tooltip)), 
-      :url => { :controller => todos_controller, :action => 'new', :parent_id => todo.id, :project_id => todo.project, :issue_id => @issue },
+      :url => { :controller => todos_controller, :action => 'new', :parent_id => todo.id, :project_id => todo.project, :issue_id => @issue || todo.issue_id },
       :html => {:class => 'icon-new'}, 
       :update => "todo#{todo.id}-new-box" ) #, :position => :top
         
@@ -49,8 +49,9 @@
       <%= format_date(todo.completed_at) %>
     </span>
   <% end %>
-  <span class="text todo-has-children-<%= todo.children.any? %>"><%= textilizable(todo.text) %> </span>
-  
+  <span class="text todo-has-children-<%= todo.children.any? %>">
+  <%= render_todo_text(todo, :editable => editable) %>  
+</span>
   <span class=notes>
     <% if todo.due %>
       <span class=due><%=l(:todo_due_label)%> <%= format_date(todo.due) %></span>
@@ -81,7 +82,7 @@
       if editable then 
          sortable_element(
               TodosController::UL_ID + todo.id.to_s, 
-              :url => {:controller => 'todos', :action => 'sort', :project_id => todo.project_id},
+              :url => {:controller => todos_controller, :action => 'sort', :project_id => todo.project_id},
               :handle => "todo-content", :tree => true
          )  
       end

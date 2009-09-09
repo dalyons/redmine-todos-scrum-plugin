@@ -34,7 +34,8 @@ module TodoIssuesControllerPatch
     base.send(:include, ClassMethods)
     base.extend(ClassMethods)
     # Same as typing in the class
-    base.class_eval do      
+    base.class_eval do
+      helper :todos
       alias_method_chain(:show, :todo) unless method_defined?(:show_without_todo)
     end
   end
