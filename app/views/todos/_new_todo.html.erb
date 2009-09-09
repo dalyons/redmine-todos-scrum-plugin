@@ -13,6 +13,7 @@
       :onchange=> "$('due#{todo.parent_id}_span').update($('due#{todo.parent_id}').value); $('due#{todo.parent_id}_cancel_span').show();"
     %>
     <%= f.text_field :text, :size => 40 %>
+    <span id="todo-flash-error-<%= todo.parent_id || 'root' %>" class='flash error' style='display: none;'></span>
     
     <%= l(:todo_new_due_label) %>
     

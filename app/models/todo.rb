@@ -34,6 +34,7 @@ class Todo < ActiveRecord::Base
 
 
   validates_presence_of  :author
+  validates_length_of :text, :within => 1..255
   
   
   #for some reason, running under Passenger in production, changing all the todo tree&order 

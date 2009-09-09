@@ -81,3 +81,10 @@ div#issue-todos #project-todos span.notes { color: #888888; font-size: 0.8em; fo
 div#issue-todos #project-todos span.notes span.refers { display: none;}
 
 #project-todos li .todo-content p{ display:inline;}
+
+#project-todos li .todo-content span.flash.error, div.new-todo span.flash.error {
+    background: transparent url(/images/false.png) no-repeat scroll 0px -2px;
+    color: #ff0000;
+    font-size: 11px;
+    padding-left: 20px;
+}
