@@ -11,10 +11,11 @@ class TodosController < ApplicationController
   #unloadable
   #  Project.send(:include, TodosProjectPatch)
   #end
-  
+
   before_filter :find_project
   before_filter :authorize
-  
+  helper :todos
+
   #global string to use as the suffix for the element id for todo's <UL> 
   UL_ID = "todo-children-ul_"
   TODO_LI_ID = "todo_"
@@ -57,7 +58,7 @@ class TodosController < ApplicationController
                                          :locals => {:todo => @todo, :editable => true}                 
       render :action => "todo.rjs"
     else
-      redirect_to :action => "index", :project_id => params[:project_id]
+      redirect_to :action => "index", :project_id => @project.id
     end
   end
 
@@ -75,14 +76,17 @@ class TodosController < ApplicationController
         render :action => "create.rjs"   #using rjs
       else
         flash[:notice] = l(:notice_successful_create)
-        redirect_to :action => "index", :project_id => params[:project_id]
+        redirect_to :action => "index", :project_id => @project.id
       end
     else
-      flash[:notice] = "fail! you suck."
-      render :action => "index", :project_id => params[:project_id]
+      flash.now[:error] =  @todo.errors.collect{|k,m| m}.join
+      respond_to do |format|
+        format.html { redirect_to :action => "index" }
+        format.js { render :action => 'create' }
+      end
     end
   end
-  
+
   #for the d&d sorting ajax helpers
   #TODO: this is pretty messy.
   def sort
@@ -97,7 +101,26 @@ class TodosController < ApplicationController
     render :nothing => true
 
   end
-  
+
+  def edit
+    if request.post?
+      @todo = Todo.for_project(@project.id).find(params[:id])
+      if @todo.update_attributes(:text => params[:text])
+        @allowed_to_edit = User.current.allowed_to?(:edit_project_todo_lists, @project)
+        respond_to do |format|
+          format.html { redirect_to :action => 'index' }
+          format.js { render :action => 'update' }
+        end
+      else
+        flash.now[:error] =  @todo.errors.collect{|k,m| m}.join
+        respond_to do |format|
+          format.html { redirect_to :action => 'index' }
+          format.js { render :action => 'edit' }
+        end
+      end
+    end
+  end
+
  private
   def find_project
     @project = Project.find(params[:project_id])
