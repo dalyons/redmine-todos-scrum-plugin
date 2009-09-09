@@ -33,11 +33,11 @@ Redmine::Plugin.register :redmine_todos_plugin do
       {:todos => [:index] }
       
     permission :edit_project_todo_lists, 
-      {:todos => [:create, :destroy, :new, :toggle_complete, :sort],
-        :issues => [:create, :destroy, :new, :toggle_complete, :sort]}
+      {:todos => [:create, :destroy, :new, :toggle_complete, :sort, :edit],
+        :issues => [:create, :destroy, :new, :toggle_complete, :sort, :edit]}
   
     permission :use_personal_todo_lists, 
-      {:mytodos => [:index,:destroy, :new, :create, :toggle_complete, :index, :sort]}
+      {:mytodos => [:index,:destroy, :new, :create, :toggle_complete, :index, :sort, :edit]}
          
   end
 	
