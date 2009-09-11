@@ -13,7 +13,7 @@ page.replace_html li_id, @element_html
   parent_ul_id = TodosController::UL_ID + todo.parent_or_root_id
   page.sortable(parent_ul_id, 
                 {   
-                  :url => {:controller => todos_controller, :action => 'sort', :project_id => @todo.project_id},
+                  :url => {:controller => todos_controller, :action => 'sort', :project_id => @todo.project},
                   :handle => "todo-content", :tree => true 
                 })
 end

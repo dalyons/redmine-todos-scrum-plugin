@@ -11,7 +11,7 @@ module TodosHelper
     if !todo.text.blank?
       todos_controller = (controller.controller_name == 'issues') ? 'todos' : controller.controller_name
       links << link_to_in_place_text_editor(image_tag('edit.png'), "todo-#{todo.id}-text",
-                                             { :controller => todos_controller, :action => 'edit', :id => todo, :project_id => todo.project_id },
+                                             { :controller => todos_controller, :action => 'edit', :id => todo, :project_id => todo.project },
                                                 :title => l(:button_edit)) if editable
     end
     content << content_tag('span', links.join(' '), :class => 'todo-controls') unless links.empty?

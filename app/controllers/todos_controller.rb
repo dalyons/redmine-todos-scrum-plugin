@@ -58,7 +58,7 @@ class TodosController < ApplicationController
                                          :locals => {:todo => @todo, :editable => true}                 
       render :action => "todo.rjs"
     else
-      redirect_to :action => "index", :project_id => @project.id
+      redirect_to :action => "index", :project_id => @project
     end
   end
 
@@ -76,7 +76,7 @@ class TodosController < ApplicationController
         render :action => "create.rjs"   #using rjs
       else
         flash[:notice] = l(:notice_successful_create)
-        redirect_to :action => "index", :project_id => @project.id
+        redirect_to :action => "index", :project_id => @project
       end
     else
       flash.now[:error] =  @todo.errors.collect{|k,m| m}.join

@@ -17,8 +17,10 @@
          # :update => "todo_#{todo.id}" 
          )
     %>
+    <% todo_issue = ((@issue && @issue.id) || todo.issue_id) %>
     <%= link_to_remote( image_tag('add.png', :title => l(:todo_add_child_tooltip)), 
-      :url => { :controller => todos_controller, :action => 'new', :parent_id => todo.id, :project_id => todo.project, :issue_id => @issue || todo.issue_id },
+      :url => { :controller => "#{'issues/' + todo_issue.to_s + '/' if todo_issue}#{todos_controller}/#{todo.id}",
+	      :action => 'new' },
       :html => {:class => 'icon-new'}, 
       :update => "todo#{todo.id}-new-box" ) #, :position => :top
         
@@ -64,7 +66,8 @@
         <%=l(:todo_ref_label)%>
         <%= link_to "##{ todo.refers_to.id}", 
                 {:controller => :issues, :action => :show, :id => todo.refers_to.id},
-                 :title => "#{todo.refers_to.tracker.name}: #{todo.refers_to.subject}" %>
+                 :title => "#{todo.refers_to.tracker.name}: #{todo.refers_to.subject}",
+		 :skip_relative_url_root => true %>
       </span>
     <% end %>
   </span>
@@ -82,7 +85,7 @@
       if editable then 
          sortable_element(
               TodosController::UL_ID + todo.id.to_s, 
-              :url => {:controller => todos_controller, :action => 'sort', :project_id => todo.project_id},
+              :url => {:controller => todos_controller, :action => 'sort', :project_id => todo.project},
               :handle => "todo-content", :tree => true
          )  
       end
