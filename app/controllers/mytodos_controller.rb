@@ -73,7 +73,28 @@ class MytodosController < ApplicationController
       render :text => @todo.errors.collect{|k,m| m}.join
     end
   end
-  
+
+  def show
+    begin
+      @todo = Todo.for_user(User.current.id).find(params[:id])
+    rescue ActiveRecord::RecordNotFound => ex
+      raise ex, l(:todo_not_found_error)
+    end
+
+    if @todo
+      respond_to do |format|
+        format.html { render :template => 'todos/show'}
+        #format.js { render :template => 'todos/show' }
+      end
+    else
+      flash.now[:error] = @todo.errors.collect{|k,m| m}.join
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' }
+        #format.js { render :action => 'edit' }
+      end
+    end
+  end
+
   def toggle_complete
     @todo = Todo.for_user(User.current.id).find(params[:id])
     @todo.set_done !@todo.done
