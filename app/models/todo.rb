@@ -14,6 +14,7 @@ class Todo < ActiveRecord::Base
   #  raise "Sorry, cant run with reloading models. " +
   #        "Change config.cache_classes to 'true' or run in production mode!"
   #end
+  unloadable # Send unloadable so it will not be unloaded in development
 
   acts_as_tree :order => "position"
   acts_as_list :scope => :parent_id
@@ -30,12 +31,28 @@ class Todo < ActiveRecord::Base
   named_scope :for_project, lambda {|*args| {:conditions => {:project_id => args.first}} }
   named_scope :for_user, lambda {|*args|
     { :conditions => ["author_id = ? OR assigned_to_id = ?",args.first, args.first] }
-  } 
+  }
 
+  acts_as_event :title => Proc.new {|o| 
+    "#{l(:label_todo)} ##{o.id}
+                (#{(o.done)? l(:todo_status_done) : ((o.updated_at == o.created_at)? l(:todo_status_new) : l(:todo_status_updated))}): #{o.text}"},
+                :description => Proc.new{|o|
+                                  items = []
+                                  items << "#{l(:todo_assigned_label)} #{o.assigned_to}"
+                                  items << ((r = o.refers_to) ? "#{l(:field_issue_to)}: #{r.tracker} ##{o.refers_to.id} (#{o.refers_to.status}): #{o.refers_to.subject}" : "")
+                                  items.join("\n")
+                                },
+                :url => Proc.new {|o| {:controller => "projects/#{o.project.identifier}/todos", :action => 'show', :id => o}},
+                :type => Proc.new {|o| 'todo' + (o.done ? ' done' : '') }
+              
+  acts_as_activity_provider :timestamp => "#{table_name}.updated_at",
+                            :find_options => {:include => [:project, :author, :refers_to]},
+                            :author_key => :author_id
 
   validates_presence_of  :author
   validates_length_of :text, :within => 1..255
-  
+
+  alias_attribute :created_on, :updated_at
   
   #for some reason, running under Passenger in production, changing all the todo tree&order 
   #positions doesnt work. For some reason, rails doesnt write the parent_id of some records 
@@ -114,7 +131,7 @@ class Todo < ActiveRecord::Base
         id = children_hash["id"].to_i
         todo = valid_todos.select{|t| t.id == id }.first
         #todo.reload
-        logger.debug "id:#{todo.id} n:#{todo.text} parent:#{parent_id} position:#{position}"
+        #logger.debug "id:#{todo.id} n:#{todo.text} parent:#{parent_id} position:#{position}"
         
         todo.update_attributes!(:parent_id => parent_id, :position => position) unless todo.nil?
         
@@ -136,5 +153,5 @@ class Todo < ActiveRecord::Base
   #find a todo by id, but return null if the user didnt author it or is not assigned to it
   def self::find_by_user(todo_id, user_id)
     self.find(todo_id, :conditions => ["author_id = :id OR assigned_to_id = :id",{:id => User.current.id}] )
-  end
+  end    
 end
