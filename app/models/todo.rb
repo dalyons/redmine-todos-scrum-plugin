@@ -43,7 +43,7 @@ class Todo < ActiveRecord::Base
                                   items.join("\n")
                                 },
                 :url => Proc.new {|o| {:controller => "projects/#{o.project.identifier}/todos", :action => 'show', :id => o}},
-                :type => Proc.new {|o| 'todo' + (o.done ? ' done' : '') }
+                :type => Proc.new {|o| 'todo'}
               
   acts_as_activity_provider :timestamp => "#{table_name}.updated_at",
                             :find_options => {:include => [:project, :author, :refers_to]},

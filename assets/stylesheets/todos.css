@@ -80,7 +80,8 @@ div#issue-todos #project-todos ul.root { padding-left: 0px;}
 div#issue-todos #project-todos span.notes { color: #888888; font-size: 0.8em; font-style: normal;}
 div#issue-todos #project-todos span.notes span.refers { display: none;}
 
-#project-todos li .todo-content p{ display:inline;}
+#project-todos li .todo-content p{ display: inline;}
+li .todo-content .text form div{ display: none;}
 
 #project-todos li .todo-content span.flash.error, div.new-todo span.flash.error {
     background: transparent url(/images/false.png) no-repeat scroll 0px -2px;
@@ -92,3 +93,4 @@ div#issue-todos #project-todos span.notes span.refers { display: none;}
 dt.todo {
     background-image:url(../images/todo.png);
 }
+
