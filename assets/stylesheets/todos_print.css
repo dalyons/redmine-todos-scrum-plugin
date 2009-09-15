@@ -90,3 +90,7 @@ div#issue-todos #project-todos span.notes span.refers { display: none;}
     font-size: 11px;
     padding-left: 20px;
 }
+
+dt.todo {
+    background-image:url(../images/todo.png);
+}
