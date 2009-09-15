@@ -1,4 +1,4 @@
-<%  if User.current.allowed_to?(:view_project_todo_lists, @project) || User.current.admin? %>
+<%  if User.current.allowed_to?(:view_todos, @project) || User.current.admin? %>
   <% content_for :header_tags do %>
       <%= stylesheet_link_tag 'todos', :plugin => 'redmine_todos_plugin' %>
       <%= stylesheet_link_tag 'todos_print', :plugin => 'redmine_todos_plugin', :media => 'print' %>

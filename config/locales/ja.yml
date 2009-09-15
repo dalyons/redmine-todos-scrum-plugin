@@ -1,6 +1,6 @@
 #Todos Japanese locale File for Rails >= 2.2.2
 ja:
-  project_todos_title: Todoリスト
+  label_todo_plural: Todoリスト
   my_todos_title: マイTodoリスト
 
   todo_sort_no_project_error: "プロジェクトなしでソートすることはできません!"
@@ -31,6 +31,6 @@ ja:
 
   project_module_todo_lists: Todoリスト
 
-  permission_view_project_todo_lists: View Todo Lists
-  permission_edit_project_todo_lists: Edit Todo Lists
-  permission_use_personal_todo_lists: Use personal Todo Lists
+  permission_view_todos: View Todo Lists
+  permission_edit_todos: Edit Todo Lists
+  permission_use_personal_todos: Use personal Todo Lists

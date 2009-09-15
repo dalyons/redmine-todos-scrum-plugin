@@ -1,6 +1,6 @@
 #language file for de - post rails 2.2.2
 de:
-  project_todos_title: Anstehende Aufgaben
+  label_todo_plural: Anstehende Aufgaben
   my_todos_title: Meine anstehenden Aufgaben
 
   todo_sort_no_project_error: "Ohne Projekt kann nicht sortiert werden!"
@@ -31,6 +31,6 @@ de:
 
   project_module_todo_lists: Liste anstehender Aufgaben
 
-  permission_view_project_todo_lists: Anstehende Aufgaben einsehen
-  permission_edit_project_todo_lists: Anstehende Aufgaben bearbeiten
-  permission_use_personal_todo_lists: Persönliche Liste für anstehende Aufgaben nutzen
+  permission_view_todos: Anstehende Aufgaben einsehen
+  permission_edit_todos: Anstehende Aufgaben bearbeiten
+  permission_use_personal_todos: Persönliche Liste für anstehende Aufgaben nutzen

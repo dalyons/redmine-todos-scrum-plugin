@@ -20,7 +20,7 @@ require_dependency 'issues_controller'
 module TodoIssuesControllerPatch
   module ClassMethods    
     def show_with_todo
-      @allowed_to_edit_todos = User.current.allowed_to?(:edit_project_todo_lists, @project)
+      @allowed_to_edit_todos = User.current.allowed_to?(:edit_todos, @project)
       @todos = Todo.for_project(@project.id).roots.find(:all, :conditions => ["issue_id = ?", @issue.id])
       show_without_todo
     end
@@ -35,6 +35,7 @@ module TodoIssuesControllerPatch
     base.extend(ClassMethods)
     # Same as typing in the class
     base.class_eval do
+      unloadable # Send unloadable so it will not be unloaded in development
       helper :todos
       alias_method_chain(:show, :todo) unless method_defined?(:show_without_todo)
     end
