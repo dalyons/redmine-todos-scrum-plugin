@@ -1,0 +1,13 @@
+<% content_for :header_tags do %>
+    <%= stylesheet_link_tag 'todos', :plugin => 'redmine_todos_plugin' %>
+    <%= stylesheet_link_tag 'todos_print', :plugin => 'redmine_todos_plugin', :media => 'print' %>
+<% end %>
+
+<div id=project-todos>
+  <%= render :partial => 'todos/link_bar' %>
+    <h2><%= l(:label_todo_plural) %></h2>
+    <ul class="todos root" id="<%= TodosController::UL_ID + 'rootnot-editable' %>">
+      <%= render :partial => 'todos/todo_li',
+	:locals => {:todos => @todos, :project_id => nil, :todo => @todo, :editable => false} %>
+    </ul>
+</div>

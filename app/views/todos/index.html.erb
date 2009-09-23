@@ -10,7 +10,7 @@
 	<div style="" >
 	  
 		<%= render(:partial => 'new_todo', 
-					:locals => {:todo => Todo.new(:project => @project,:assigned_to => User.current)}) if @allowed_to_edit  
+					:locals => {:todo => Todo.new(:project => @project, :assigned_to => User.current)}) if @allowed_to_edit
 		%>
 		
 	</div>

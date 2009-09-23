@@ -11,10 +11,12 @@ class TodosController < ApplicationController
   #unloadable
   #  Project.send(:include, TodosProjectPatch)
   #end
-  
+
   before_filter :find_project
   before_filter :authorize
-  
+
+  helper :todos
+
   #global string to use as the suffix for the element id for todo's <UL> 
   UL_ID = "todo-children-ul_"
   TODO_LI_ID = "todo_"
@@ -22,7 +24,7 @@ class TodosController < ApplicationController
   def index
     @todos = Todo.for_project(@project.id).roots
 
-    @allowed_to_edit = User.current.allowed_to?(:edit_project_todo_lists, @project)
+    @allowed_to_edit = User.current.allowed_to?(:edit_todos, @project)
     
     @new_todo = Todo.new
   end
@@ -39,10 +41,32 @@ class TodosController < ApplicationController
     render :text => @todo.errors.collect{|k,m| m}.join
 
   end
-  
+
+  def show    
+    begin
+      @todo = Todo.for_project(@project.id).find(params[:id])
+    rescue ActiveRecord::RecordNotFound => ex
+      raise ex, l(:todo_not_found_error)
+    end
+    
+    if @todo
+      respond_to do |format|
+        format.html { render }
+        #format.js { render :action => 'show' }
+      end
+    else
+      flash.now[:error] = @todo.errors.collect{|k,m| m}.join
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' }
+        #format.js { render :action => 'edit' }
+      end
+    end
+  end
+
   def new
     @todo = Todo.new
     @todo.parent_id = Todo.for_project(@project.id).find(params[:parent_id]).id
+    @todo.issue_id = Issue.find(params[:issue_id]).id
     @todo.project = @project
     @todo.assigned_to = User.current
     render :partial => 'new_todo', :locals => { :todo => @todo}
@@ -56,7 +80,7 @@ class TodosController < ApplicationController
                                          :locals => {:todo => @todo, :editable => true}                 
       render :action => "todo.rjs"
     else
-      redirect_to :action => "index", :project_id => params[:project_id]
+      redirect_to :action => "index", :project_id => @project
     end
   end
 
@@ -74,14 +98,17 @@ class TodosController < ApplicationController
         render :action => "create.rjs"   #using rjs
       else
         flash[:notice] = l(:notice_successful_create)
-        redirect_to :action => "index", :project_id => params[:project_id]
+        redirect_to :action => "index", :project_id => @project
       end
     else
-      flash[:notice] = "fail! you suck."
-      render :action => "index", :project_id => params[:project_id]
+      flash.now[:error] =  @todo.errors.collect{|k,m| m}.join
+      respond_to do |format|
+        format.html { redirect_to :action => "index" }
+        format.js { render :action => 'create' }
+      end
     end
   end
-  
+
   #for the d&d sorting ajax helpers
   #TODO: this is pretty messy.
   def sort
@@ -96,7 +123,26 @@ class TodosController < ApplicationController
     render :nothing => true
 
   end
-  
+
+  def edit
+    if request.post?
+      @todo = Todo.for_project(@project.id).find(params[:id])
+      if @todo.update_attributes(:text => params[:text])
+        @allowed_to_edit = User.current.allowed_to?(:edit_todos, @project)
+        respond_to do |format|
+          format.html { redirect_to :action => 'index' }
+          format.js { render :action => 'update' }
+        end
+      else
+        flash.now[:error] =  @todo.errors.collect{|k,m| m}.join
+        respond_to do |format|
+          format.html { redirect_to :action => 'index' }
+          format.js { render :action => 'edit' }
+        end
+      end
+    end
+  end
+
  private
   def find_project
     @project = Project.find(params[:project_id])

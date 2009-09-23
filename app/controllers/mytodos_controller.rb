@@ -13,7 +13,8 @@ class MytodosController < ApplicationController
 
 
   before_filter :authorize
-
+  helper :todos
+  
   def index
     #get all the root level todos belonging to current user
     #@todos = User.current.todos.select{|t| t.parent_id == nil }
@@ -55,7 +56,11 @@ class MytodosController < ApplicationController
         redirect_to :action => "index"
       end
     else
-      render :text => @todo.errors.collect{|k,m| m}.join
+      flash.now[:error] =  @todo.errors.collect{|k,m| m}.join
+      respond_to do |format|
+        format.html { redirect_to :action => "index" }
+        format.js { render :template => 'todos/create.rjs' }
+      end
     end
   end
   
@@ -68,7 +73,28 @@ class MytodosController < ApplicationController
       render :text => @todo.errors.collect{|k,m| m}.join
     end
   end
-  
+
+  def show
+    begin
+      @todo = Todo.for_user(User.current.id).find(params[:id])
+    rescue ActiveRecord::RecordNotFound => ex
+      raise ex, l(:todo_not_found_error)
+    end
+
+    if @todo
+      respond_to do |format|
+        format.html { render :template => 'todos/show'}
+        #format.js { render :template => 'todos/show' }
+      end
+    else
+      flash.now[:error] = @todo.errors.collect{|k,m| m}.join
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' }
+        #format.js { render :action => 'edit' }
+      end
+    end
+  end
+
   def toggle_complete
     @todo = Todo.for_user(User.current.id).find(params[:id])
     @todo.set_done !@todo.done
@@ -83,7 +109,7 @@ class MytodosController < ApplicationController
   
   def sort
     
-    @todos = Todo.for_user(User.current.id)
+    @todos = Todo.for_user(User.current)
     
     params.keys.select{|k| k.include? TodosController::UL_ID }.each do |key|
       Todo.sort_todos(@todos,params[key])
@@ -93,6 +119,24 @@ class MytodosController < ApplicationController
     #render :template => 'todos/sort.rjs' 
   end
   
+  def edit
+    if request.post?
+      @todo = Todo.for_user(User.current).find(params[:id])
+      if @todo.update_attributes(:text => params[:text])
+        respond_to do |format|
+          format.html { redirect_to :controller => 'mytodos', :action => 'index' }
+          format.js { render :action => 'update' }
+        end
+      else
+        flash.now[:error] =  @todo.errors.collect{|k,m| m}.join
+        respond_to do |format|
+          format.html { redirect_to :action => 'index' }
+          format.js { render :action => 'edit' }
+        end
+      end
+    end
+  end
+
  private
   def authorize
     action = {:controller => params[:controller], :action => params[:action]}

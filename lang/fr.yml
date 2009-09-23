@@ -1,9 +1,9 @@
 #language file for fr - pre rails 2.2.2
-project_todos_title: Tâches
+label_todo_plural: Tâches
 my_todos_title: Mes Tâches
 
 todo_sort_no_project_error: "impossible de trier sans un projet!"
-todo_project_not_found_error: "Projet non trouvé!"
+todo_project_not_found_error: "Le Projet demandé n'existe pas!"
 todo_new_missing_update_target_error: "Vous devez spécifier un update_target!!"
 
 mytodos_heading: Mes Tâches Personnelles
@@ -30,6 +30,15 @@ todo_ref_label: "Ref:"
 
 project_module_todo_lists: Liste de Tâches
 
-permission_view_project_todo_lists: Voir les Listes de Tâches
-permission_edit_project_todo_lists: Editer les Listes de Tâches
-permission_use_personal_todo_lists: Utiliser les Listes de Tâches personnelles
+permission_view_todos: Voir les Listes de Tâches
+permission_edit_todos: Editer les Listes de Tâches
+permission_use_personal_todos: Utiliser les Listes de Tâches personnelles
+
+label_related_todos: Tâches liées
+
+todo_not_found_error: "La Tâche demandée n'existe pas!"
+
+label_todo: Tâche
+todo_status_done: Terminé
+todo_status_new: Nouveau
+todo_status_updated: Mise à jour

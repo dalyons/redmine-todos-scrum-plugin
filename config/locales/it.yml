@@ -1,6 +1,6 @@
 #language file for it - pre rails 2.2.2
 it:
-  project_todos_title: ToDo
+  label_todo_plural: ToDo
   my_todos_title: Miei Todo
 
   todo_sort_no_project_error: "Impossibile ordinare senza un progetto!"
@@ -31,6 +31,6 @@ it:
 
   project_module_todo_lists: Lista todo
 
-  permission_view_project_todo_lists: Mostra lista todo
-  permission_edit_project_todo_lists: Modifica lista todo
-  permission_use_personal_todo_lists: Usa lista todo personale
+  permission_view_todos: Mostra lista todo
+  permission_edit_todos: Modifica lista todo
+  permission_use_personal_todos: Usa lista todo personale

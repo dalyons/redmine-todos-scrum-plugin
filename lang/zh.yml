@@ -1,5 +1,5 @@
 
-project_todos_title: 日程
+label_todo_plural: 日程
 my_todos_title: 我的日程
 
 todo_sort_no_project_error: "未找到项目因此无法排序!"
@@ -28,8 +28,8 @@ todo_due_label: "完成日期:"
 todo_assigned_label: "指派给:"
 todo_ref_label: "关联:"
 
-permission_view_project_todo_lists: 查看项目日程
-permission_edit_project_todo_lists: 编辑项目日程
-permission_use_personal_todo_lists: 使用个人日程
+permission_view_todos: 查看项目日程
+permission_edit_todos: 编辑项目日程
+permission_use_personal_todos: 使用个人日程
 
 project_module_todo_lists: 日程管理

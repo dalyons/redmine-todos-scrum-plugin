@@ -1,0 +1,9 @@
+<% form_remote_tag(:url => {:project_id => @todo.project}, :html => { :id => "todo-#{@todo.id}-form" }) do %>
+    <%= text_field_tag :text, h(@todo.text), :size => 40 %>
+    <% if flash[:error] %>
+      <span class='flash error'><%= h(flash[:error]) %></span>
+    <% end %>
+    <p><%= submit_tag l(:button_save) %>
+    <%= link_to l(:button_cancel), '#', :onclick => "Element.remove('todo-#{@todo.id}-form'); " +
+                                                    "Element.show('todo-#{@todo.id}-text'); return false;" %></p>
+<% end %>

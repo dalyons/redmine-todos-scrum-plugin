@@ -1,6 +1,6 @@
 #Todos en locacles file
 es:
-  project_todos_title: Tareas Pendientes
+  label_todo_plural: Tareas Pendientes
   my_todos_title: Mis Tareas Pendientes
 
   #cant sort without a project!

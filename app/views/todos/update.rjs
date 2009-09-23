@@ -1,0 +1,8 @@
+if @todo.frozen?
+  # todo was destroyed
+  page.remove "change-#{@todo.id}"
+else
+  page.replace "todo-#{@todo.id}-text", render_todo_text(@todo, {:editable => @allowed_to_edit})
+  page.show "todo-#{@todo.id}-text"
+  page.remove "todo-#{@todo.id}-form"
+end

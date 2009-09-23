@@ -1,5 +1,5 @@
 #language file for ko - pre rails 2.2.2
-project_todos_title: 할일
+label_todo_plural: 할일
 my_todos_title: 내 할일
 
 todo_sort_no_project_error: "정렬하려면 프로젝트가 필요합니다!"
@@ -30,9 +30,9 @@ todo_ref_label: "참고:"
 
 project_module_todo_lists: 할일 목록
 
-permission_view_project_todo_lists: 할일 목록 보기
-permission_edit_project_todo_lists: 할일 목록 고치기
-permission_use_personal_todo_lists: 개인 할일 목록 사용하기
+permission_view_todos: 할일 목록 보기
+permission_edit_todos: 할일 목록 고치기
+permission_use_personal_todos: 개인 할일 목록 사용하기
 
 
 
@@ -50,9 +50,9 @@ permission_use_personal_todo_lists: 개인 할일 목록 사용하기
   
   project_module_todo_lists: 할일 목록
   
-  permission_view_project_todo_lists: 할일 목록 보기
-  permission_edit_project_todo_lists: 할일 목록 고치기
-  permission_use_personal_todo_lists: 개인 할일 목록 사용하기
+  permission_view_todos: 할일 목록 보기
+  permission_edit_todos: 할일 목록 고치기
+  permission_use_personal_todos: 개인 할일 목록 사용하기
   
   
   

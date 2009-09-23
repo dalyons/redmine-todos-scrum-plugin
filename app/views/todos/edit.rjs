@@ -1,0 +1,9 @@
+@todo = Todo.for_project(@project.id).find(params[:id])
+page.hide "todo-#{@todo.id}-text"
+if flash[:error]
+  page.replace "todo-#{@todo.id}-form",
+    :partial => 'todo_text_form', :object => @todo
+else
+  page.insert_html :after, "todo-#{@todo.id}-text",
+                 :partial => 'todo_text_form'
+end

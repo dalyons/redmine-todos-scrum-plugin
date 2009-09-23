@@ -1,6 +1,6 @@
 #language file for es - pre rails 2.2.2
 
-project_todos_title: Tareas Pendientes
+label_todo_plural: Tareas Pendientes
 my_todos_title: Mis Tareas Pendientes
 
 #cant sort without a project!
