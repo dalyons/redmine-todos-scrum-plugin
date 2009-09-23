@@ -34,3 +34,12 @@ ja:
   permission_view_todos: View Todo Lists
   permission_edit_todos: Edit Todo Lists
   permission_use_personal_todos: Use personal Todo Lists
+
+  label_related_todos: 関連するTodo
+
+  todo_not_found_error: "Todoが見つかりません!"
+
+  label_todo: Todo
+  todo_status_done: Done
+  todo_status_new: New
+  todo_status_updated: Updated
