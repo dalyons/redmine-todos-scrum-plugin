@@ -7,6 +7,14 @@ Currently has translations for Chinese, Spanish, Italian, French, German, Korean
 
 Please check the issues page(thanks Mischa!) for current known bugs.
 
+== Release 0.0.3.8
+* Issue page integration (Adding todos directly in the Issue page)
+* You can edit the text of a todo
+* You can use Textile syntax for the text
+* Better URL-construction
+* Activity page integration (Show todos statuses in Activity page)
+* Bugs fix
+
 == Release 0.0.3.7
 * French translations added(thanks Stéphane!)
 * German translations added(thanks Andreas!)
@@ -59,6 +67,12 @@ Minor bugfixes:
 == Release 0.0.1
 * All todo functionality implemented, works great for simple todo listing needs.
 * Scrum/release groupings not implemented yet
+
+== Todo
+* Allow to edit *all* fields of a todo (make a toggle panel to show all fields).
+* Allow to move a personal todo to a todo project and vice-versa.
+* Update localizations (except for English and French)
+* Check if all actions respond in HTML and JavaScript format (to have a full JS degradation for better accessibility).
 
 == Installation 
 0. Follow the Redmine plugin installation steps at: http://www.redmine.org/wiki/redmine/Plugins 
