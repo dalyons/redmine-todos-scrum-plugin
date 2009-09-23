@@ -33,27 +33,3 @@ project_module_todo_lists: 할일 목록
 permission_view_todos: 할일 목록 보기
 permission_edit_todos: 할일 목록 고치기
 permission_use_personal_todos: 개인 할일 목록 사용하기
-
-
-
-#Todos Korean locale File for Rails >= 2.2.2
-  todos_print_button_tooltip: 이 목록 인쇄
-  
-  todo_unmark_tooltip: 이 할일을 (자식까지) 끝내지 않은 것으로 표시
-  todo_mark_tooltip: 이 할일을 (자식까지) 끝낸 것으로 표시
-  todo_add_child_tooltip: '이 할일에 자식 추가'
-  todo_delete_tooltip: 이 할일 (자식까지) 지우기 
-  
-  todo_due_label: "기한:"
-  todo_assigned_label: "담당:"
-  todo_ref_label: "참고:"
-  
-  project_module_todo_lists: 할일 목록
-  
-  permission_view_todos: 할일 목록 보기
-  permission_edit_todos: 할일 목록 고치기
-  permission_use_personal_todos: 개인 할일 목록 사용하기
-  
-  
-  
-  
