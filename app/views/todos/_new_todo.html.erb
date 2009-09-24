@@ -8,7 +8,7 @@
   <% remote_form_for :todo, todo, :url => {:controller => "todos", :action=> "create", :project_id => todo.project },
       #:update =>  TodosController::UL_ID + todo.parent_or_root_id, :position => :bottom,
       :success => "elements['todo[text]'].activate().clear();" do |f| %>
-
+      
     <%= f.hidden_field :due, :id=>"due#{todo.parent_id}", 
       :onchange=> "$('due#{todo.parent_id}_span').update($('due#{todo.parent_id}').value); $('due#{todo.parent_id}_cancel_span').show();"
     %>
@@ -34,19 +34,18 @@
     <%= f.hidden_field :parent_id %>
     <br />
     <%= f.select :assigned_to_id, todo.project.users.collect{|m| [m.name,m.id]},
-         { :prompt=> l(:todo_new_assign_to_tooltip) },
+         {:prompt=> l(:todo_new_assign_to_tooltip) },  
          {:title => l(:todo_new_assign_to_tooltip) }
     %>
-
-    <%= f.select :issue_id,
-          todo.possible_issues.collect{ |i|
-            ["##{i.id} #{i.subject[0..40]}... #{i.tracker.name}" , i.id ]
+    <%= f.select :issue_id,           todo.possible_issues.collect{ |i| 
+            subject = i.subject[0..40].scan(/([\x00-\x7f]|[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3})/).join
+            ["##{i.id} #{subject}... #{i.tracker.name}" , i.id]
           },
           {:prompt=> l(:todo_new_issue_tooltip), :selected => (todo.issue_id)?  todo.issue_id.to_i : nil}
     %>    
     <br />
     <%= f.submit l(:todo_new_create_button) %>
-
+    
     <% if todo.parent %>
       <%= l(:todo_new_or_label) %>
       <%= link_to_function(l(:todo_new_done_link),
