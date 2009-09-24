@@ -3,7 +3,6 @@
     <%= stylesheet_link_tag 'todos_print', :plugin => 'redmine_todos_plugin', :media => 'print' %>
 <% end %>
 
-<% todos_controller = (controller.controller_name == 'issues') ? 'todos' : controller.controller_name %>
 <div id=project-todos>
   <%= render :partial => 'todos/link_bar' %>
   <h3><%= l(:mytodos_heading)%></h3>
@@ -23,7 +22,7 @@
     <h3>
       
         <%= link_to h(project.name), 
-           {:controller => todos_controller, :action => 'index', :project_id => project},
+           {:controller => 'todos', :action => 'index', :project_id => project},
            :class => (User.current.member_of?(project) ? "icon icon-fav" : ""),
            :title => l(:mytodos_edit_project_tooltip) %>
       <%= l(:label_todo_plural) %>
