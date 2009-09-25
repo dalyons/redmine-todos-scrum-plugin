@@ -19,7 +19,7 @@
     %>
     <% todo_issue = ((@issue && @issue.id) || todo.issue_id) %>
     <%= link_to_remote( image_tag('add.png', :title => l(:todo_add_child_tooltip)), 
-      :url => { :controller => "#{'issues/' + todo_issue.to_s + '/' if todo_issue}#{todos_controller}/#{todo.id}",
+      :url => { :controller => "#{'projects/' + todo.project.identifier.to_s + '/' if todo.project}#{'issues/' + todo_issue.to_s + '/' if todo_issue}#{todos_controller}/#{todo.id}",
 	      :action => 'new' },
       :html => {:class => 'icon-new'}, 
       :update => "todo#{todo.id}-new-box" ) #, :position => :top
