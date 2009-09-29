@@ -118,8 +118,8 @@ class TodosController < ApplicationController
       Todo.sort_todos(@todos,params[key])
     end
     
-    #render :nothing => true
-    render :action => "sort.rjs"
+    render :nothing => true
+    #render :action => "sort.rjs"
   end
 
 
