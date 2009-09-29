@@ -5,6 +5,8 @@
 
 <span class="todo-controls">
   <% if editable then %>
+  
+    <% todo_issue = ((@issue && @issue.id) || todo.issue_id) %>
     <% todo_class = todo.done ? 'icon-restore' : 'icon-done' %>
     <% todo_img = todo.done ? 
                       image_tag('cancel.png', :title => l(:todo_unmark_tooltip)) :
@@ -16,16 +18,13 @@
           :html => {:class => todo_class} #,
          # :update => "todo_#{todo.id}" 
          )
-    %>
-    <% todo_issue = ((@issue && @issue.id) || todo.issue_id) %>
-    <%= link_to_remote( image_tag('add.png', :title => l(:todo_add_child_tooltip)), 
+    %><%= link_to_remote( image_tag('add.png', :title => l(:todo_add_child_tooltip)), 
       :url => { :controller => "#{'projects/' + todo.project.identifier.to_s + '/' if todo.project}#{'issues/' + todo_issue.to_s + '/' if todo_issue}#{todos_controller}/#{todo.id}",
 	      :action => 'new' },
       :html => {:class => 'icon-new'}, 
       :update => "todo#{todo.id}-new-box" ) #, :position => :top
         
-    %>
-    <%= link_to_remote( image_tag('delete.png', :title => l(:todo_delete_tooltip)), 
+    %><%= link_to_remote( image_tag('delete.png', :title => l(:todo_delete_tooltip)), 
       :url => { :controller => todos_controller, :action => 'destroy', :id => todo,:project_id => todo.project},
       :confirm => l(:text_are_you_sure), :html => {:class => 'icon-delete'}, 
       :update => "todo_#{todo.id}" ) 

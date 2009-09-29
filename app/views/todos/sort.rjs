@@ -1,3 +1,4 @@
+#Need to recreate the Sortable element after a sort is complete, so that you can D&D to recently moved elements with no children.
 
 #doesnt matter which todo we choose from the sort set - they all go to the same root. & project
 @todo = @todos.first
