@@ -13,8 +13,7 @@ class MytodosController < ApplicationController
 
 
   before_filter :authorize
-  helper :todos
-  
+
   def index
     #get all the root level todos belonging to current user
     #@todos = User.current.todos.select{|t| t.parent_id == nil }
@@ -56,11 +55,7 @@ class MytodosController < ApplicationController
         redirect_to :action => "index"
       end
     else
-      flash.now[:error] =  @todo.errors.collect{|k,m| m}.join
-      respond_to do |format|
-        format.html { redirect_to :action => "index" }
-        format.js { render :template => 'todos/create.rjs' }
-      end
+      render :text => @todo.errors.collect{|k,m| m}.join
     end
   end
   
@@ -119,24 +114,6 @@ class MytodosController < ApplicationController
     #render :template => 'todos/sort.rjs' 
   end
   
-  def edit
-    if request.post?
-      @todo = Todo.for_user(User.current).find(params[:id])
-      if @todo.update_attributes(:text => params[:text])
-        respond_to do |format|
-          format.html { redirect_to :controller => 'mytodos', :action => 'index' }
-          format.js { render :action => 'update' }
-        end
-      else
-        flash.now[:error] =  @todo.errors.collect{|k,m| m}.join
-        respond_to do |format|
-          format.html { redirect_to :action => 'index' }
-          format.js { render :action => 'edit' }
-        end
-      end
-    end
-  end
-
  private
   def authorize
     action = {:controller => params[:controller], :action => params[:action]}

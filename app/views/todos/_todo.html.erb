@@ -52,8 +52,8 @@
     </span>
   <% end %>
   <span class="text todo-has-children-<%= todo.children.any? %>">
-  <%= render_todo_text(todo, :editable => editable) %>  
-</span>
+    <%= textilizable(todo.text) %>
+  </span>
   <span class=notes>
     <% if todo.due %>
       <span class=due><%=l(:todo_due_label)%> <%= format_date(todo.due) %></span>
