@@ -74,22 +74,16 @@
 </span>
 <div id='todo<%= todo.id %>-new-box'></div>
 
-  
     
     <ul class="todos children depth<%= todo.ancestors.size%>" id='<%= TodosController::UL_ID + todo.id.to_s %>' >
       <% for child_todo in todo.children %>
           <%= render :partial => 'todos/todo_li', :locals => {:todo => child_todo, :editable => editable} %>
       <% end %>
+      <% if todo.children.empty?   %>
+        <li><ul style='min-height:1px; '></ul></li>
+      <% end %>
     </ul>
-    <%= 
-      if editable then 
-         sortable_element(
-              TodosController::UL_ID + todo.id.to_s, 
-              :url => {:controller => todos_controller, :action => 'sort', :project_id => todo.project},
-              :handle => "todo-content", :tree => true
-         )  
-      end
-    %>
+
     
 
   

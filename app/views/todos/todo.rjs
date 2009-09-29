@@ -6,14 +6,13 @@ li_id = TodosController::TODO_LI_ID + @todo.id.to_s
 
 page.replace_html li_id, @element_html
 
-#recreate all the sortable elements for ancestors up the tree. You should just be able to recreate the sortable on the
-# parent's ul list, but for some reason when you do this it wont let you drag the recently replace node onto lesser
-# depth nodes.
-@todo.self_and_ancestors.each do |todo|
-  parent_ul_id = TodosController::UL_ID + todo.parent_or_root_id
-  page.sortable(parent_ul_id, 
+
+#recreate the root sortable element
+root_ul_id = TodosController::UL_ID + @todo.root.parent_or_root_id
+page.sortable(root_ul_id, 
                 {   
                   :url => {:controller => todos_controller, :action => 'sort', :project_id => @todo.project},
                   :handle => "todo-content", :tree => true 
                 })
-end
+
+

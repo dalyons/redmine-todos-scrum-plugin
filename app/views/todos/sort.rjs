@@ -1,0 +1,12 @@
+
+#doesnt matter which todo we choose from the sort set - they all go to the same root. & project
+@todo = @todos.first
+
+root_ul_id = TodosController::UL_ID + @todo.root.parent_or_root_id
+
+page.sortable(root_ul_id, 
+                {   
+                  :url => {:controller => todos_controller, :action => 'sort', :project_id => @todo.project},
+                  :handle => "todo-content", :tree => true 
+                })
+
