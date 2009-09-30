@@ -1,4 +1,4 @@
-#require 'ruby-debug'
+require 'ruby-debug'
 
 
 class TodosController < ApplicationController
@@ -26,7 +26,8 @@ class TodosController < ApplicationController
 
     @allowed_to_edit = User.current.allowed_to?(:edit_todos, @project)
     
-    @new_todo = Todo.new
+    @new_todo = parent_object.todos.new(:assigned_to => User.current) #Todo.new
+   
   end
   
 
@@ -64,11 +65,13 @@ class TodosController < ApplicationController
   end
 
   def new
-    @todo = Todo.new
+    @todo = parent_object.todos.new
     @todo.parent_id = Todo.for_project(@project.id).find(params[:parent_id]).id
-    @todo.issue_id = Issue.find(params[:issue_id]).id
-    @todo.project = @project
+    @todo.issue = Issue.find(params[:issue_id]).id if params[:issue_id]
     @todo.assigned_to = User.current
+    
+    #@todo.todoable = parent_object
+    
     render :partial => 'new_todo', :locals => { :todo => @todo}
   end
   
@@ -87,9 +90,10 @@ class TodosController < ApplicationController
 
 
   def create
-    @todo = Todo.new(params[:todo])
-    @todo.project = @project
+    @todo = @project.todos.new(params[:todo])
+    #@todo.todoable = @project
     @todo.author = User.current
+    
     
     if @todo.save
       if (request.xhr?)
@@ -146,5 +150,23 @@ class TodosController < ApplicationController
   def find_project
     @project = Project.find(params[:project_id])
     raise ActiveRecord::RecordNotFound, l(:todo_project_not_found_error) + " id:" + params[:project_id] unless @project
+  end
+  
+  
+  #TODO: there may be a better way...
+  def parent_object
+    todoable = 
+      case
+        when params[:user_id] then User.find(params[:user_id])
+        when params[:project_id] then Project.find(params[:project_id])
+        #when params[:todo_template_id] then TodoTemplate.find(params[:todo_template_id])
+      end   
+    raise ActiveRecord::RecordNotFound, "TODO association not FOUND! " if !todoable
+    return todoable
+  end
+  
+  def find_todo
+    @todo = parent_object.todos.find(params[:id])
+    raise ActiveRecord::RecordNotFound, "TODO NOT FOUND! id:" + params[:id] unless @todo
   end
 end

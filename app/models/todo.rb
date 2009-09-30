@@ -25,12 +25,16 @@ class Todo < ActiveRecord::Base
   belongs_to :project
   belongs_to :refers_to, :class_name => 'Issue', :foreign_key => 'issue_id'
   
+  #todos can belong to many different objects using the polymorphic interface.
+  belongs_to :todoable, :polymorphic => true
+  
   named_scope :roots, :conditions => {:parent_id => nil }
-  named_scope :personal_todos, :conditions => {:project_id => nil}
-  named_scope :project_todos, :conditions => ["project_id is not null"]
-  named_scope :for_project, lambda {|*args| {:conditions => {:project_id => args.first}} }
-  named_scope :for_user, lambda {|*args|
-    { :conditions => ["author_id = ? OR assigned_to_id = ?",args.first, args.first] }
+  named_scope :personal_todos, :conditions => {:todoable_type => User.to_s}
+  named_scope :project_todos, :conditions => {:todoable_type => Project.to_s}
+  named_scope :for_project, lambda {|project_id| {:conditions => {:todoable_type => Project.to_s, :todoable_id => project_id}} }
+  named_scope :for_user, lambda {|user_id|
+    #{:conditions => {:todoable_type => User.to_s, :todoable_id => args.first}}
+    { :conditions => ["author_id = ? OR assigned_to_id = ?",user_id, user_id] }
   }
 
   acts_as_event :title => Proc.new {|o| 

@@ -2,10 +2,14 @@
 #New todo: partial for creating a new todo.
 #requires:
 #   todo : a new Todo object
+  parent_object = todo.todoable
+  raise unless parent_object
+  
 %>
 
 <div class="new-todo">
-  <% remote_form_for :todo, todo, :url => {:controller => "todos", :action=> "create", :project_id => todo.project },
+  <% remote_form_for [parent_object,todo],
+      #:todo, todo, :url => {:controller => "todos", :action=> "create", :project_id => todo.project },
       #:update =>  TodosController::UL_ID + todo.parent_or_root_id, :position => :bottom,
       :success => "elements['todo[text]'].activate().clear();" do |f| %>
       
@@ -33,7 +37,7 @@
 
     <%= f.hidden_field :parent_id %>
     <br />
-    <%= f.select :assigned_to_id, todo.project.users.collect{|m| [m.name,m.id]},
+    <%= f.select :assigned_to_id, todo.todoable.users.collect{|m| [m.name,m.id]},
          {:prompt=> l(:todo_new_assign_to_tooltip) },  
          {:title => l(:todo_new_assign_to_tooltip) }
     %>

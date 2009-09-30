@@ -1,4 +1,8 @@
 <% todos_controller = (controller.controller_name == 'issues') ? 'todos' : controller.controller_name %>
+<% 
+  parent_object = todo.todoable 
+  raise unless parent_object
+%>
 <% editable ||= false %>
 
 
@@ -14,18 +18,18 @@
     %>
     
     <%= link_to_remote( todo_img,
-          :url => { :controller => todos_controller, :action => 'toggle_complete', :id => todo.id, :project_id => todo.project},
-          :html => {:class => todo_class} #,
-         # :update => "todo_#{todo.id}" 
+          :url => polymorphic_url([parent_object,todo], :action => :toggle_complete), :method => :post,
+          :html => {:class => todo_class} 
          )
     %><%= link_to_remote( image_tag('add.png', :title => l(:todo_add_child_tooltip)), 
-      :url => { :controller => "#{'projects/' + todo.project.identifier.to_s + '/' if todo.project}#{'issues/' + todo_issue.to_s + '/' if todo_issue}#{todos_controller}/#{todo.id}",
-	      :action => 'new' },
+      :url => new_polymorphic_url( [parent_object,:todo], :parent_id => todo, :issue_id => todo_issue), :method => :get,
+         
+      #{ :controller => "#{'projects/' + todo.project.identifier.to_s + '/' if todo.project}#{'issues/' + todo_issue.to_s + '/' if todo_issue}#{todos_controller}/#{todo.id}",     :action => 'new' },
       :html => {:class => 'icon-new'}, 
-      :update => "todo#{todo.id}-new-box" ) #, :position => :top
+      :update => "todo#{todo.id}-new-box" ) 
         
     %><%= link_to_remote( image_tag('delete.png', :title => l(:todo_delete_tooltip)), 
-      :url => { :controller => todos_controller, :action => 'destroy', :id => todo,:project_id => todo.project},
+      :url => polymorphic_url([ parent_object,todo]), :method => :delete,
       :confirm => l(:text_are_you_sure), :html => {:class => 'icon-delete'}, 
       :update => "todo_#{todo.id}" ) 
     %>
