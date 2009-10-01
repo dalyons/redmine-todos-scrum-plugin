@@ -12,6 +12,7 @@ Please check the issues page(thanks Mischa!) for current known bugs.
 * Re-implementation of todo editing functionality - now you can edit everything, not just text.
 * Massive refactoring of the todo associations to make them simpler and more generic, and to prepare for templates.
 * Russian translations added
+* IMPORTANT NOTE: you will have to 'rake db:migrate_plugins' after updating to this version(there are db changes)!!!
 
 == Release 0.0.3.8
 * Issue page integration (Adding todos directly in the Issue page)
