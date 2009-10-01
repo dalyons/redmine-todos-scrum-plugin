@@ -7,11 +7,13 @@
   <%= render :partial => 'todos/link_bar' %>
   <h3><%= l(:mytodos_heading)%></h3>
   
-  <%= render :partial => 'new_todo',
+  <%= render :partial => 'todos/new_todo',
        :locals => {:todo => @new_todo } %>
 
   <%= render :partial => 'todos/root_todos', 
-      :locals => {:todos => @personal_todos, :editable => true, :project_id => 'personal'} %>
+      :locals => {:todos => @personal_todos, :editable => true, :parent_object => @user} #:project_id => 'personal'} 
+      
+      %>
 
 
 </div>
@@ -29,7 +31,7 @@
     </h3>
     
     <%= render :partial => 'todos/root_todos', 
-        :locals => {:todos => todos, :project_id => project, :editable => false} %>
+        :locals => {:todos => todos, :parent_object => project, :editable => false} %>
         
   <% end %>
 

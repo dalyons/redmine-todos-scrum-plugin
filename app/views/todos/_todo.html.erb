@@ -32,6 +32,7 @@
       :url => polymorphic_url([ parent_object,todo]), :method => :delete,
       :confirm => l(:text_are_you_sure), :html => {:class => 'icon-delete'}, 
       :update => "todo_#{todo.id}" ) 
+      
     %>
   
   <% else %>

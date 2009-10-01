@@ -11,7 +11,7 @@ class RemoveOldTodoAssociations < ActiveRecord::Migration
       todo.update_attributes!(:todoable_type => 'User', :todoable_id => todo.author_id)
     end
     
-    remove_column :todos, :project_id
+    #remove_column :todos, :project_id
 
   end
 

@@ -21,7 +21,25 @@ module TodoIssuesControllerPatch
   module ClassMethods    
     def show_with_todo
       @allowed_to_edit_todos = User.current.allowed_to?(:edit_todos, @project)
-      @todos = Todo.for_project(@project.id).roots.find(:all, :conditions => ["issue_id = ?", @issue.id])
+      
+      #find all todos that relate to this issue... but only collect the 'highest' ones, as we dont want to double render. 
+      #consider a nested todo list, A -> B -> [C,D]  where B and D both refer to the issue.
+      #We only want to show B, the highest related todo.
+      
+      #get all the issue todos, highest first.
+      all_issue_todos = @project.todos.find_all_by_issue_id(@issue.id).sort{|a,b| a.ancestors.length <=> b.ancestors.length}
+      
+      @todos = all_issue_todos.inject(Set.new) do |highest, todo|
+        ancestors = Set.new(todo.ancestors)
+        if highest.intersection(ancestors).empty?  
+          highest.add todo
+        end
+        highest
+      end
+      
+      @todos = @todos.to_a
+      
+      #@todos = @project.todos.roots.find(:all, :conditions => ["issue_id = ?", @issue.id])
       show_without_todo
     end
 
