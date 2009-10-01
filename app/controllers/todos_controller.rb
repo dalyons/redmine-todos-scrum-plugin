@@ -83,7 +83,7 @@ class TodosController < ApplicationController
     if (request.xhr?)
       @element_html = render_to_string :partial => 'todos/todo',
                                          :locals => {:todo => @todo, :editable => true}                 
-      render :action => "todo.rjs"
+      render :template => "todos/todo.rjs"
     else
       redirect_to :action => "index", :project_id => params[:project_id]
     end

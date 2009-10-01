@@ -33,7 +33,7 @@ class MytodosController < TodosController
 
  protected
   def parent_object
-    todoable = User.current.becomes(User)   #you can only ever view your own todos.
+    todoable = User.current   #you can only ever view your own mytodos.
     raise ActiveRecord::RecordNotFound, "TODO association not FOUND! " if !todoable
     
     return todoable

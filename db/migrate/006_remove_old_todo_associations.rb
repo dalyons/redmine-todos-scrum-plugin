@@ -8,10 +8,10 @@ class RemoveOldTodoAssociations < ActiveRecord::Migration
     
     #Turn personal todos(authored, no project) into proper User todos
     Todo.find(:all,:conditions => 'project_id is null').each do |todo|
-      todo.update_attributes!(:todoable_type => 'User', :todoable_id => todo.author_id)
+      todo.update_attributes!(:todoable => todo.author)
     end
     
-    #remove_column :todos, :project_id
+    remove_column :todos, :project_id
 
   end
 
