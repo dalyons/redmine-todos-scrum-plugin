@@ -28,6 +28,11 @@
       :html => {:class => 'icon-new'}, 
       :update => "todo#{todo.id}-new-box" ) 
         
+    %><%= link_to_remote( image_tag('edit.png', :title => 'Edit'), 
+      :url => edit_polymorphic_url( [parent_object,todo]), :method => :get,
+      :html => {:class => 'icon-edit'}, 
+      :update => "todo_#{todo.id}" )
+      
     %><%= link_to_remote( image_tag('delete.png', :title => l(:todo_delete_tooltip)), 
       :url => polymorphic_url([ parent_object,todo]), :method => :delete,
       :confirm => l(:text_are_you_sure), :html => {:class => 'icon-delete'}, 

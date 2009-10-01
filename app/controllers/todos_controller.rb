@@ -13,7 +13,7 @@ class TodosController < ApplicationController
   #end
   
   #before_filter :find_project  #, :only => [:index] 
-  before_filter :find_todo, :only => [:destroy, :show, :toggle_complete, :edit]
+  before_filter :find_todo, :only => [:destroy, :show, :toggle_complete, :edit, :update]
   before_filter :authorize
 
   helper :todos
@@ -52,18 +52,15 @@ class TodosController < ApplicationController
     #  raise ex, l(:todo_not_found_error)
     #end
     
-    if @todo
-      respond_to do |format|
-        format.html { render }
-        #format.js { render :action => 'show' }
-      end
-    else
-      flash.now[:error] = @todo.errors.collect{|k,m| m}.join
-      respond_to do |format|
-        format.html { redirect_to :action => 'index' }
-        #format.js { render :action => 'edit' }
-      end
+    respond_to do |format|
+      format.html { render }
+      format.js { 
+        @element_html = render_to_string :partial => 'todos/todo',
+                                         :locals => {:todo => @todo, :editable => true}                 
+        render :template => "todos/todo.rjs"
+      }
     end
+
   end
 
   def new
@@ -129,24 +126,43 @@ class TodosController < ApplicationController
     #render :action => "sort.rjs"
   end
 
+  def update
+    if @todo.update_attributes(params[:todo])
+      if request.xhr?
+        show
+      else
+        flash[:notice] = "Todo updated!"
+        redirect_to :action => :index
+      end
+    else
+      render :text => "Error in update"
+    end
+  end
 
   def edit
-    if request.post?
-      #@todo = Todo.for_project(@project.id).find(params[:id])
-      if @todo.update_attributes(:text => params[:text])
-        @allowed_to_edit = User.current.allowed_to?(:edit_todos, parent_object)
-        respond_to do |format|
-          format.html { redirect_to :action => 'index' }
-          format.js { render :action => 'update', :controller => :todos  }
-        end
-      else
-        flash.now[:error] =  @todo.errors.collect{|k,m| m}.join
-        respond_to do |format|
-          format.html { redirect_to :action => 'index' }
-          format.js { render :action => 'edit', :controller => :todos }
-        end
+    if request.xhr?
+      respond_to do |format|
+        format.html { render :partial => "todos/inline_edit.html", :locals => {:todo => @todo} }
       end
+    else
+      raise "Non-ajax editing not supported..."
     end
+    
+      #if @todo.update_attributes(:text => params[:text])
+      #  @allowed_to_edit = User.current.allowed_to?(:edit_todos, parent_object)
+      #  respond_to do |format|
+      #    format.html { render :partial => "todos/inline_edit.html", :locals => {:todo => @todo} }
+          #format.js { render :action => 'update', :controller => :todos  }
+          #format.js { render :partial => "todos/inline_edit.html", :locals => {:todo => @todo} }
+      #  end
+      #else
+      #  flash.now[:error] =  @todo.errors.collect{|k,m| m}.join
+      #  respond_to do |format|
+          #format.html { redirect_to :action => 'index' }
+      #    format.js { render :action => 'edit', :controller => :todos }
+      #  end
+      #end
+
   end
 
  protected

@@ -27,7 +27,7 @@ Redmine::Plugin.register :redmine_todos_plugin do
   name 'Redmine Todo Lists plugin'
   author 'David Lyons'
   description 'A plugin to create and manage agile-esque todo lists on a per project basis.'
-  version '0.0.3.8'
+  version '0.0.3.9'
   
 
   settings :default => {
@@ -39,11 +39,11 @@ Redmine::Plugin.register :redmine_todos_plugin do
     permission :view_todos, {:todos => [:index, :show] }
       
     permission :edit_todos,
-      {:todos => [:create, :destroy, :new, :toggle_complete, :sort, :edit],
-        :issues => [:create, :destroy, :new, :toggle_complete, :sort, :edit]}
+      {:todos => [:create, :destroy, :new, :toggle_complete, :sort, :edit, :update],
+        :issues => [:create, :destroy, :new, :toggle_complete, :sort, :edit, :update]}
   
     permission :use_personal_todos,
-      {:mytodos => [:index,:destroy, :new, :create, :toggle_complete, :index, :sort, :edit]}
+      {:mytodos => [:index,:destroy, :new, :create, :toggle_complete, :index, :sort, :edit, :update]}
          
   end
  
