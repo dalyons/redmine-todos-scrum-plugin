@@ -1,5 +1,6 @@
 <% todos_controller = (controller.controller_name == 'issues') ? 'todos' : controller.controller_name %>
 <% editable ||= false %>
+<% raise unless parent_object %>
 
     <ul class="todos root" id="<%= TodosController::UL_ID + 'root' %><%='not-editable' unless editable %>">
       <% for todo in todos.sort{|a,b| a.position <=> b.position} %>
@@ -10,7 +11,8 @@
       if editable then
          sortable_element(
             TodosController::UL_ID + 'root', 
-            :url => {:controller => todos_controller, :action => 'sort', :project_id => project_id},
+            #:url => {:controller => todos_controller, :action => 'sort', :project_id => project_id},
+            :url => polymorphic_url([parent_object, :todos], :action =>:sort), :method => :post,
             :handle => "todo-content", :tree => true
          ) 
       end 

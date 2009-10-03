@@ -3,9 +3,16 @@
 A nested, easy to use project based todos plugin for Redmine. Allows easy creation and management of infinitely nestable todo lists on a per project basis, that can be organised into sprints(or releases). 
 Also provides global 'My Todos' for all projects. Todos can be allocated to uses, and tied to Redmine Issues.
 
-Currently has translations for Chinese, Spanish, Italian, French, German, Korean, Japanese and English, thanks to contributions from others. 
+Currently has translations for Russian, Chinese, Spanish, Italian, French, German, Korean, Japanese and English, thanks to contributions from others. 
 
 Please check the issues page(thanks Mischa!) for current known bugs.
+
+== Release 0.0.3.9
+* Merging in of nowhereman's changes(thanks for all the features!)
+* Re-implementation of todo editing functionality - now you can edit everything, not just text.
+* Massive refactoring of the todo associations to make them simpler and more generic, and to prepare for templates.
+* Russian translations added
+* IMPORTANT NOTE: you will have to 'rake db:migrate_plugins' after updating to this version(there are db changes)!!!
 
 == Release 0.0.3.8
 * Issue page integration (Adding todos directly in the Issue page)

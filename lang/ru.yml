@@ -1,0 +1,36 @@
+#todos russian file for Rails < 2.2.2
+
+project_todos_title: Заметки
+my_todos_title: Заметки к выполнению
+
+todo_sort_no_project_error: "нет возможности сортировки без указания проекта"
+todo_project_not_found_error: "Проект не найден!"
+todo_new_missing_update_target_error: "Вам необходимо update_target!!"
+
+mytodos_heading: Мои личные заметки к выполнению
+mytodos_edit_project_tooltip: "Редактирование заметок для текущего проекта"
+
+todo_new_done_link: Добавление заметки выполнено
+todo_new_due_label: к дате
+todo_new_or_label: или
+todo_new_create_button: Создать заметку
+todo_new_issue_tooltip: связана с
+todo_new_assign_to_tooltip: назначена на
+
+todos_project_heading: Заметки для
+todos_print_button_tooltip: Печать текущего списка
+
+todo_unmark_tooltip: Пометить эту заметку (и все подчиненные) как Невыполненные
+todo_mark_tooltip: Пометить эту заметку (и все подчиненные) как Выполненную
+todo_add_child_tooltip: 'добавить подзаметку к текущей'
+todo_delete_tooltip: Удалить текущую заметку (и подчиненные)
+
+todo_due_label: "К дате:"
+todo_assigned_label: "Назначена на:"
+todo_ref_label: "Связана с:"
+
+project_module_todo_lists: Списки заметок
+
+permission_view_project_todo_lists: Просмотр списков заметок
+permission_edit_project_todo_lists: Редактирование списков заметок
+permission_use_personal_todo_lists: Использовать свой список заметок

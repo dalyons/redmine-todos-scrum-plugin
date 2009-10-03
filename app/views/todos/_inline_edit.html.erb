@@ -1,0 +1,33 @@
+<% raise unless todo %>
+
+<div>
+  <div class='todos-edit'>
+    <% remote_form_for([todo.todoable,todo], :html => {:class => 'inline'}) do |f| %>
+      <%= f.text_field :text %>
+      Due:
+      <%= f.text_field :due, :size => 8 %>
+      <%= calendar_for :todo_due %>
+      <% if todo.todoable.is_a? Project %>
+        <%= f.select :assigned_to_id, todo.todoable.users.collect{|m| [m.name,m.id]},
+             {:prompt=> l(:todo_new_assign_to_tooltip) },  
+             {:title => l(:todo_new_assign_to_tooltip) }
+         %>
+         <%= f.select :issue_id,           todo.possible_issues.collect{ |i| 
+                subject = i.subject[0..40].scan(/([\x00-\x7f]|[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3})/on).join
+                ["##{i.id} #{subject}... #{i.tracker.name}" , i.id]
+              },
+              {:prompt=> l(:todo_new_issue_tooltip), :selected => (todo.issue_id)?  todo.issue_id.to_i : nil}
+        %>
+      <% end %>
+      <br />
+      <%= f.submit %>
+      <%= link_to_remote("cancel", :url => polymorphic_path([todo.todoable,todo]), :method => :get) %>
+      
+    
+    <% end %>
+
+
+  </div>
+  <div style='clear:both;' />
+</div>
+

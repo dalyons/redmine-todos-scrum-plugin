@@ -17,7 +17,7 @@ module TodosProjectPatch
     # Same as typing in the class
     Project.class_eval do
       unloadable # Send unloadable so it will not be unloaded in development
-      has_many :todos
+      has_many :todos, :as => :todoable
       #raise ActiveRecord::RecordNotFound, "pie"
 	#puts "ARRRRGH!!!!!!!!!!" + base.to_s
     end
@@ -44,12 +44,14 @@ module TodosUserPatch
     base.class_eval do
       unloadable # Send unloadable so it will not be unloaded in development
       
+      has_many :todos, :as => :todoable
+      
       #A user can 
       has_many :authored_todos, :class_name => 'Todo', :foreign_key => 'author_id', :order => 'position'
       has_many :assigned_todos, :class_name => 'Todo', :foreign_key => 'assigned_to_id', :order => 'position'
       
       #define a method to get the todos belonging to this user by UNIONing the above two collections
-      def todos
+      def my_todos
         self.authored_todos | self.assigned_todos
       end
       #raise ActiveRecord::RecordNotFound, "pie"

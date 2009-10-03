@@ -14,12 +14,12 @@
     <p><strong><%= l(:label_related_todos) %></strong></p>
     <div id='project-todos'>
       <%= render :partial => 'todos/root_todos',
-        :locals => {:todos => @todos, :project_id => @project, :editable => @allowed_to_edit_todos} %>
+        :locals => {:todos => @todos, :parent_object => @project, :editable => @allowed_to_edit_todos} %>
     </div>
   </div>
 <% end %>
 
 <div id='new-todo-form' style="<%= (params[:todo] ? '' : 'display: none;') %>">
   <%= render(:partial => 'todos/new_todo',
-    :locals => { :todo => Todo.new(:project => @project, :assigned_to => User.current, :issue_id => @issue.id)}) if @allowed_to_edit_todos %>
+    :locals => { :todo => @project.todos.new(:assigned_to => User.current, :issue_id => @issue.id)}) if @allowed_to_edit_todos %>
 </div>

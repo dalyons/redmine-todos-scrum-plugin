@@ -1,9 +1,0 @@
-@todo = Todo.for_user(User.current).find(params[:id])
-page.hide "todo-#{@todo.id}-text"
-if flash[:error]
-  page.replace "todo-#{@todo.id}-form",
-    :partial => 'todos/todo_text_form', :object => @todo
-else
-  page.insert_html :after, "todo-#{@todo.id}-text",
-                 :partial => 'todos/todo_text_form'
-end

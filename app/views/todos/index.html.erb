@@ -6,17 +6,17 @@
 
 <div id=project-todos>
   <%= render :partial => 'todos/link_bar' %>
-	<h2><%= l(:todos_project_heading) %> <%= @project.name %></h2>
-	<div style="" >
-	  
-		<%= render(:partial => 'new_todo', 
-					:locals => {:todo => Todo.new(:project => @project, :assigned_to => User.current)}) if @allowed_to_edit
-		%>
-		
-	</div>
+  <h2><%= l(:todos_project_heading) %> <%= @project.name %></h2>
+  <div style="" >
+ 
+    <%= render(:partial => 'new_todo', 
+        :locals => {:todo => @new_todo}) if @allowed_to_edit
+    %>
 
-	<%= render :partial => 'root_todos', 
-	  :locals => {:todos => @todos, :project_id => @project, :editable => @allowed_to_edit} %>
+  </div>
+
+  <%= render :partial => 'root_todos', 
+    :locals => {:todos => @todos, :parent_object => @project, :editable => @allowed_to_edit} %>
 
 </div>
 

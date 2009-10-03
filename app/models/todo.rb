@@ -22,15 +22,23 @@ class Todo < ActiveRecord::Base
   belongs_to :author, :class_name => 'User', :foreign_key => 'author_id'
   belongs_to :assigned_to, :class_name => 'User', :foreign_key => 'assigned_to_id'
   
-  belongs_to :project
+ 
   belongs_to :refers_to, :class_name => 'Issue', :foreign_key => 'issue_id'
   
+  #todos can belong to many different objects using the polymorphic interface.
+  belongs_to :todoable, :polymorphic => true
+  
+  #need an explicit association to project, because the acts_as_activity_provider needs it. I think?
+  belongs_to :project, :foreign_key => 'todoable_id', :conditions => ['todoable_type = ?', Project.to_s] 
+  
   named_scope :roots, :conditions => {:parent_id => nil }
-  named_scope :personal_todos, :conditions => {:project_id => nil}
-  named_scope :project_todos, :conditions => ["project_id is not null"]
-  named_scope :for_project, lambda {|*args| {:conditions => {:project_id => args.first}} }
-  named_scope :for_user, lambda {|*args|
-    { :conditions => ["author_id = ? OR assigned_to_id = ?",args.first, args.first] }
+  named_scope :personal_todos, :conditions => {:todoable_type => User.to_s}
+  named_scope :project_todos, :conditions => {:todoable_type => Project.to_s}
+  named_scope :for_project, lambda { |project_id|
+    {:conditions => {:todoable_type => Project.to_s, :todoable_id => project_id}} 
+  }
+  named_scope :for_user, lambda { |user_id|
+    { :conditions => ["author_id = ? OR assigned_to_id = ?",user_id, user_id] }
   }
 
   acts_as_event :title => Proc.new {|o| 
@@ -42,11 +50,11 @@ class Todo < ActiveRecord::Base
                                   items << ((r = o.refers_to) ? "#{l(:field_issue_to)}: #{r.tracker} ##{o.refers_to.id} (#{o.refers_to.status}): #{o.refers_to.subject}" : "")
                                   items.join("\n")
                                 },
-                :url => Proc.new {|o| {:controller => "projects/#{o.project.identifier}/todos", :action => 'show', :id => o}},
+                :url => Proc.new {|o| {:controller => "projects/#{o.todoable.identifier}/todos", :action => 'show', :id => o}},
                 :type => Proc.new {|o| 'todo'}
               
   acts_as_activity_provider :timestamp => "#{table_name}.updated_at",
-                            :find_options => {:include => [:project, :author, :refers_to]},
+                            :find_options => {:include => [ :project, :author, :refers_to]},
                             :author_key => :author_id
 
   validates_presence_of  :author
@@ -91,19 +99,14 @@ class Todo < ActiveRecord::Base
   end
   
   def possible_issues
-    if self.project
-      self.project.issues.find(:all, :order => "id DESC").reject{|i| i.closed?} 
+    if self.todoable.is_a? Project
+      self.todoable.issues.find(:all, :order => "id DESC").reject{|i| i.closed?} 
     else
       []
     end
   end
   
   def parent_or_root_id
-    if self.project
-      (parent_id || 'project-' + self.project.id.to_s).to_s
-    else
-      (parent_id || 'personal').to_s
-    end
     return (parent_id || 'root').to_s
   end
   
@@ -143,15 +146,16 @@ class Todo < ActiveRecord::Base
     reorder.call(todos_position_tree, nil)
     
   end
-  
-  def self::group_by_project(todos)
-    res = Hash.new{|h,k| h[k] = []}
-    todos.each{|todo| res[todo.project_id] << todo}
-    return res
-  end
+ 
+#########NOT USED?
+  #def self::group_by_project(todos)
+  #  res = Hash.new{|h,k| h[k] = []}
+  #  todos.each{|todo| res[todo.project_id] << todo}
+  #  return res
+  #end
   
   #find a todo by id, but return null if the user didnt author it or is not assigned to it
-  def self::find_by_user(todo_id, user_id)
-    self.find(todo_id, :conditions => ["author_id = :id OR assigned_to_id = :id",{:id => User.current.id}] )
-  end    
+  #def self::find_by_user(todo_id, user_id)
+  #  self.find(todo_id, :conditions => ["author_id = :id OR assigned_to_id = :id",{:id => User.current.id}] )
+  #end    
 end

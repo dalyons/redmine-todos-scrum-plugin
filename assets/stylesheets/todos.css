@@ -94,3 +94,15 @@ dt.todo {
     background-image:url(../images/todo.png);
 }
 
+.todos-edit {
+  border: 1px solid #e4e4e4; 
+  padding: 0.7em; 
+  margin:0.4em; 
+  background-color:#f6f6f6;
+  float: left;
+}
+.clearer {}
+.todos-edit form { display: inline; }
+
+
+
