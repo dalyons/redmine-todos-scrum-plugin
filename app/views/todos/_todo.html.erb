@@ -22,7 +22,7 @@
           :html => {:class => todo_class} 
          )
     %><%= link_to_remote( image_tag('add.png', :title => l(:todo_add_child_tooltip)), 
-      :url => new_polymorphic_url( [parent_object,:todo], :parent_id => todo, :issue_id => todo_issue), :method => :get,
+      :url => new_polymorphic_url( [parent_object,todo]), :parent_id => todo, :issue_id => todo_issue, :method => :get,
          
       #{ :controller => "#{'projects/' + todo.project.identifier.to_s + '/' if todo.project}#{'issues/' + todo_issue.to_s + '/' if todo_issue}#{todos_controller}/#{todo.id}",     :action => 'new' },
       :html => {:class => 'icon-new'}, 
