@@ -96,7 +96,7 @@ class TodosController < ApplicationController
     
     if @todo.save
       if (request.xhr?)
-        @element_html = render_to_string :partial => 'todos/todo_li.html',
+        @element_html = render_to_string :partial => 'todos/todo_li',
                                          :locals => { :todo => @todo, :editable => true }
         render :template => "todos/create.rjs"    #using rjs
       else
@@ -142,7 +142,7 @@ class TodosController < ApplicationController
   def edit
     if request.xhr?
       respond_to do |format|
-        format.html { render :partial => "todos/inline_edit.html", :locals => {:todo => @todo} }
+        format.html { render :partial => "todos/inline_edit", :locals => {:todo => @todo} }
       end
     else
       raise "Non-ajax editing not supported..."
