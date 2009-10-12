@@ -7,6 +7,10 @@ Currently has translations for Russian, Chinese, Spanish, Italian, French, Germa
 
 Please check the issues page(thanks Mischa!) for current known bugs.
 
+= Requirements
+* Redmine 0.8.5 or later (may work on earlier versions, but not tested for it)
+* Rails 2.2.1 or greater
+
 == Release 0.0.3.9
 * Merging in of nowhereman's changes(thanks for all the features!)
 * Re-implementation of todo editing functionality - now you can edit everything, not just text.
