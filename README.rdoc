@@ -15,6 +15,10 @@ Please check the issues page(thanks Mischa!) for current known bugs.
 * Redmine 0.8.5 or later (may work on earlier versions, but not tested for it) - Works best on 0.9.x
 * Rails 2.2.1 or greater (NOTE - if you are on 0.8.x, you will have to manually install a newer rails version & edit your config/enviroment.rb)
 
+== Release 0.0.4.0
+* Fixed bug where deleting projects or users left orphan todos that caused errors.
+* Added top-menu visiblity patch from fnordfish (issue #13) 
+
 == Release 0.0.3.9
 * Merging in of nowhereman's changes(thanks for all the features!)
 * Re-implementation of todo editing functionality - now you can edit everything, not just text.
