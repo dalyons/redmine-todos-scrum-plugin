@@ -8,8 +8,8 @@ Currently has translations for Russian, Chinese, Spanish, Italian, French, Germa
 Please check the issues page(thanks Mischa!) for current known bugs.
 
 = Requirements
-* Redmine 0.8.5 or later (may work on earlier versions, but not tested for it)
-* Rails 2.2.1 or greater
+* Redmine 0.8.5 or later (may work on earlier versions, but not tested for it) - Works best on 0.9.x
+* Rails 2.2.1 or greater (NOTE - if you are on 0.8.x, you will have to manually install a newer rails version & edit your config/enviroment.rb)
 
 == Release 0.0.3.9
 * Merging in of nowhereman's changes(thanks for all the features!)
