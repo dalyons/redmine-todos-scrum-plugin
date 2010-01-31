@@ -55,7 +55,10 @@ Redmine::Plugin.register :redmine_todos_plugin do
   end
  
   menu :top_menu, :mytodos, { :controller => 'mytodos', :action => 'index' }, 
-      :caption => :my_todos_title #, :public => false
+    :caption => :my_todos_title,
+    :if => Proc.new {
+      User.current.allowed_to?(:use_personal_todos, nil, :global => true)
+    }
      
   menu :project_menu, :todos, {:controller => 'todos', :action => 'index'}, 
       :caption => :label_todo_plural, :after => :new_issue, :param => :project_id
