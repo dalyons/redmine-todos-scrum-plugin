@@ -15,8 +15,8 @@ Please check the issues page(thanks Mischa!) for current known bugs.
 * Redmine 0.8.5 or later (may work on earlier versions, but not tested for it) - Works best on 0.9.x
 * Rails 2.2.1 or greater (NOTE - if you are on 0.8.x, you will have to manually install a newer rails version & edit your config/enviroment.rb)
 
-== Release 0.0.4.0
-* Fixed bug where you couldnt add a child todo on the Issue screen(oops!!).
+== Release 0.0.4.x
+* (0.0.4.1)Fixed bug where you couldnt add a child todo on the Issue screen(oops!!).
 * Fixed bug where deleting projects or users left orphan todos that caused errors.
 * Added top-menu visiblity patch from fnordfish (issue #13) 
 
