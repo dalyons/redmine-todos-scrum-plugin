@@ -44,7 +44,7 @@ module TodoIssuesControllerPatch
     end
 
     def show_todos
-       render :partial => 'todos', :locals => { :todos => @todos }
+       render_to_string :partial => 'todos', :locals => { :todos => @todos }
     end
   end
 
