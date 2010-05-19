@@ -1,7 +1,7 @@
 require 'redmine'
 
 # Hooks
-require 'todo_issues_hook'
+require_dependency 'todo_issues_hook'
 
 # Patches to the Redmine core
 require 'dispatcher'

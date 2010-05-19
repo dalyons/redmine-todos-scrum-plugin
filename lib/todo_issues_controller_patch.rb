@@ -19,7 +19,7 @@ require_dependency 'issues_controller'
 
 module TodoIssuesControllerPatch
   module ClassMethods    
-    def show_with_todo
+    def set_todos
       @allowed_to_edit_todos = User.current.allowed_to?(:edit_todos, @project)
       
       #find all todos that relate to this issue... but only collect the 'highest' ones, as we dont want to double render. 
@@ -38,24 +38,19 @@ module TodoIssuesControllerPatch
       end
       
       @todos = @todos.to_a
-      
-      #@todos = @project.todos.roots.find(:all, :conditions => ["issue_id = ?", @issue.id])
-      show_without_todo
     end
 
-    def show_todos
-       render_to_string :partial => 'todos', :locals => { :todos => @todos }
-    end
+    private :set_todos
   end
 
   def self.included(base) # :nodoc:
     base.send(:include, ClassMethods)
     base.extend(ClassMethods)
-    # Same as typing in the class
+
     base.class_eval do
       unloadable # Send unloadable so it will not be unloaded in development
       helper :todos
-      alias_method_chain(:show, :todo) unless method_defined?(:show_without_todo)
+      before_filter :set_todos, :only => :show
     end
   end
 end

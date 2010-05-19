@@ -7,10 +7,7 @@ class TodoIssuesHook < Redmine::Hook::ViewListener
   # Context:
   # * :issue => Current issue
   #
-  def view_issues_show_description_bottom(context ={ })
-    controller = context[:controller]
-    controller.show_todos
-  end
+  render_on :view_issues_show_description_bottom, :partial => 'todos', :locals => { :todos => @todos }
 
   def view_layouts_base_html_head(context = {})
     project = context[:project]
