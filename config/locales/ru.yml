@@ -1,5 +1,6 @@
 #Todos Russian locale File for Rails >= 2.2.2
 ru:
+  label_todo_plural: Списки задач
   project_todos_title: Заметки
   my_todos_title: Заметки к выполнению
   

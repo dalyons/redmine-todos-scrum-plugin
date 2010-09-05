@@ -17,7 +17,7 @@ module TodosProjectPatch
     # Same as typing in the class
     Project.class_eval do
       unloadable # Send unloadable so it will not be unloaded in development
-      has_many :todos, :as => :todoable
+      has_many :todos, :as => :todoable, :dependent => :destroy
       #raise ActiveRecord::RecordNotFound, "pie"
 	#puts "ARRRRGH!!!!!!!!!!" + base.to_s
     end
@@ -44,7 +44,7 @@ module TodosUserPatch
     base.class_eval do
       unloadable # Send unloadable so it will not be unloaded in development
       
-      has_many :todos, :as => :todoable
+      has_many :todos, :as => :todoable, :dependent => :destroy
       
       #A user can 
       has_many :authored_todos, :class_name => 'Todo', :foreign_key => 'author_id', :order => 'position'

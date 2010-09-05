@@ -34,3 +34,11 @@ zh:
   
   project_module_todo_lists: 日程管理
 
+  label_related_todos: 相关日程
+
+  todo_not_found_error: 找不到日程!
+
+  label_todo: 日程
+  todo_status_done: 已完成
+  todo_status_new: 新建
+  todo_status_updated: 更新
