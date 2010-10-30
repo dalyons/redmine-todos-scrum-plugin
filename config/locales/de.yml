@@ -34,3 +34,7 @@ de:
   permission_view_todos: Anstehende Aufgaben einsehen
   permission_edit_todos: Anstehende Aufgaben bearbeiten
   permission_use_personal_todos: Persönliche Liste für anstehende Aufgaben nutzen
+  label_related_todos: Verbundene Aufgaben
+  label_todo: Aufgabe
+  todo_status_new: Neu
+
