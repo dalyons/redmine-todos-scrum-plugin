@@ -3,11 +3,12 @@
 A nested, easy to use project based todos plugin for Redmine. Allows easy creation and management of infinitely nestable todo lists on a per project basis, that can be organised into sprints(or releases). 
 Also provides global 'My Todos' for all projects. Todos can be allocated to uses, and tied to Redmine Issues.
 
-Currently has translations for Russian, Chinese, Spanish, Italian, French, German, Korean, Japanese and English, thanks to contributions from others. 
+Currently has translations for Russian, Chinese, Spanish, Italian, French, German, Korean, Japanese, Polish, Brazilian Portugese and English, thanks to contributions from others. 
 
 Please check the issues page(thanks Mischa!) for current known bugs.
 
 = News
+* polish, brazilian portugese locales added, misc lang fixes for other locales.
 * Redmine 0.9.x - Please let me know if this plugin dosent work for you on redmine 0.9.x. I tested it on a clean 0.9.1 redmine, and it worked fine - let me know if you have any issues.
 * Redmine 0.8.x - There appear to be some issues with 0.8.x even with rails >= 2.2.1. If upgrading to 0.9.x is not an option, please let me know and ill try to fix it for 0.8.x.
 
