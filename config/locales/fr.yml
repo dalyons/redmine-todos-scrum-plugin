@@ -1,45 +1,46 @@
 #language file for fr - post rails 2.2.2
+##updated by Thibaut Cuvelier on May 29th, 2010
 fr:
   label_todo_plural: Tâches
   my_todos_title: Mes Tâches
 
-  todo_sort_no_project_error: "impossible de trier sans un projet!"
-  todo_project_not_found_error: "Le Projet demandé n'existe pas!"
-  todo_new_missing_update_target_error: "Vous devez spécifier un update_target!!"
+  todo_sort_no_project_error: "Impossible de trier sans projet !"
+  todo_project_not_found_error: "Le projet demandé n'existe pas !"
+  todo_new_missing_update_target_error: "Vous devez spécifier une cible de mise-à-jour !"
 
-  mytodos_heading: Mes Tâches Personnelles
-  mytodos_edit_project_tooltip: "Editer les tâches pour ce projet"
+  mytodos_heading: "Mes tâches personnelles"
+  mytodos_edit_project_tooltip: "Éditer les tâches pour ce projet"
 
-  todo_new_done_link: Terminer l'ajout de Tâche
-  todo_new_due_label: Date d'échéance
-  todo_new_or_label: ou
-  todo_new_create_button: Créer une Tâche
-  todo_new_issue_tooltip: se rapporte à
-  todo_new_assign_to_tooltip: assigner à
+  todo_new_done_link: "Terminer l'ajout de tâche"
+  todo_new_due_label: "Date d'échéance"
+  todo_new_or_label: "ou"
+  todo_new_create_button: "Créer une tâche"
+  todo_new_issue_tooltip: "se rapporte à"
+  todo_new_assign_to_tooltip: "assigner à"
 
-  todos_project_heading: Tâches pour
-  todos_print_button_tooltip: Imprimer cette liste
+  todos_project_heading: "Tâches pour"
+  todos_print_button_tooltip: "Imprimer cette liste"
 
-  todo_unmark_tooltip: Marquer cette tâches (et ses fils) comme Incomplète
-  todo_mark_tooltip: Marquer cette tâche (et ses fils) comme Terminée
-  todo_add_child_tooltip: 'ajouter un fils à cette tâche'
-  todo_delete_tooltip: effacer cette tâche (et ses fils!)
+  todo_unmark_tooltip: "Marquer cette tâche (et ses fils) comme incomplète"
+  todo_mark_tooltip: "Marquer cette tâche (et ses fils) comme terminée"
+  todo_add_child_tooltip: "Ajouter un fils à cette tâche"
+  todo_delete_tooltip: "Effacer cette tâche et ses fils"
 
-  todo_due_label: "Date d'échéance:"
-  todo_assigned_label: "Assigné à:"
-  todo_ref_label: "Ref:"
+  todo_due_label: "Date d'échéance :"
+  todo_assigned_label: "Assigné à :"
+  todo_ref_label: "Référence :"
 
-  project_module_todo_lists: Liste de Tâches
+  project_module_todo_lists: "Liste de tâches"
 
-  permission_view_todos: Voir les Listes de Tâches
-  permission_edit_todos: Editer les Listes de Tâches
-  permission_use_personal_todos: Utiliser les Listes de Tâches personnelles
+  permission_view_todos: "Voir les listes de tâches"
+  permission_edit_todos: "Éditer les listes de tâches"
+  permission_use_personal_todos: "Utiliser les listes de tâches personnelles"
 
-  label_related_todos: Tâches liées
+  label_related_todos: "Tâches liées"
 
-  todo_not_found_error: "La Tâche demandée n'existe pas!"
+  todo_not_found_error: "La tâche demandée n'existe pas !"
 
-  label_todo: Tâche
-  todo_status_done: Terminé
-  todo_status_new: Nouveau
-  todo_status_updated: Mise à jour
+  label_todo: "Tâche"
+  todo_status_done: "Terminé"
+  todo_status_new: "Nouveau"
+  todo_status_updated: "Mis à jour"
