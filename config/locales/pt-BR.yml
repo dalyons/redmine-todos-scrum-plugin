@@ -1,0 +1,44 @@
+pt-BR:
+  label_todo_plural: Lembretes
+  my_todos_title: Meus lembretes
+
+  todo_sort_no_project_error: "não pode ordenar sem um projeto!"
+  todo_project_not_found_error: "Projeto não encontrado!"
+  todo_new_missing_update_target_error: "Você precisa de um update_target!!"
+
+  mytodos_heading: Meus lembretes pessoais
+  mytodos_edit_project_tooltip: "Editar os lembretes deste projeto"
+
+  todo_new_done_link: Criação de lembretes Feita
+  todo_new_due_label: Prazo
+  todo_new_or_label: ou
+  todo_new_create_button: Criar lembrete
+  todo_new_issue_tooltip: referente a
+  todo_new_assign_to_tooltip: atribuído para
+
+  todos_project_heading: Lembrete para
+  todos_print_button_tooltip: Imprimir esta lista
+
+  todo_unmark_tooltip: Marcar este lembrete (e filho) como Incompleto
+  todo_mark_tooltip: Marcar este lembrete (e filhos) como Feito
+  todo_add_child_tooltip: 'adicionar filho a este lembrete'
+  todo_delete_tooltip: excluir este lembrete (e filhos!)
+
+  todo_due_label: "Prazo:"
+  todo_assigned_label: "Atribuído para:"
+  todo_ref_label: "Ref:"
+
+  project_module_todo_lists: Listas de lembretes
+
+  permission_view_todos: Ver listas de lembretes
+  permission_edit_todos: Editar listas de lembretes
+  permission_use_personal_todos: Usar lista de lembretes pessoais
+
+  label_related_todos: Lembretes relacionados
+
+  todo_not_found_error: "Lembrete não encontrado!"
+
+  label_todo: Lembrete
+  todo_status_done: Feito
+  todo_status_new: Novo
+  todo_status_updated: Atualizado
