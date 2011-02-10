@@ -30,9 +30,9 @@ todo_ref_label: "参照先:"
 
 project_module_todo_lists: Todoリスト
 
-permission_view_todos: View Todo Lists
-permission_edit_todos: Edit Todo Lists
-permission_use_personal_todos: Use personal Todo Lists
+permission_view_todos: Todoリストの閲覧
+permission_edit_todos: Todoリストの編集
+permission_use_personal_todos: マイTodoリストの使用
 
 label_related_todos: 関連するTodo
 
