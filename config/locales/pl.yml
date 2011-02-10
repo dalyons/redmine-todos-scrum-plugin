@@ -1,0 +1,45 @@
+#Todos Polish locale File for Rails >= 2.2.2
+pl:
+  label_todo_plural: TODOs
+  my_todos_title: Moje TODOs
+
+  todo_sort_no_project_error: "Nie można sortować bez projektu!"
+  todo_project_not_found_error: "Projekt nie znaleziony!"
+  todo_new_missing_update_target_error: "Potrzebujesz update_target!!"
+
+  mytodos_heading: Moje osobiste TODOs
+  mytodos_edit_project_tooltip: "Edytuj TODOs dla tego projektu"
+
+  todo_new_done_link: Zakończ dodawanie
+  todo_new_due_label: Czas zakończenia
+  todo_new_or_label: lub
+  todo_new_create_button: Stwórz Todo
+  todo_new_issue_tooltip: odnosi się do
+  todo_new_assign_to_tooltip: przypisany do
+
+  todos_project_heading: TODOs dla
+  todos_print_button_tooltip: Wydrukuj tą listę.
+
+  todo_unmark_tooltip: Zaznacz ten TODO(ze wszystkimi jego punktami) jako Nieukończony
+  todo_mark_tooltip: Zaznacz ten TODO(ze wszystkimi jego podpunktami) jako Ukończony
+  todo_add_child_tooltip: 'Dodaj podpunkt do tego TODO'
+  todo_delete_tooltip: Usuń ten TODO i wszystkie jego podpunkty
+
+  todo_due_label: "Czas zakończenia:"
+  todo_assigned_label: "Przypisany do:"
+  todo_ref_label: "Ref:"
+
+  project_module_todo_lists: Lista TODO
+
+  permission_view_todos: Zobacz listę TODO
+  permission_edit_todos: Edytuj listę TODO
+  permission_use_personal_todos: Użyj osobistej listy TODO
+
+  label_related_todos: Podobne TODO
+
+  todo_not_found_error: "TODO nie znaleziony!"
+
+  label_todo: Todo
+  todo_status_done: Ukończony
+  todo_status_new: Nowy
+  todo_status_updated: Zaktualizowany
