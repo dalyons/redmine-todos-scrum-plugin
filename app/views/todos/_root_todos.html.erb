@@ -7,15 +7,6 @@
           <%= render :partial => 'todos/todo_li', :locals => { :todo => todo, :editable => editable }%>
       <% end %>
     </ul>
-    <%= 
-      if editable then
-         sortable_element(
-            TodosController::UL_ID + 'root', 
-            #:url => {:controller => todos_controller, :action => 'sort', :project_id => project_id},
-            :url => polymorphic_url([parent_object, :todos], :action =>:sort), :method => :post,
-            :handle => "todo-content", :tree => true
-         ) 
-      end 
-    %>
+
         
 

@@ -8,10 +8,7 @@
 %>
 
 <div class="new-todo">
-  <% remote_form_for [parent_object,todo],
-      #:todo, todo, :url => {:controller => "todos", :action=> "create", :project_id => todo.project },
-      #:update =>  TodosController::UL_ID + todo.parent_or_root_id, :position => :bottom,
-      :success => "elements['todo[text]'].activate().clear();" do |f| %>
+  <%= form_for [parent_object,todo],:url => "/#{parent_object.class.to_s.downcase}s/#{parent_object.identifier}/todos" do |f| %>
       
     <%= f.hidden_field :due, :id=>"due#{todo.parent_id}", 
       :onchange=> "$('due#{todo.parent_id}_span').update($('due#{todo.parent_id}').value); $('due#{todo.parent_id}_cancel_span').show();"

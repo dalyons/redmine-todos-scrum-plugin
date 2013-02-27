@@ -64,6 +64,7 @@ class TodosController < ApplicationController
   end
 
   def new
+    parent_object = Project.find_by_identifier(params[:project_id])
     @todo = parent_object.todos.new
     @todo.parent_id = parent_object.todos.find(params[:parent_id]).id
     @todo.refers_to = Issue.find(params[:issue_id]) if params[:issue_id]
@@ -75,7 +76,7 @@ class TodosController < ApplicationController
   end
   
   def toggle_complete
-    #@todo = Todo.for_project(@project.id).find(params[:id])
+    @todo = Todo..find(params[:id])
     @todo.set_done !@todo.done
     if (request.xhr?)
       @element_html = render_to_string :partial => 'todos/todo',

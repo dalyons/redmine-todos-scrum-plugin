@@ -2,7 +2,7 @@
 
 <div>
   <div class='todos-edit'>
-    <% remote_form_for([todo.todoable,todo], :html => {:class => 'inline'}) do |f| %>
+    <% form_for([todo.todoable,todo], :html => {:class => 'inline'},:remote => true) do |f| %>
       <%= f.text_field :text %>
       Due:
       <%= f.text_field :due, :size => 8 %>
@@ -21,7 +21,7 @@
       <% end %>
       <br />
       <%= f.submit %>
-      <%= link_to_remote("cancel", :url => polymorphic_path([todo.todoable,todo]), :method => :get) %>
+      <%= link_to("cancel", polymorphic_path([todo.todoable,todo]), :method => :get ,:remote => true) %>
       
     
     <% end %>

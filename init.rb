@@ -4,9 +4,9 @@ require 'redmine'
 require_dependency 'todo_issues_hook'
 
 # Patches to the Redmine core
-require 'dispatcher'
 
-Dispatcher.to_prepare do
+
+Rails.configuration.to_prepare do
   require_dependency 'project'
   require_dependency 'user'
 
@@ -68,9 +68,9 @@ end
 
 #fix required to make the plugin work in devel mode with rails 2.2
 # as per http://www.ruby-forum.com/topic/171629
-load_paths.each do |path|
-  ActiveSupport::Dependencies.load_once_paths.delete(path)
-end
+#load_paths.each do |path|
+#  ActiveSupport::Dependencies.load_once_paths.delete(path)
+#end
 
 
 

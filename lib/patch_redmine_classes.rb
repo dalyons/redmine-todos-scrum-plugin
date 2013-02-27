@@ -66,8 +66,8 @@ module TodosUserPatch
   end
 end
  
-ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
-          :default => "%d/%m/%Y",
-          :short_day => "%b %d"
-)
-
+#ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
+#          :default => "%d/%m/%Y",
+#          :short_day => "%b %d"
+#)
+#
