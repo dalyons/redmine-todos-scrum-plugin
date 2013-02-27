@@ -2,6 +2,6 @@
 
 we have following working for redmine 2.1
 
-# viewing of project todo's
-# deleating a todo
-# addding a todo
+* viewing of project todo's
+* deleating a todo
+* addding a todo
