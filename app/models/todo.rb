@@ -1,15 +1,15 @@
 
 class Todo < ActiveRecord::Base
       
-        ##junk for trying to patch redmine classes - dosent work in dev
+  ##junk for trying to patch redmine classes - dosent work in dev
   
   #require_dependancy 'patch_redmine_classes' 
   #include TodosProjectPatch
   #include TodosUserPatch
   #Project.send(:include, TodosProjectPatch)
   #Dispatcher.to_prepare {
-#    Project.send(:include, TodosProjectPatch)
-#  }
+  #    Project.send(:include, TodosProjectPatch)
+  #  }
   #unless Rails.configuration.cache_classes
   #  raise "Sorry, cant run with reloading models. " +
   #        "Change config.cache_classes to 'true' or run in production mode!"
@@ -31,50 +31,48 @@ class Todo < ActiveRecord::Base
   #need an explicit association to project, because the acts_as_activity_provider needs it. I think?
   belongs_to :project, :foreign_key => 'todoable_id', :conditions => ['todoable_type = ?', Project.to_s] 
   
-#  named_scope :roots, :conditions => {:parent_id => nil }
+  #  named_scope :roots, :conditions => {:parent_id => nil }
   def self.roots
-  where(:parent_id => nil )
-end
-def self.personal_todos
-  where(:todoable_type => User.to_s )
-end
-def self.project_todos
-  where(:todoable_type => Project.to_s )
-end
-def self.for_project
-  lambda { |project_id|
-    {:conditions => {:todoable_type => Project.to_s, :todoable_id => project_id}}
-  }
-end
-#  named_scope :personal_todos, :conditions => {:todoable_type => User.to_s}
-#  named_scope :project_todos, :conditions => {:todoable_type => Project.to_s}
-#  named_scope :for_project, lambda { |project_id|
-#    {:conditions => {:todoable_type => Project.to_s, :todoable_id => project_id}}
-#  }
-#  named_scope :for_user, lambda { |user_id|
-#    { :conditions => ["author_id = ? OR assigned_to_id = ?",user_id, user_id] }
-#  }
-  def self.for_user
-  lambda { |user_id|
-    { :conditions => ["author_id = ? OR assigned_to_id = ?",user_id, user_id] }
-  }
-end
+    where(:parent_id => nil )
+  end
+  def self.personal_todos
+    where(:todoable_type => User.to_s )
+  end
+  def self.project_todos
+    where(:todoable_type => Project.to_s )
+  end
+  def self.for_project
+    lambda { |project_id|
+      {:conditions => {:todoable_type => Project.to_s, :todoable_id => project_id}}
+    }
+  end
+  #  named_scope :personal_todos, :conditions => {:todoable_type => User.to_s}
+  #  named_scope :project_todos, :conditions => {:todoable_type => Project.to_s}
+  #  named_scope :for_project, lambda { |project_id|
+  #    {:conditions => {:todoable_type => Project.to_s, :todoable_id => project_id}}
+  #  }
+  #  named_scope :for_user, lambda { |user_id|
+  #    { :conditions => ["author_id = ? OR assigned_to_id = ?",user_id, user_id] }
+  #  }
+  def self.for_user user_id
+     where("author_id = ? OR assigned_to_id = ?",user_id, user_id)
+  end
 
   acts_as_event :title => Proc.new {|o| 
     "#{l(:label_todo)} ##{o.id}
                 (#{(o.done)? l(:todo_status_done) : ((o.updated_at == o.created_at)? l(:todo_status_new) : l(:todo_status_updated))}): #{o.text}"},
-                :description => Proc.new{|o|
-                                  items = []
-                                  items << "#{l(:todo_assigned_label)} #{o.assigned_to}"
-                                  items << ((r = o.refers_to) ? "#{l(:field_issue_to)}: #{r.tracker} ##{o.refers_to.id} (#{o.refers_to.status}): #{o.refers_to.subject}" : "")
-                                  items.join("\n")
-                                },
-                :url => Proc.new {|o| {:controller => "projects/#{o.todoable.identifier}/todos", :action => 'show', :id => o}},
-                :type => Proc.new {|o| 'todo'}
+    :description => Proc.new{|o|
+    items = []
+    items << "#{l(:todo_assigned_label)} #{o.assigned_to}"
+    items << ((r = o.refers_to) ? "#{l(:field_issue_to)}: #{r.tracker} ##{o.refers_to.id} (#{o.refers_to.status}): #{o.refers_to.subject}" : "")
+    items.join("\n")
+  },
+    :url => Proc.new {|o| {:controller => "projects/#{o.todoable.identifier}/todos", :action => 'show', :id => o}},
+    :type => Proc.new {|o| 'todo'}
               
   acts_as_activity_provider :timestamp => "#{table_name}.updated_at",
-                            :find_options => {:include => [ :project, :author, :refers_to]},
-                            :author_key => :author_id
+    :find_options => {:include => [ :project, :author, :refers_to]},
+    :author_key => :author_id
 
   validates_presence_of  :author
   validates_length_of :text, :within => 1..255
@@ -137,11 +135,11 @@ end
   #complicated ugly method that sorts todos based on the nested param array passed in from
   #the Prototype sortable element helper.
   ###tree mode - prototype helps pass in the todo tree like so:
-    # "todo-children-ul_"=>{ 
-    #   "0"=>{"id"=>"96"}, 
-    #    "1"=>{"0"=>{"id"=>"93"}, "id"=>"68", "1"=>{"id"=>"92"}, "2"=>{"id"=>"94"}},
-    #    "2"=>{"id"=>"55"}, etc.. }
-    #so make a recursive reordering function for that structure.
+  # "todo-children-ul_"=>{
+  #   "0"=>{"id"=>"96"},
+  #    "1"=>{"0"=>{"id"=>"93"}, "id"=>"68", "1"=>{"id"=>"92"}, "2"=>{"id"=>"94"}},
+  #    "2"=>{"id"=>"55"}, etc.. }
+  #so make a recursive reordering function for that structure.
   def self::sort_todos(valid_todos, todos_position_tree = {}) #element_identifier = "todo-children-ul_", params = {})
     
     #logger.info "sorting!" + todos_position_tree.inspect
@@ -166,7 +164,7 @@ end
     
   end
  
-#########NOT USED?
+  #########NOT USED?
   #def self::group_by_project(todos)
   #  res = Hash.new{|h,k| h[k] = []}
   #  todos.each{|todo| res[todo.project_id] << todo}
