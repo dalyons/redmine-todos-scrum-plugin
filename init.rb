@@ -30,7 +30,7 @@ Rails.configuration.to_prepare do
   IssuesController.send(:include, TodoIssuesControllerPatch)
 end
 
-Redmine::Plugin.register "redmine-todos-scrum-plugin" do
+Redmine::Plugin.register "redmine_todos_scrum_plugin" do
   name 'Redmine Todo Lists plugin'
   author 'David Lyons'
   description 'A plugin to create and manage agile-esque todo lists on a per project basis.'

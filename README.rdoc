@@ -1,108 +1,19 @@
 = nested todo/scrum-ish plugin for redmine
 
-A nested, easy to use project based todos plugin for Redmine. Allows easy creation and management of infinitely nestable todo lists on a per project basis, that can be organised into sprints(or releases). 
-Also provides global 'My Todos' for all projects. Todos can be allocated to uses, and tied to Redmine Issues.
 
-Currently has translations for Russian, Chinese, Spanish, Italian, French, German, Korean, Japanese, Polish, Brazilian Portugese and English, thanks to contributions from others. 
+* Supporting redmine 2.1
 
-Please check the issues page(thanks Mischa!) for current known bugs.
+= Working features
 
-= News
-* polish, brazilian portugese locales added, misc lang fixes for other locales.
-* Redmine 0.9.x - Please let me know if this plugin dosent work for you on redmine 0.9.x. I tested it on a clean 0.9.1 redmine, and it worked fine - let me know if you have any issues.
-* Redmine 0.8.x - There appear to be some issues with 0.8.x even with rails >= 2.2.1. If upgrading to 0.9.x is not an option, please let me know and ill try to fix it for 0.8.x.
+* new todo
+* delete todo
 
-= Requirements
-* Redmine 0.8.5 or later (may work on earlier versions, but not tested for it) - Works best on 0.9.x
-* Rails 2.2.1 or greater (NOTE - if you are on 0.8.x, you will have to manually install a newer rails version & edit your config/enviroment.rb)
+= Installation
 
-== Release 0.0.4.x
-* (0.0.4.1)Fixed bug where you couldnt add a child todo on the Issue screen(oops!!).
-* Fixed bug where deleting projects or users left orphan todos that caused errors.
-* Added top-menu visiblity patch from fnordfish (issue #13) 
-
-== Release 0.0.3.9
-* Merging in of nowhereman's changes(thanks for all the features!)
-* Re-implementation of todo editing functionality - now you can edit everything, not just text.
-* Massive refactoring of the todo associations to make them simpler and more generic, and to prepare for templates.
-* Russian translations added
-* IMPORTANT NOTE: you will have to 'rake db:migrate_plugins' after updating to this version(there are db changes)!!!
-
-== Release 0.0.3.8
-* Issue page integration (Adding todos directly in the Issue page)
-* You can edit the text of a todo
-* You can use Textile syntax for the text
-* Better URL-construction
-* Activity page integration (Show todos statuses in Activity page)
-* Bugs fix
-
-== Release 0.0.3.7
-* French translations added(thanks Stéphane!)
-* German translations added(thanks Andreas!)
-* Actually commited the italian file, oops!
-* Korean translations added(thanks sio4!)
-* Japanese translations added(thanks iteman!)
-
-== Release 0.0.3.6
-* Italian translations added(thanks Marco!)
-* Spanish translations added(thanks Joaquim Casals!)
-* Fixed the unsortable todos after creation and check/uncheck, by adding RJS scripts to recreate the sortable elements
-* You can clear the date on new todos now
-* Tab highlighting works properly now(thanks Mischa!)
-
-== Release 0.0.3.5
-* Fixed the bug that prevented sorting on newly created todos without a page refresh! 
-* Changed the way project todos are displayed on MyTodos screen.
-* Fixed some minor ajax bugs
-* Added a few more chinese translations(thanks again Zou!)
-
-== Release 0.0.3.4
-* All strings are now localeized to comply with Rails 2.2.2 i18n. Lang files now live in /config/locales/.
-* As part of this release I had to change the plugin module name, which may mean you need to redo permissions?
-* Added chinese lang files(thanks Chaoqun Zou!), and fixed some AJAX bugs.
+* Checkout the repository
+* Copy folder into plugins folder of redmine
+* Rename folder to "redmine_todo_scrum_plugin"
+* Run command "rake redmine:plugins:migrate"
+* Restart the server
 
 
-== Release 0.0.3.3
-* Fixed the fix from the last release. Plugin no longer patches redmine classes, becuase this doesnt work in dev mode. Now uses named_scopes instead.
-* Now toggling items as complete is an AJAX call instead of a page reload.
-
-== Release 0.0.3.2
-* Fixed the inability to run the plugin on a rails server in development mode. It just uses a conditional to check for 'cache_classes', then reloads the offending module from the controller - if anyone knows of a better way please tell me.
-
-== Release 0.0.3.1
-* Fixed permissions issue. You no longer need to make any changes to Redmine's user.rb
-
-== Release 0.0.3
-* Implemented personal todo lists. Allows users to manage a personal list of todos through the 'My Todos' page. After upgrading to this version you will need to redo the module permissions in 'Roles and Permissions'.
-* minor bugfixes to the AJAX in the todo lists.
-* fair whack of refactoring.
-
-== Release 0.0.2.1
-Minor bugfixes:
-* Renamed/removed all references to this plugin from 'task_lists' to 'todos_list'. After updating to this ver you will have to re-setup roles & permissions, as well as re-enable the module on a per-project basis. Hopefully it wont change names again! Sorry for confusion.
-* Removed ruby-debug dependancy, a careless error by me. 
-
-== Release 0.0.2
-* Implements D&D re-ordering of lists.
-
-== Release 0.0.1
-* All todo functionality implemented, works great for simple todo listing needs.
-* Scrum/release groupings not implemented yet
-
-== Todo
-* Allow to edit *all* fields of a todo (make a toggle panel to show all fields).
-* Allow to move a personal todo to a todo project and vice-versa.
-* Update localizations (except for English and French)
-* Check if all actions respond in HTML and JavaScript format (to have a full JS degradation for better accessibility).
-
-== Installation 
-0. Follow the Redmine plugin installation steps at: http://www.redmine.org/wiki/redmine/Plugins 
-1. Cd to your redmine vendor/plugins dir.
-2. Git-clone the plugin from this repo into a folder in there (git clone git://github.com/dalyons/redmine-todos-scrum-plugin.git redmine_todos_plugin)
-3. Run the plugin migrations +rake db:migrate_plugins+
-4. Restart your Redmine web servers (e.g. mongrel, thin, mod_rails)
-5. Login to your Redmine install as an Administrator
-6. Setup the permissions for the todos module for your roles
-7. Enable the module on a per-project basis as needed.
-
-NOTE: the plugin directory *has* to be "redmine_todos_plugin", because Engines loads plugin stylesheets by path, not plugin name, which is a little lame.
