@@ -1,29 +1,44 @@
 
 <div class="new-todo">
-	<% remote_form_for :todo, todo, :url => {:action=> "create" }, 
-			#:update => nothing - the action returns an rjs, which handles the page updates
-			:success => "elements['todo[text]'].activate().clear();" do |f| %>
-			
-		<%= f.hidden_field :due, :id=>"due#{todo.parent_id}", 
-			:onchange=> "$('due#{todo.parent_id}_span').update($('due#{todo.parent_id}').value);"
-		%>
-		<%= f.text_field :text, :size => 40 %>
-		<span id="todo-flash-error-<%= todo.parent_id || 'root' %>" class='flash error' style='display: none;'></span>
-                
-		<%= l(:todo_new_due_label) %>
-		
-		  <span style='position: relative; top: -2px;'>
-		    <%= calendar_for "due#{todo.parent_id}" %></span>: <span id='<%= "due#{todo.parent_id}_span" %>' >
-		  </span>
+  <%=  form_for  todo, :url => "/users/#{@user.id}/todos", :remote => true,
+    #:update => nothing - the action returns an rjs, which handles the page updates
+  :success => "elements['todo[text]'].activate().clear();" do |f| %>
 
-		<%= f.hidden_field :parent_id %>
-		<br />
+    <%= f.hidden_field :due, :id=>"due#{todo.parent_id}",
+      :onchange=> "$('due#{todo.parent_id}_span').update($('due#{todo.parent_id}').value);"
+  %>
+    <%= f.text_field :text, :size => 40 %>
+    <span id="todo-flash-error-<%= todo.parent_id || 'root' %>" class='flash error' style='display: none;'></span>
 
-		<%= f.submit l(:todo_new_create_button) %>
-		<% if todo.parent %>
-		  <%= l(:todo_new_or_label) %> 
-			<%= link_to_function(l(:todo_new_done_link), 
-			    "Element.update('todo#{todo.parent_id}-new-box','')") %>
-		<% end %>
-	<% end %>
+    <%= l(:todo_new_due_label) %>
+
+    <span style='position: relative; top: -2px;'>
+      <%= calendar_for "due#{todo.parent_id}" %></span>: <span id='<%= "due#{todo.parent_id}_span" %>' >
+    </span>
+
+    <%= f.hidden_field :parent_id %>
+    <br />
+
+    <%= f.submit l(:todo_new_create_button),:class=>"mytodo_submit_button" %>
+    <% if todo.parent %>
+      <%= l(:todo_new_or_label) %>
+      <%= link_to_function(l(:todo_new_done_link),
+        "Element.update('todo#{todo.parent_id}-new-box','')") %>
+    <% end %>
+  <% end %>
 </div>
+
+<script type="text/javascript">
+  $('.mytodo_submit_button').click(function(event){
+    id=$(event.target).siblings('input#todo_text')
+    val=$(id).val()
+    if(val)
+    {
+      return true
+    }
+    else
+    {
+      return false
+    }
+})
+</script>
