@@ -62,9 +62,7 @@ class TodosController < ApplicationController
     respond_to do |format|
       format.html { render }
       format.js {
-        @element_html = render_to_string :partial => 'todos/todo',
-        :locals => {:todo => @todo, :editable => true}
-        render :template => "todos/todo.rjs"
+        render action: 'update_todo_ui'
       }
     end
 
@@ -118,6 +116,7 @@ class TodosController < ApplicationController
             @todos = @project.todos.roots
             @allowed_to_edit = User.current.allowed_to?(:edit_todos, @project)
             @new_todo = parent_object.todos.new(:assigned_to => User.current) #Todo.new
+            @issue_todos = 'reload'  unless  params[:todo][:issue_id].empty?
             render action: 'update_todo_ui'
           }
         end
