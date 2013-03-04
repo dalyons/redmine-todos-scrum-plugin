@@ -4,16 +4,15 @@
     #:update => nothing - the action returns an rjs, which handles the page updates
   :success => "elements['todo[text]'].activate().clear();" do |f| %>
 
-    <%= f.hidden_field :due, :id=>"due#{todo.parent_id}",
-      :onchange=> "$('due#{todo.parent_id}_span').update($('due#{todo.parent_id}').value);"
-  %>
     <%= f.text_field :text, :size => 40 %>
     <span id="todo-flash-error-<%= todo.parent_id || 'root' %>" class='flash error' style='display: none;'></span>
 
-    <%= l(:todo_new_due_label) %>
-
+    <%= l(:todo_new_due_label) %>:
+    <%= f.hidden_field :due, :id=>"due#{todo.parent_id}",
+      :onchange=> "$('due#{todo.parent_id}_span').update($('due#{todo.parent_id}').value);"
+  %>
     <span style='position: relative; top: -2px;'>
-      <%= calendar_for "due#{todo.parent_id}" %></span>: <span id='<%= "due#{todo.parent_id}_span" %>' >
+      <%= calendar_for "due#{todo.parent_id}" %></span> <span id='<%= "due#{todo.parent_id}_span" %>' >
     </span>
 
     <%= f.hidden_field :parent_id %>
@@ -40,5 +39,5 @@
     {
       return false
     }
-})
+  })
 </script>
