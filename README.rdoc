@@ -1,6 +1,7 @@
 = Nested todo/scrum-ish plugin for redmine
 
 * Supporting redmine 2.1
+* Supporting Rails 3
 
 = Working features
 
