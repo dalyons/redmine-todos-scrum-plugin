@@ -1,5 +1,4 @@
-= nested todo/scrum-ish plugin for redmine
-
+= Nested todo/scrum-ish plugin for redmine
 
 * Supporting redmine 2.1
 
@@ -15,5 +14,7 @@
 * Rename folder to "redmine_todo_scrum_plugin"
 * Run command "rake redmine:plugins:migrate"
 * Restart the server
+
+You are ready to go
 
 
