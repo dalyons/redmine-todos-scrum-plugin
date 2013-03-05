@@ -6,6 +6,9 @@
 
 * new todo
 * delete todo
+* edit todo
+* toggle todo completion status
+* supports self todos and their CRUD operations
 
 = Installation
 
