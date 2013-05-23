@@ -18,7 +18,7 @@ class TodosController < ApplicationController
 
   helper :todos
   
- #global string to use as the suffix for the element id for todo's <UL> 
+  #global string to use as the suffix for the element id for todo's <UL>
   UL_ID = "todo-children-ul_"
   TODO_LI_ID = "todo_"
   
@@ -41,11 +41,18 @@ class TodosController < ApplicationController
     else
       flash[:error] = l(:notice_unsuccessful_save) unless request.xhr?
     end
-    render :text => @todo.errors.collect{|k,m| m}.join
-
+    
+    respond_to do |format|
+      format.js {
+        @todos = @project.todos.roots
+        @allowed_to_edit = User.current.allowed_to?(:edit_todos, @project)
+        @new_todo = parent_object.todos.new(:assigned_to => User.current) #Todo.new
+        render action: 'update_todo_ui'
+      }
+    end
   end
 
-  def show    
+  def show
     #begin
     #  @todo = Todo.for_project(@project.id).find(params[:id])
     #rescue ActiveRecord::RecordNotFound => ex
@@ -54,33 +61,41 @@ class TodosController < ApplicationController
     
     respond_to do |format|
       format.html { render }
-      format.js { 
-        @element_html = render_to_string :partial => 'todos/todo',
-                                         :locals => {:todo => @todo, :editable => true}                 
-        render :template => "todos/todo.rjs"
+      format.js {
+        render action: 'update_todo_ui'
       }
     end
 
   end
 
   def new
+    @todo=Todo.new
+    @parrent_id=params[:parent_id]
+    parent_object = Project.find_by_identifier(params[:project_id])
     @todo = parent_object.todos.new
     @todo.parent_id = parent_object.todos.find(params[:parent_id]).id
     @todo.refers_to = Issue.find(params[:issue_id]) if params[:issue_id]
     @todo.assigned_to = User.current
-    
     #@todo.todoable = parent_object
-    
-    render :partial => 'new_todo', :locals => { :todo => @todo}
+    respond_to do |format|
+      format.js {
+        render action: 'update_todo_ui'
+      }
+    end
   end
   
   def toggle_complete
-    #@todo = Todo.for_project(@project.id).find(params[:id])
+    @todo = Todo.find(params[:id])
     @todo.set_done !@todo.done
     if (request.xhr?)
       @element_html = render_to_string :partial => 'todos/todo',
-                                         :locals => {:todo => @todo, :editable => true}                 
-      render :template => "todos/todo.rjs"
+        :locals => {:todo => @todo, :editable => true}
+      respond_to do |format|
+        format.js {
+          @allowed_to_edit = User.current.allowed_to?(:edit_todos, @project)
+          render action: 'update_todo_ui'
+        }
+      end
     else
       redirect_to :action => "index", :project_id => params[:project_id]
     end
@@ -96,9 +111,15 @@ class TodosController < ApplicationController
     
     if @todo.save
       if (request.xhr?)
-        @element_html = render_to_string :partial => 'todos/todo_li',
-                                         :locals => { :todo => @todo, :editable => true }
-        render :template => "todos/create.rjs"    #using rjs
+        respond_to do |format|
+          format.js {
+            @todos = @project.todos.roots
+            @allowed_to_edit = User.current.allowed_to?(:edit_todos, @project)
+            @new_todo = parent_object.todos.new(:assigned_to => User.current) #Todo.new
+            @issue_todos = 'reload'  unless  params[:todo][:issue_id].empty?
+            render action: 'update_todo_ui'
+          }
+        end
       else
         flash[:notice] = l(:notice_successful_create)
 
@@ -129,7 +150,12 @@ class TodosController < ApplicationController
   def update
     if @todo.update_attributes(params[:todo])
       if request.xhr?
-        show
+        respond_to do |format|
+          format.js {
+            @allowed_to_edit = User.current.allowed_to?(:edit_todos, @project)
+            render action: 'update_todo_ui'
+          }
+        end
       else
         flash[:notice] = "Todo updated!"
         redirect_to :action => :index
@@ -142,41 +168,43 @@ class TodosController < ApplicationController
   def edit
     if request.xhr?
       respond_to do |format|
-        format.html { render :partial => "todos/inline_edit", :locals => {:todo => @todo} }
+        format.js {
+          render action: 'update_todo_ui'
+        }
       end
     else
       raise "Non-ajax editing not supported..."
     end
     
-      #if @todo.update_attributes(:text => params[:text])
-      #  @allowed_to_edit = User.current.allowed_to?(:edit_todos, parent_object)
-      #  respond_to do |format|
-      #    format.html { render :partial => "todos/inline_edit.html", :locals => {:todo => @todo} }
-          #format.js { render :action => 'update', :controller => :todos  }
-          #format.js { render :partial => "todos/inline_edit.html", :locals => {:todo => @todo} }
-      #  end
-      #else
-      #  flash.now[:error] =  @todo.errors.collect{|k,m| m}.join
-      #  respond_to do |format|
-          #format.html { redirect_to :action => 'index' }
-      #    format.js { render :action => 'edit', :controller => :todos }
-      #  end
-      #end
+    #if @todo.update_attributes(:text => params[:text])
+    #  @allowed_to_edit = User.current.allowed_to?(:edit_todos, parent_object)
+    #  respond_to do |format|
+    #    format.html { render :partial => "todos/inline_edit.html", :locals => {:todo => @todo} }
+    #format.js { render :action => 'update', :controller => :todos  }
+    #format.js { render :partial => "todos/inline_edit.html", :locals => {:todo => @todo} }
+    #  end
+    #else
+    #  flash.now[:error] =  @todo.errors.collect{|k,m| m}.join
+    #  respond_to do |format|
+    #format.html { redirect_to :action => 'index' }
+    #    format.js { render :action => 'edit', :controller => :todos }
+    #  end
+    #end
 
   end
 
- protected
+  protected
 
   
   
   #TODO: there may be a better way...
   def parent_object
-    #todoable = 
+    #todoable =
     #  case
     #    when params[:user_id] then User.find(params[:user_id])
     #    when params[:project_id] then Project.find(params[:project_id])
     #    #when params[:todo_template_id] then TodoTemplate.find(params[:todo_template_id])
-    #  end   
+    #  end
     todoable = Project.find(params[:project_id]) if params[:project_id]
     raise ActiveRecord::RecordNotFound, "TODO association not FOUND! " if !todoable
     
@@ -188,7 +216,7 @@ class TodosController < ApplicationController
     raise ActiveRecord::RecordNotFound, "TODO NOT FOUND! id:" + params[:id] unless @todo
   end
   
- private
+  private
   def find_project
     @project = Project.find(params[:project_id])
     raise ActiveRecord::RecordNotFound, l(:todo_project_not_found_error) + " id:" + params[:project_id] unless @project

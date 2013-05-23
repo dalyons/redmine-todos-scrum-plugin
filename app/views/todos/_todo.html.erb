@@ -17,26 +17,26 @@
                       image_tag('true.png', :title => l(:todo_mark_tooltip), :size=>'13x13') 
     %>
     
-    <%= link_to_remote( todo_img,
-          :url => polymorphic_url([parent_object,todo], :action => :toggle_complete), :method => :post,
-          :html => {:class => todo_class} 
+    <%= link_to( todo_img,
+           polymorphic_url([parent_object,todo], :action => :toggle_complete), :method => :post,
+          :html => {:class => todo_class} , :remote => true
          )
-    %><%= link_to_remote( image_tag('add.png', :title => l(:todo_add_child_tooltip)), 
-      :url => new_polymorphic_url( [parent_object,:todo], :parent_id => todo, :issue_id => todo_issue), :method => :get,
+    %><%= link_to( image_tag('add.png', :title => l(:todo_add_child_tooltip)),
+       new_polymorphic_url( [parent_object,:todo], :parent_id => todo, :issue_id => todo_issue), :method => :get,
          
       #{ :controller => "#{'projects/' + todo.project.identifier.to_s + '/' if todo.project}#{'issues/' + todo_issue.to_s + '/' if todo_issue}#{todos_controller}/#{todo.id}",     :action => 'new' },
       :html => {:class => 'icon-new'}, 
-      :update => "todo#{todo.id}-new-box" ) 
+      :update => "todo#{todo.id}-new-box" , :remote => true)
         
-    %><%= link_to_remote( image_tag('edit.png', :title => 'Edit'), 
-      :url => edit_polymorphic_url( [parent_object,todo]), :method => :get,
+    %><%= link_to( image_tag('edit.png', :title => 'Edit'),
+       edit_polymorphic_url( [parent_object,todo]), :method => :get,
       :html => {:class => 'icon-edit'}, 
-      :update => "todo_#{todo.id}" )
+      :update => "todo_#{todo.id}" , :remote => true)
       
-    %><%= link_to_remote( image_tag('delete.png', :title => l(:todo_delete_tooltip)), 
-      :url => polymorphic_url([ parent_object,todo]), :method => :delete,
+    %><%= link_to( image_tag('delete.png', :title => l(:todo_delete_tooltip)),
+       polymorphic_url([ parent_object,todo]), :method => :delete,
       :confirm => l(:text_are_you_sure), :html => {:class => 'icon-delete'}, 
-      :update => "todo_#{todo.id}" ) 
+      :update => "todo_#{todo.id}" , :remote => true)
       
     %>
   

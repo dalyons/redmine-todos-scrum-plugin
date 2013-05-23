@@ -1,6 +1,7 @@
 <% content_for :header_tags do %>
-    <%= stylesheet_link_tag 'todos', :plugin => 'redmine_todos_plugin' %>
-    <%= stylesheet_link_tag 'todos_print', :plugin => 'redmine_todos_plugin', :media => 'print' %>
+  <%= stylesheet_link_tag 'todos', :plugin => 'redmine_todos_plugin' %>
+  <%= stylesheet_link_tag 'todos_print', :plugin => 'redmine_todos_plugin', :media => 'print' %>
+  <%= stylesheet_link_tag 'jquery-ui-1.8.21.css', :plugin => 'redmine_todos_plugin' %>
 <% end %>
 
 
@@ -8,16 +9,16 @@
   <%= render :partial => 'todos/link_bar' %>
   <h2><%= l(:todos_project_heading) %> <%= @project.name %></h2>
   <div style="" >
- 
-    <%= render(:partial => 'new_todo', 
-        :locals => {:todo => @new_todo}) if @allowed_to_edit
-    %>
+
+    <%= render(:partial => 'new_todo',
+      :locals => {:todo => @new_todo}) if @allowed_to_edit
+  %>
 
   </div>
-
-  <%= render :partial => 'root_todos', 
-    :locals => {:todos => @todos, :parent_object => @project, :editable => @allowed_to_edit} %>
-
+  <div id="all_todos_for_project">
+    <%= render :partial => 'root_todos',
+      :locals => {:todos => @todos, :parent_object => @project, :editable => @allowed_to_edit} %>
+  </div>
 </div>
 
 

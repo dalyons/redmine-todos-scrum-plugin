@@ -1,0 +1,34 @@
+<% if controller.action_name.eql?('destroy') %>
+
+  $("#personal_todo_list").html("<%= escape_javascript(render(:partial => 'root_todos' ,
+      :locals => {:todos => @personal_todos, :editable => true, :parent_object => @user})) %>")
+
+<% elsif controller.action_name.eql?('create') %>
+
+  $("#personal_todo_list").html("<%= escape_javascript(render(:partial => 'root_todos' ,
+      :locals => {:todos => @personal_todos, :editable => true, :parent_object => @user})) %>")
+
+<% elsif controller.action_name.eql?('toggle_complete') %>
+
+  $("#todo_<%=@todo.id%>").html("<%= escape_javascript(
+    render(:partial => 'todos/todo', :locals => {:todo => @todo, :editable => true})) %>")
+
+<% elsif controller.action_name.eql?('update') %>
+
+  $("#todo_<%=@todo.id%>").html("<%= escape_javascript(
+    render(:partial => 'todos/todo', :locals => {:todo => @todo, :editable => true})) %>")
+
+<% elsif controller.action_name.eql?('edit') %>
+
+  $("#todo_<%=@todo.id%>").html("<%= escape_javascript(render(:partial => "todos/inline_edit", :locals => {:todo => @todo})) %>")
+
+<% elsif controller.action_name.eql?('new') %>
+
+  $("#todo_<%=@parrent_id%>").append("<%= escape_javascript(render(:partial => 'mytodos/new_todo', :locals => { :todo => @todo})) %>")
+
+<% elsif controller.action_name.eql?('show') %>
+
+  $("#todo_<%=@todo.id%>").html("<%= escape_javascript(
+    render(:partial => 'todos/todo', :locals => {:todo => @todo, :editable => true})) %>")
+
+<% end %>
